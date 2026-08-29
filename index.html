@@ -1,0 +1,2249 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zahrada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#F0F1EC; --card:#F7F8F4; --ink:#1B211D; --ink-2:#4E574F; --ink-3:#7C857C;
+  --line:#D2D7CB; --grid:#CFD5C8; --grid-5:#B4BDAC;
+  --p19:#DEE8CB; --p19-line:#5E7442; --p81:#EAECE1; --p81-line:#9AA48D;
+  --meadow:#DCC97C; --meadow-line:#A08A2C;
+  --build:#BFB6A9; --build-line:#6C6459; --paving:#D4D0C6;
+  --accent:#1D6274; --accent-2:#2E8AA3; --accent-soft:#D8E7EB; --scarp:#9C7A4E; --tree:#4E7A3A; --water:#3F7F98; --fire:#B0603A; --play:#7B9440;
+  --z-provoz:#8A8578; --z-pobyt:#C08A4A; --z-hra:#7B9440; --z-uzitek:#4E7A3A;
+  --z-ohen:#B0603A; --z-sad:#5E7442; --z-louka:#A08A2C; --z-klid:#6A6E8A;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#141917; --card:#1B211E; --ink:#E4E9E2; --ink-2:#A9B2A9; --ink-3:#7A847B;
+    --line:#2C352F; --grid:#28312B; --grid-5:#3B463D;
+    --p19:#252F1E; --p81:#1D231F; --p19-line:#7E9A5C; --p81-line:#5A6455;
+    --meadow:#6B5C26; --meadow-line:#C3A945;
+    --build:#3C3A35; --build-line:#8D8578; --paving:#282824;
+    --accent:#5BAFC4; --accent-2:#7FC8DA; --accent-soft:#17313A; --scarp:#C9A06A; --tree:#8CB86A; --water:#6BB0C8; --fire:#D08A62; --play:#A6C06A;
+  --z-provoz:#A9A392; --z-pobyt:#D8A868; --z-hra:#A6C06A; --z-uzitek:#8CB86A;
+  --z-ohen:#D08A62; --z-sad:#7E9A5C; --z-louka:#C3A945; --z-klid:#98A0C0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141917; --card:#1B211E; --ink:#E4E9E2; --ink-2:#A9B2A9; --ink-3:#7A847B;
+  --line:#2C352F; --grid:#28312B; --grid-5:#3B463D;
+  --p19:#252F1E; --p81:#1D231F; --p19-line:#7E9A5C; --p81-line:#5A6455;
+  --meadow:#6B5C26; --meadow-line:#C3A945;
+  --build:#3C3A35; --build-line:#8D8578; --paving:#282824;
+  --accent:#5BAFC4; --accent-2:#7FC8DA; --accent-soft:#17313A; --scarp:#C9A06A; --tree:#8CB86A; --water:#6BB0C8; --fire:#D08A62; --play:#A6C06A;
+  --z-provoz:#A9A392; --z-pobyt:#D8A868; --z-hra:#A6C06A; --z-uzitek:#8CB86A;
+  --z-ohen:#D08A62; --z-sad:#7E9A5C; --z-louka:#C3A945; --z-klid:#98A0C0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:28px 22px 60px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 26px;
+  padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:22px}
+h1{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:600;font-size:38px;
+  letter-spacing:.01em;margin:0;line-height:1}
+.sub{color:var(--ink-2);font-size:14px;margin:0}
+.facts{display:flex;flex-wrap:wrap;gap:6px 22px;margin-left:auto}
+.fact{display:flex;flex-direction:column}
+.fact b{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:15px;font-variant-numeric:tabular-nums}
+.fact span{font-family:"Barlow Condensed",sans-serif;font-size:12px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3)}
+main{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:26px;align-items:start}
+@media (max-width:900px){main{grid-template-columns:1fr}}
+.planbox{background:var(--card);border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.toolbar{display:flex;flex-wrap:wrap;gap:6px;padding:9px 11px;border-bottom:1px solid var(--line)}
+button{font-family:"Barlow Condensed",sans-serif;font-size:14px;letter-spacing:.05em;
+  text-transform:uppercase;padding:5px 11px;border:1px solid var(--line);background:transparent;
+  color:var(--ink-2);border-radius:2px;cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--card)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+svg#plan{display:block;width:100%;height:clamp(420px,80vh,1120px);touch-action:none;cursor:default;background:var(--card)}
+canvas#scena{display:block;width:100%;height:clamp(420px,80vh,1120px);touch-action:none;cursor:grab;background:var(--card)}
+canvas#scena:active{cursor:grabbing}
+svg#plan[hidden],canvas#scena[hidden]{display:none}
+#ovladani3d{padding:7px 12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3)}
+aside{position:sticky;top:18px;display:flex;flex-direction:column;gap:16px}
+@media (max-width:900px){aside{position:static}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:2px;padding:13px 14px}
+.panel h2{font-family:"Barlow Condensed",sans-serif;font-size:13px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 9px;font-weight:600}
+.coord{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;
+  font-size:27px;letter-spacing:-.01em;display:flex;gap:16px}
+.coord i{font-style:normal;color:var(--ink-3);font-size:13px;padding-right:3px}
+.hint{font-size:12.5px;color:var(--ink-3);margin:7px 0 0}
+ul.pins{list-style:none;margin:0;padding:0;font-family:"IBM Plex Mono",monospace;font-size:13px;
+  font-variant-numeric:tabular-nums;display:flex;flex-direction:column;gap:3px}
+ul.pins li{display:flex;gap:9px;align-items:baseline}
+ul.pins b{color:var(--accent);font-weight:500;min-width:16px}
+ul.pins em{font-style:normal;color:var(--ink-3);margin-left:auto}
+.layers{display:flex;flex-direction:column;gap:6px}
+.layers label{display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;color:var(--ink-2)}
+.layers input{accent-color:var(--accent);width:15px;height:15px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-family:"Barlow Condensed",sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);text-align:left;font-weight:600;padding:0 0 5px}
+td{padding:4px 0;border-top:1px solid var(--line);vertical-align:top}
+td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;text-align:right;
+  white-space:nowrap;color:var(--ink-2)}
+.key{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-2);padding:2.5px 0}
+.sw{width:17px;height:12px;border-radius:1px;flex:none}
+footer{margin-top:30px;padding-top:15px;border-top:1px solid var(--line);
+  color:var(--ink-3);font-size:12.5px;max-width:70ch}
+footer b{color:var(--ink-2);font-weight:500}
+.tools{display:flex;gap:6px;align-items:center;padding-right:10px;margin-right:4px;border-right:1px solid var(--line)}
+.shapes{display:flex;flex-direction:column;gap:9px}
+.shape{display:grid;grid-template-columns:12px 1fr auto;gap:2px 8px;align-items:center}
+.shape .range{grid-column:2/4;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  color:var(--ink-3);font-variant-numeric:tabular-nums}
+.shape .dot{width:11px;height:11px;border-radius:2px}
+.shape input{width:100%;font:inherit;font-size:13.5px;color:var(--ink);background:transparent;
+  border:0;border-bottom:1px solid var(--line);padding:2px 0}
+.shape input:focus{border-bottom-color:var(--accent);outline:0}
+.shape .meta{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.shape button{padding:1px 6px;font-size:13px;line-height:1.3}
+details{margin-top:10px}
+summary{font-family:"Barlow Condensed",sans-serif;font-size:12.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3);cursor:pointer}
+details textarea{display:block;width:100%;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.45;background:var(--paper);border:1px solid var(--line);border-radius:2px;
+  padding:8px;margin:8px 0 0;color:var(--ink-2);resize:vertical}
+details textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+.toolbar select{font-family:"IBM Plex Sans",sans-serif;font-size:13.5px;padding:4px 8px;
+  border:1px solid var(--line);border-radius:2px;background:var(--card);color:var(--ink);max-width:210px}
+.toolbar select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+svg#plan g{pointer-events:none}
+svg#plan g.item{pointer-events:auto;cursor:grab}
+svg#plan g.item.lock{cursor:not-allowed}
+svg#plan g.item.sel{cursor:grabbing}
+svg#plan #cross{pointer-events:none}
+.item-row.lock{opacity:.75}
+.item-row .lockbtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--card)}
+.itembar{display:flex;gap:6px;margin-top:9px}
+.items{display:flex;flex-direction:column;gap:7px}
+.item-row{display:grid;grid-template-columns:1fr auto auto auto;gap:6px;align-items:center;
+  font-size:13.5px;padding:3px 4px;border-radius:2px}
+.item-row.sel{background:var(--accent-soft)}
+.item-row .pos{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;grid-column:1/5}
+.item-row button{padding:1px 6px;font-size:12px}
+@media (prefers-reduced-motion:no-preference){#cross{transition:opacity .12s}}
+</style>
+
+<div class="wrap">
+<header>
+  <div>
+    <h1>Zahrada</h1>
+    <p class="sub">podklad pro rozmisťování prvků. Souřadnice v metrech.</p>
+  </div>
+  <div class="facts">
+    <div class="fact"><b>1 386 m²</b><span>P1</span></div>
+    <div class="fact"><b>1 138 m²</b><span>P2</span></div>
+    <div class="fact"><b>15,5 m</b><span>šířka</span></div>
+    <div class="fact"><b>97,9 m</b><span>délka</span></div>
+    <div class="fact"><b>+4,9 m</b><span>převýšení</span></div>
+  </div>
+</header>
+
+<main>
+  <div class="planbox">
+    <div class="toolbar">
+      <div class="tools">
+        <button id="t-cur" aria-pressed="true" title="Posouvání prvků a plánu">Kurzor</button>
+        <button id="t-pin" title="Klik = měřicí bod">Body</button>
+        <button id="t-mer" title="Tažením změříš vzdálenost">Pravítko</button>
+        <button id="t-draw" title="Tažením nakreslíš čáru nebo plochu">Kreslit</button>
+      </div>
+      <button id="mode3d" title="Prostorový pohled na zahradu">3D pohled</button>
+      <button id="v-all" aria-pressed="true">Celek</button>
+      <button id="v-low">Dolní část</button>
+      <button id="v-high">Horní část</button>
+      <button id="zoom-in">+</button>
+      <button id="zoom-out">−</button>
+      <button id="undo">Zpět</button>
+      <button id="clear">Vymazat náčrty</button>
+      <span class="tools" style="border-left:1px solid var(--line);border-right:0;padding:0 0 0 10px;margin:0 4px 0 0">
+        <button id="z-none" aria-pressed="true" title="Bez zón">Zóny —</button>
+        <button id="z-D" title="Naše varianta">D</button>
+        <button id="z-A" title="Užitek blízko, oheň dál">A</button>
+        <button id="z-B" title="Oheň hned u domku, užitek dál">B</button>
+        <button id="z-C" title="Podélné pruhy – provoz vs. klid">C</button>
+      </span>
+      <select id="kat" aria-label="Prvek k umístění"></select>
+      <button id="add">Přidat prvek</button>
+      <button id="lock-sel">Zamknout</button>
+      <button id="ulozit">Uložit natrvalo</button>
+      <button id="copy-top">Zkopírovat pro Claude</button>
+    </div>
+    <svg id="plan" role="img" aria-label="Plán pozemku P1 se souřadnicovou sítí"></svg>
+    <canvas id="scena" hidden aria-label="Prostorový pohled na zahradu"></canvas>
+    <div id="ovladani3d" hidden>
+      <span>Tažením se otáčí · kolečkem přiblížíš · <b>Shift</b> + tažení naklápí</span>
+    </div>
+  </div>
+
+  <aside>
+    <div class="panel" id="zona-panel">
+      <h2>Varianty rozvržení</h2>
+      <p class="hint" id="zona-info" hidden></p>
+      <p class="hint">Přepínač <b>Zóny A / B / C</b> v liště. Zóny jsou návrh rozvržení,
+        ne hotový plán – ukazují, kde co má být, ne přesné tvary.</p>
+    </div>
+    <div class="panel">
+      <h2>Kurzor</h2>
+      <div class="coord"><span><i>X</i><span id="cx">—</span></span><span><i>Y</i><span id="cy">—</span></span></div>
+      <p class="hint" id="mer-info" hidden></p>
+      <p class="hint">Režim <b>Pravítko</b>: tažením změříš libovolnou vzdálenost.
+        Režim <b>Body</b>: klikáním sbíráš body i s odstupy.</p>
+    </div>
+    <div class="panel">
+      <h2>Body</h2>
+      <ul class="pins" id="pins"></ul>
+      <p class="hint" id="pins-empty">Zatím žádné.</p>
+    </div>
+    <div class="panel">
+      <h2>Umístěné prvky</h2>
+      <div class="items" id="items"></div>
+      <p class="hint" id="uloz-info" hidden></p>
+      <div class="itembar" id="itembar" hidden>
+        <button id="lock-all">Zamknout vše</button>
+        <button id="unlock-all">Odemknout vše</button>
+        <button id="del-unlocked">Odebrat odemčené</button>
+      </div>
+      <p class="hint" id="items-empty">Vyber prvek v liště nad plánem a dej <b>Přidat prvek</b>.
+        Pak s ním můžeš v režimu <b>Kurzor</b> táhnout myší. <b>R</b> otočí o 15°,
+        <b>L</b> zamkne či odemkne, <b>Backspace</b> smaže vybraný.
+        Zamknutý prvek se nedá omylem posunout – vybereš ho kliknutím na řádek tady v seznamu. Tlačítko <b>Vymazat náčrty</b> v liště se prvků netýká.</p>
+    </div>
+    <div class="panel">
+      <h2>Nakreslené tvary</h2>
+      <div class="shapes" id="shapes"></div>
+      <p class="hint" id="shapes-empty">Přepni nahoře na <b>Kreslit</b> a táhni myší.
+        Čára se sama vyhladí; když skončíš blízko začátku, uzavře se do plochy a spočítá se výměra.
+        Náčrty jsou dočasné — pošli mi je tlačítkem <b>Zkopírovat náčrt</b>.</p>
+      <details id="exp" hidden>
+        <summary>Souřadnice tvarů</summary>
+        <textarea id="exp-json" readonly rows="7" spellcheck="false"
+          aria-label="Souřadnice náčrtů k odeslání"></textarea>
+        <p class="hint">Když tlačítko nezabere: klikni do pole, <b>Cmd+A</b> a <b>Cmd+C</b>.</p>
+        <button id="copy-shapes">Kopírovat</button>
+      </details>
+    </div>
+    <div class="panel">
+      <h2>Vrstvy</h2>
+      <div class="layers" id="layers"></div>
+    </div>
+    <div class="panel">
+      <h2>Legenda</h2>
+      <div id="legend"></div>
+    </div>
+    <div class="panel">
+      <h2>Co kde stojí</h2>
+      <table>
+        <thead><tr><th>Prvek</th><th style="text-align:right">X</th><th style="text-align:right">Y</th></tr></thead>
+        <tbody id="tab"></tbody>
+      </table>
+      <p class="hint">Dům je <b>RD Rýmařov Bungalov 83 V</b>, 10,4 × 9,5 m, zastavěná plocha 101 m².
+        Plná čára jsou stěny, čárkovaně přesah střechy (47 cm). Od východní hranice <b>3,0 m</b>,
+        od západní <b>2,0 m</b> — měřeno ke stěnám; k okapu o 47 cm méně.</p>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  Geometrie odečtena z geodetického zaměření (10/2023), data v <b>plan/pozemek.json</b>.
+  Síť je natočená tak, aby pozemek stál svisle — <b>skutečný sever je od osy Y odkloněn o 11,6° k západu</b>.
+  Terasa je zakreslená ve skutečné velikosti 4 × 7 m, ale její přesná poloha je zatím odhad. Příjezd je 3 m široký.
+  <b>Svejly z projektu se realizovat nebudou</b>, proto tu nejsou.
+  Funkční rozměry prvků v katalogu vycházejí z předlohy kurzu <b>Žijte ve své zahradě</b>
+  (Flera s. r. o.); symboly jsou kreslené vlastní.
+</footer>
+</div>
+
+<script>
+const D={
+ p19:[[10.51,97.62],[26.01,97.9],[26.01,0],[15.5,0.49],[15.5,22.96],[10.5,27.94]],
+ p81:[[0,97.42],[10.51,97.62],[10.5,27.94],[15.5,22.96],[15.5,0.49],[0,1.22],[0,40.85]],
+ dum:[[12.07,40.99],[12.07,30.57],[23.41,30.57],[23.41,40.98]],
+ zaklady:[[12.47, 30.97], [23.01, 30.97], [23.01, 40.58], [12.47, 40.58]],
+ terasa:[[15.14,40.58],[22.14,40.58],[22.14,44.38],[15.14,44.38]],
+ sklep:[[21.54,51.08],[23.94,51.08],[23.94,54.59],[21.54,54.59]],
+ cesta:[[16.24,0],[19.24,0],[19.24,22.8],[16.24,22.8]],
+ louka:[[0, 49.74], [4.5, 49.74], [4.5, 75.51], [4.56, 76.58], [4.72, 77.64], [5.0, 78.67], [5.39, 79.67], [5.87, 80.63], [6.46, 81.53], [7.13, 82.36], [7.89, 83.12], [8.72, 83.79], [9.62, 84.38], [10.58, 84.86], [11.58, 85.25], [12.61, 85.53], [13.67, 85.69], [14.74, 85.75], [26.01, 85.75], [26.01, 97.9], [0, 97.42]],
+ rovina:[[10.5,27.94],[15.5,22.96],[26.01,22.96],[26.01,51.08],[10.5,51.08]],
+ skok:[[14.9, 51.08], [26.01, 51.08]],
+ najezd:[[10.5, 41.5], [14.9, 51.08], [10.5, 51.08]],
+ hh:{"sloupky": [[9.8, 80.5], [6.5, 80.5], [6.5, 76.0]], "prurez_m": [0.16, 0.16], "vyska_m": 2.6, "rameno_hamaka": {"od": [6.5, 80.5], "do": [6.5, 76.0], "delka_m": 4.5}, "rameno_houpacky": {"od": [6.5, 80.5], "do": [9.8, 80.5], "delka_m": 3.3, "pocet_houpacek": 2}},
+ zed_op:{"material": "gabion nebo betonové tvárnice", "y": 51.08, "x_od": 14.9, "x_do": 21.54, "delka_m": 5.64, "vyska_odhad_m": 0.9, "tloustka_odhad_m": 0.5, "useky": [{"x_od": 14.9, "x_do": 18.9, "delka_m": 4.0}, {"x_od": 19.9, "x_do": 21.54, "delka_m": 1.64}], "mezera": {"x_od": 18.9, "x_do": 19.9, "sirka_m": 1.0, "proc": "schody C6 přes zeď"}},
+ bazeny:[{"id": "A", "nazev": "Za terasou pod opěrnou zdí", "x": [12.7, 16.8], "y": [45.2, 49.3], "rozmer_m": [4.1, 4.1], "zdroj": "zákres Pety", "pro": "nejblíž domu a terase – nejlepší dohled na dítě, nejkratší cesta s ručníkem, voda a elektřina po ruce; rovina pod opěrnou zdí"}, {"id": "B", "nazev": "Nad skokem u nájezdu", "x": [8.2, 12.7], "y": [51.3, 55.1], "rozmer_m": [4.5, 3.8], "zdroj": "zákres Pety", "pro": "horní úroveň, víc soukromí a slunce; blíž zahradnímu domku a jeho zázemí"}],
+ uz:{"popis": "Užitková zahrada při východní hranici, mezi zahradním domkem a jižní patou kopečku. Vyvýšené záhony ve třech pásech, bylinky u vstupu, skleník na severním konci, kompost až za skleníkem podél plotu.", "rozsah": {"x": [20.0, 26.0], "y": [61.08, 73.67]}, "vyvysene_zahony": [{"nazev": "Bylinky u vstupu", "x": [20.3, 25.7], "y": [62.74, 63.74], "vyska_m": 0.45}, {"nazev": "Záhon A – západní", "x": [20.3, 21.5], "y": [64.34, 69.67], "vyska_m": 0.45}, {"nazev": "Záhon B – střední", "x": [22.6, 23.8], "y": [64.34, 69.67], "vyska_m": 0.45}, {"nazev": "Záhon C – u plotu", "x": [24.8, 26.0], "y": [64.34, 69.67], "vyska_m": 0.45}], "sklenik": {"x": [21.4, 25.4], "y": [71.17, 73.17], "vyska_m": 2.3}, "kompost": {"x": [24.7, 25.7], "y": [73.87, 76.87], "rozmer_m": [1, 3], "typ": "tříkomorový"}, "oblouk": {"x": 23.0, "y": 61.9, "sirka_m": 1.6, "vyska_m": 2.3}, "opory": [{"typ": "A-rám (žebřík)", "x": 25.4, "y": [64.74, 69.27], "vyska_m": 1.9, "sirka_m": 1.1}, {"typ": "treláž (svislá mřížka)", "x": 20.4, "y": [64.74, 69.27], "vyska_m": 1.8, "sirka_m": 1.0}]},
+ kulna:[[0.3, 37.5], [2.8, 37.5], [2.8, 40.5], [0.3, 40.5]],
+ zed:[[26.01,0],[26.01,40.6]],
+ plotZ:[[0,1.2],[0,40]],
+ plot:[[26.01,40.6],[26.01,97.9]],
+ schody:[[22.74, 48.38], [23.94, 48.38], [23.94, 51.08], [22.74, 51.08]],
+ domek:[[19.94, 51.08], [23.94, 51.08], [23.94, 61.08], [19.94, 61.08]],
+ kopecek:[[18.63, 73.51], [18.26, 73.58], [17.9, 73.69], [17.55, 73.85], [17.21, 74.05], [16.89, 74.3], [16.59, 74.58], [16.3, 74.9], [16.05, 75.26], [15.82, 75.65], [15.61, 76.07], [15.43, 76.52], [15.29, 76.98], [15.17, 77.47], [15.09, 77.97], [15.04, 78.49], [15.02, 79.01], [15.04, 79.54], [15.09, 80.07], [15.17, 80.59], [15.28, 81.11], [15.43, 81.61], [15.6, 82.1], [15.81, 82.56], [16.04, 83.01], [16.29, 83.43], [16.57, 83.82], [16.87, 84.17], [17.2, 84.49], [17.53, 84.78], [17.88, 85.02], [18.25, 85.22], [18.62, 85.38], [18.99, 85.49], [19.37, 85.56], [19.75, 85.58], [20.13, 85.56], [20.5, 85.49], [20.87, 85.38], [21.22, 85.22], [21.56, 85.01], [21.88, 84.77], [22.18, 84.49], [22.46, 84.16], [22.72, 83.81], [22.95, 83.42], [23.16, 83.0], [23.33, 82.55], [23.48, 82.08], [23.59, 81.6], [23.68, 81.09], [23.73, 80.58], [23.74, 80.05], [23.73, 79.53], [23.68, 79.0], [23.6, 78.48], [23.48, 77.96], [23.34, 77.46], [23.16, 76.97], [22.96, 76.5], [22.73, 76.06], [22.47, 75.64], [22.19, 75.25], [21.89, 74.9], [21.57, 74.57], [21.23, 74.29], [20.88, 74.05], [20.52, 73.85], [20.15, 73.69], [19.77, 73.58], [19.39, 73.51], [19.01, 73.48]],
+ vrsek:[[19.04, 76.82], [18.88, 76.85], [18.72, 76.9], [18.56, 76.98], [18.4, 77.07], [18.26, 77.18], [18.13, 77.3], [18.0, 77.45], [17.88, 77.61], [17.78, 77.79], [17.68, 77.98], [17.6, 78.18], [17.54, 78.38], [17.49, 78.61], [17.45, 78.83], [17.43, 79.06], [17.42, 79.3], [17.43, 79.54], [17.45, 79.78], [17.49, 80.01], [17.54, 80.24], [17.6, 80.47], [17.68, 80.69], [17.77, 80.9], [17.88, 81.1], [17.99, 81.29], [18.12, 81.46], [18.25, 81.62], [18.4, 81.76], [18.55, 81.89], [18.71, 82.0], [18.87, 82.09], [19.04, 82.16], [19.21, 82.21], [19.38, 82.25], [19.55, 82.25], [19.72, 82.25], [19.89, 82.21], [20.05, 82.16], [20.21, 82.09], [20.36, 82.0], [20.51, 81.89], [20.64, 81.76], [20.77, 81.62], [20.88, 81.46], [20.99, 81.28], [21.08, 81.09], [21.16, 80.89], [21.23, 80.68], [21.28, 80.46], [21.32, 80.23], [21.34, 80.0], [21.34, 79.77], [21.34, 79.53], [21.32, 79.29], [21.28, 79.06], [21.23, 78.83], [21.16, 78.6], [21.08, 78.38], [20.99, 78.17], [20.89, 77.97], [20.77, 77.78], [20.65, 77.61], [20.51, 77.45], [20.37, 77.3], [20.21, 77.17], [20.06, 77.07], [19.89, 76.98], [19.73, 76.9], [19.56, 76.85], [19.39, 76.82], [19.21, 76.81]],
+ otvory:[["j", 14.142, 30.97, 1.14, 1.275, 0.825, 0], ["j", 17.232, 30.97, 1.14, 1.275, 0.825, 0], ["j", 20.042, 30.97, 1.1, 2.165, 0.0, 1], ["j", 21.342, 30.97, 0.6, 1.275, 0.825, 0], ["s", 14.042, 40.58, 2.2, 2.16, -0.06, 0], ["s", 16.842, 40.58, 1.14, 2.16, -0.06, 0], ["s", 21.042, 40.58, 1.14, 2.16, -0.06, 0], ["z", 12.47, 34.277, 1.14, 1.275, 0.825, 0], ["z", 12.47, 39.412, 1.4, 2.16, -0.06, 0], ["v", 23.01, 32.92, 0.6, 1.275, 0.825, 0], ["v", 23.01, 35.177, 0.9, 1.275, 0.825, 0]],   // okna a dvere z pudorysu: [stena, X, Y, sirka, vyska, parapet, dvere?]
+ stromy:[[18.81, 82.75, "hrušeň", 2.0, 5.0], [17.81, 78.25, "jabloň", 2.0, 5.0]],
+ sad:[[1, 4.71, 86.45, "třešeň", 2.0, 7.0], [2, 7.61, 90.65, "hrušeň", 2.0, 5.0], [3, 13.51, 93.75, "mahalebka", 2.0, 5.0], [4, 16.71, 87.15, "mahalebka", 2.0, 7.0], [5, 21.41, 92.25, "bluma", 2.0, 5.0]],   // zamereno 27.8.2026: [cislo, X, Y, druh, koruna dnes, koruna cil]
+};
+const YMAX=97.9, X0=-5, X1=31, Y0=-5, Y1=103.9;
+const NS="http://www.w3.org/2000/svg";
+const svg=document.getElementById("plan");
+const view={x:X0,y:Y0,w:X1-X0,h:Y1-Y0};
+const sy=y=>YMAX-y;
+const el=(n,a={})=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+const pts=P=>P.map(p=>p[0]+","+sy(p[1])).join(" ");
+const layers={};
+
+/* ---- povrchy cest: jediny zdroj pravdy je plan/cesty.json -> povrchy ----
+   z tohohle objektu se odvozuji CSS promenne pro svetly i tmavy rezim,
+   barvy ve 3D, zpusob vykresleni i legenda. Novy povrch se pridava jen sem. */
+const POVRCHY={"dlazba": {"nazev": "dlažba", "popis": "Betonová nebo kamenná dlažba v souvislé ploše – jediná cesta, po které se chodí denně a v botách z auta.", "kresba": "pas", "svetla": "#D4D0C6", "tmava": "#282824", "rgb3d": [176, 172, 164]}, "mlat": {"nazev": "mlat", "popis": "Mlatový povrch – hutněná kamenná drť s jemným podílem. Propustný, měkký pod nohama, dá se po něm jet s kolečkem. Na jílu potřebuje podkladní vrstvu a boční obrubu, jinak se rozjede do stran.", "kresba": "pas", "svetla": "#C9BCA4", "tmava": "#3A342A", "rgb3d": [186, 172, 148]}, "sterk": {"nazev": "praný štěrk", "popis": "Praný štěrk 8–16 mm na geotextilii a drti. Používá se jako plošné zpevnění, ne jako cesta – pod celou užitkovou zahradou.", "kresba": "pas", "svetla": "#CFCABE", "tmava": "#2E2E29", "rgb3d": [196, 190, 176]}, "desky": {"nazev": "betonové nášlapy", "popis": "Betonové nášlapné desky 40 × 40 cm v rozestupu 60 cm (osová vzdálenost 1,0 m), položené do trávníku.", "kresba": "desky", "deska_m": [0.4, 0.4], "rozestup_m": 0.6, "svetla": "#D4D0C6", "tmava": "#282824", "rgb3d": [178, 174, 166]}, "schody": {"nazev": "schody z nášlapů", "popis": "Betonové nášlapné desky 50 × 40 × 6 cm, dvě vedle sebe na stupeň – ne monolit vylitý betonem. Kladou se do zhutněné drtě s bočními opěrami.", "kresba": "schody", "svetla": "#D4D0C6", "tmava": "#282824", "rgb3d": [170, 166, 158]}};
+const povBarva=n=>`var(--pov-${n})`;
+(function vlozStylPovrchu(){
+  const sv=[], tm=[];
+  for(const [n,p] of Object.entries(POVRCHY)){
+    sv.push(`--pov-${n}:${p.svetla}`); tm.push(`--pov-${n}:${p.tmava}`);
+  }
+  const s=document.createElement("style");
+  s.textContent=`:root{${sv.join(";")}}\n`
+    +`@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){${tm.join(";")}}}\n`
+    +`:root[data-theme="dark"]{${tm.join(";")}}`;
+  document.head.appendChild(s);
+})();
+
+
+/* cesty a naslapy z plan/cesty.json – zaneseno 27. 8. 2026 z nacrtu ve vizualizaci */
+const CESTY_PLAN=[
+ {"id": "C1", "nazev": "Vstup od příjezdu ke vchodovým dveřím", "povrch": "dlazba", "sirka_m": 1.4, "tvar": "primy", "body": [[18.1, 23.1], [20.2, 30.9]]},
+ {"id": "C2", "nazev": "Obchůzka domu ze vstupu na terasu", "povrch": "desky", "sirka_m": 0.5, "tvar": "organicky", "body": [[19.8, 29.6], [12.9, 29.5], [11.7, 30.8], [11.0, 36.2], [11.7, 40.7], [12.7, 41.9], [15.14, 42.2]]},
+ {"id": "C3", "nazev": "Nášlapy přes trávník k plechovému domku", "povrch": "desky", "sirka_m": 0.5, "tvar": "organicky", "prohnuti_m": 0.6, "body": [[3.1, 39.9], [11.6, 41.3]]},
+ {"id": "C4", "nazev": "Od roviny za terasou k patě schodů", "povrch": "desky", "sirka_m": 0.5, "tvar": "primy", "body": [[19.55, 49.38], [20.4, 45.1]]},
+ {"id": "C5", "nazev": "Odbočka ke schodům do sklepa", "povrch": "desky", "sirka_m": 0.5, "tvar": "primy", "body": [[20.0, 47.1], [23.34, 48.08]]},
+ {"id": "C6", "nazev": "Schody přes opěrnou zeď k zahradnímu domku", "povrch": "schody", "typ": "schody", "sirka_m": 1.0, "tvar": "primy", "body": [[19.4, 49.38], [19.4, 51.08]], "stupne": {"pocet": 5, "vyska_m": 0.17, "sirka_stupne_m": 0.34, "vzorec": "2h + b = 0,68 m – pohodlný zahradní schod, spíš mělký", "deska": {"rozmer_m": [0.5, 0.4], "tloustka_m": 0.06, "kusu_na_stupen": 2, "material": "betonová nášlapná deska"}}},
+ {"id": "C7", "nazev": "Chodník podél západní stěny zahradního domku", "povrch": "mlat", "sirka_m": 1.0, "tvar": "primy", "body": [[19.44, 51.08], [19.44, 61.08]]}
+];
+/* primou caru volitelne mirne prohne, aby cesta nepretinala travnik jako pravitko */
+function prohni(P,d){
+  if(!d||P.length!==2) return P.slice();
+  const a=P[0],b=P[1],dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy)||1;
+  return [a,[(a[0]+b[0])/2-dy/L*d,(a[1]+b[1])/2+dx/L*d],b];
+}
+/* lomenou caru prolozi oblouk (Chaikin) – tvar "organicky" */
+function trasa(c){
+  const P=prohni(c.body,c.prohnuti_m);
+  return (c.tvar==="organicky"&&P.length>2) ? chaikin(P,false,3) : P;
+}
+// {povrch, sirka_m, body:[[x,y],..]} – v reportu varianty.html se prepisuje variantou
+let CESTY=CESTY_PLAN.map(c=>({...c,body:trasa(c)}));
+function group(id,label,on=true){const g=el("g",{id:"L-"+id});layers[id]={g,label,on};svg.appendChild(g);return g;}
+
+function build(){
+  svg.setAttribute("viewBox",`${view.x} ${view.y} ${view.w} ${view.h}`);
+  svg.setAttribute("preserveAspectRatio","xMidYMid meet");
+
+  const gPar=group("parcely","Parcely");
+  gPar.appendChild(el("polygon",{points:pts(D.p81),fill:"var(--p81)",stroke:"var(--p81-line)",
+    "stroke-width":1.4,"stroke-dasharray":"3 2","vector-effect":"non-scaling-stroke"}));
+  gPar.appendChild(el("polygon",{points:pts(D.p19),fill:"var(--p19)",stroke:"var(--p19-line)",
+    "stroke-width":2.2,"vector-effect":"non-scaling-stroke"}));
+
+  const gM=group("louka","Vysetá louka");
+  gM.appendChild(el("polygon",{points:pts(D.louka),fill:"var(--meadow)","fill-opacity":.55,
+    stroke:"var(--meadow-line)","stroke-width":1.2,"stroke-linejoin":"round",
+    "vector-effect":"non-scaling-stroke"}));
+
+  const gTer=group("teren","Terénní skok");
+  gTer.appendChild(el("polygon",{points:pts(D.rovina),fill:"var(--scarp)","fill-opacity":.12,
+    stroke:"none"}));
+  gTer.appendChild(el("polygon",{points:pts(D.najezd),fill:"var(--scarp)","fill-opacity":.22,
+    stroke:"var(--scarp)","stroke-width":1.2,"stroke-dasharray":"4 3","vector-effect":"non-scaling-stroke"}));
+  for(let i=1;i<=4;i++){const t=i/5;
+    gTer.appendChild(el("line",{x1:10.5, y1:sy(41.5+(50-41.5)*t),
+      x2:10.5+(14.9-10.5)*t, y2:sy(50), stroke:"var(--scarp)","stroke-width":.9,opacity:.55,
+      "vector-effect":"non-scaling-stroke"}));}
+  const zw=D.zed_op;
+  zedUseky(zw).forEach(u=>gTer.appendChild(el("line",{x1:u.x_od,y1:sy(zw.y),x2:u.x_do,y2:sy(zw.y),
+    stroke:"#7a7870","stroke-width":5,"vector-effect":"non-scaling-stroke"})));
+  const [sa,sb]=D.skok;
+  gTer.appendChild(el("line",{x1:sa[0],y1:sy(sa[1]),x2:sb[0],y2:sy(sb[1]),stroke:"var(--scarp)",
+    "stroke-width":2.6,"vector-effect":"non-scaling-stroke"}));
+  for(let x=sa[0]+.5;x<sb[0];x+=1.2)
+    gTer.appendChild(el("line",{x1:x,y1:sy(sa[1]),x2:x-.35,y2:sy(sa[1])+1.1,stroke:"var(--scarp)",
+      "stroke-width":1.1,"vector-effect":"non-scaling-stroke"}));
+
+  const gGrid=group("grid","Síť po 1 m");
+  const gline=(a,b,c,d,step)=>gGrid.appendChild(el("line",{x1:a,y1:b,x2:c,y2:d,
+    stroke:step%5?"var(--grid)":"var(--grid-5)",opacity:step%5?.55:1,
+    "stroke-width":step%10?(step%5?.5:.9):1.3,"vector-effect":"non-scaling-stroke"}));
+  for(let x=0;x<=26;x++) gline(x,sy(0),x,sy(98),x);
+  for(let y=0;y<=98;y++) gline(0,sy(y),26,sy(y),y);
+
+  const gS=group("stavby","Stavby a zpevněné plochy");
+  gS.appendChild(el("polygon",{points:pts(D.cesta),fill:"var(--paving)",stroke:"var(--build-line)",
+    "stroke-width":1,"stroke-dasharray":"4 3","vector-effect":"non-scaling-stroke"}));
+  gS.appendChild(el("polygon",{points:pts(D.terasa),fill:"var(--paving)",stroke:"var(--build-line)",
+    "stroke-width":1.2,"vector-effect":"non-scaling-stroke"}));
+  gS.appendChild(el("polygon",{points:pts(D.terasa),fill:"none",stroke:"var(--build-line)",
+    "stroke-width":1,"stroke-dasharray":"5 2 1 2",opacity:.8,"vector-effect":"non-scaling-stroke"}));
+  for(let k=1;k<6;k++){const t=k/6;
+    const a=[D.terasa[0][0]+(D.terasa[1][0]-D.terasa[0][0])*t, D.terasa[0][1]];
+    const b=[D.terasa[3][0]+(D.terasa[2][0]-D.terasa[3][0])*t, D.terasa[3][1]];
+    gS.appendChild(el("line",{x1:a[0],y1:sy(a[1]),x2:b[0],y2:sy(b[1]),stroke:"var(--build-line)",
+      "stroke-width":.7,opacity:.45,"vector-effect":"non-scaling-stroke"}));}
+  gS.appendChild(el("polygon",{points:pts(D.dum),fill:"var(--build)","fill-opacity":.45,
+    stroke:"var(--build-line)","stroke-width":1,"stroke-dasharray":"4 3","vector-effect":"non-scaling-stroke"}));
+  gS.appendChild(el("polygon",{points:pts(D.kulna),fill:"var(--build)",
+    stroke:"var(--build-line)","stroke-width":1.4,"vector-effect":"non-scaling-stroke"}));
+  gS.appendChild(el("polygon",{points:pts(D.sklep),fill:"var(--build)",
+    stroke:"var(--build-line)","stroke-width":1.6,"vector-effect":"non-scaling-stroke"}));
+  gS.appendChild(el("polygon",{points:pts(D.schody),fill:"var(--paving)",
+    stroke:"var(--build-line)","stroke-width":1.2,"vector-effect":"non-scaling-stroke"}));
+  for(let i=1;i<7;i++){const y=D.schody[0][1]+i*(D.schody[3][1]-D.schody[0][1])/7;
+    gS.appendChild(el("line",{x1:D.schody[0][0],y1:sy(y),x2:D.schody[1][0],y2:sy(y),
+      stroke:"var(--build-line)","stroke-width":.8,opacity:.7,"vector-effect":"non-scaling-stroke"}));}
+  gS.appendChild(el("polygon",{points:pts(D.zaklady),fill:"var(--build)",stroke:"var(--build-line)",
+    "stroke-width":1.6,"vector-effect":"non-scaling-stroke"}));
+
+  const gC=group("cesty","Cesty a nášlapy");
+  CESTY.forEach(c=>{
+    const PV=POVRCHY[c.povrch]||POVRCHY.desky, kresba=c.typ==="schody"?"schody":PV.kresba;
+    if(kresba==="pas"){                   // souvisly zpevneny pas ve skutecne sirce
+      gC.appendChild(el("polyline",{points:pts(c.body),fill:"none",stroke:povBarva(c.povrch),
+        "stroke-width":c.sirka_m,"stroke-linecap":"butt","stroke-linejoin":"round"}));
+      gC.appendChild(el("polyline",{points:pts(c.body),fill:"none",stroke:"var(--build-line)",
+        "stroke-width":.9,opacity:c.povrch==="dlazba"?.55:.35,
+        "vector-effect":"non-scaling-stroke"}));
+      return;
+    }
+    if(kresba==="schody"){                 // schody: stupne kolmo na osu, shora dolu
+      const a=c.body[0], b=c.body[1];
+      const dx=b[0]-a[0], dy=b[1]-a[1], L=Math.hypot(dx,dy)||1;
+      const ux=dx/L, uy=dy/L, nx=-uy, ny=ux;      // podelny a pricny smer
+      const n=(c.stupne&&c.stupne.pocet)||5, hl=(c.stupne&&c.stupne.sirka_stupne_m)||L/n;
+      const w=(c.sirka_m||1)/2;
+      for(let k=0;k<n;k++){
+        const s=L-(k+0.5)*hl;                     // od horniho stupne dolu
+        const cx=a[0]+ux*s, cy=a[1]+uy*s;
+        const P4=[[cx+nx*w+ux*hl/2, cy+ny*w+uy*hl/2],[cx-nx*w+ux*hl/2, cy-ny*w+uy*hl/2],
+                  [cx-nx*w-ux*hl/2, cy-ny*w-uy*hl/2],[cx+nx*w-ux*hl/2, cy+ny*w-uy*hl/2]];
+        gC.appendChild(el("polygon",{points:pts(P4),fill:povBarva(c.povrch),
+          "fill-opacity":0.55+0.09*k, stroke:"var(--build-line)","stroke-width":.7,
+          "vector-effect":"non-scaling-stroke"}));
+      }
+      return;
+    }
+    // naslapne desky: ctverce 40 cm po ose cele trasy, osova vzdalenost 1,0 m
+    const KROK=(PV.rozestup_m||0.6)+((PV.deska_m||[0.4])[0]), A=(PV.deska_m||[0.4,0.4])[0];
+    const dl=[0];                       // kumulovana delka trasy
+    for(let i=1;i<c.body.length;i++)
+      dl.push(dl[i-1]+Math.hypot(c.body[i][0]-c.body[i-1][0], c.body[i][1]-c.body[i-1][1]));
+    const celkem=dl[dl.length-1];
+    const pocet=Math.max(2,Math.round(celkem/KROK)+1);   // deska na obou koncich
+    let seg=0;
+    for(let k=0;k<pocet;k++){
+      const s=celkem*k/(pocet-1);
+      while(seg<dl.length-2 && dl[seg+1]<s) seg++;
+      const a=c.body[seg], b=c.body[seg+1];
+      const L=dl[seg+1]-dl[seg]||1, t=(s-dl[seg])/L;
+      const x=a[0]+(b[0]-a[0])*t, y=a[1]+(b[1]-a[1])*t;
+      const uh=Math.atan2(b[1]-a[1], b[0]-a[0])*180/Math.PI;
+      gC.appendChild(el("rect",{x:-A/2,y:-A/2,width:A,height:A,rx:.05,
+        fill:"var(--paving)",stroke:"var(--build-line)","stroke-width":.5,
+        "vector-effect":"non-scaling-stroke",
+        transform:`translate(${x.toFixed(2)},${sy(y).toFixed(2)}) rotate(${(-uh).toFixed(1)})`}));
+    }
+  });
+
+  const gNav=group("navrh","Návrh – rozhodnuté prvky");
+  gNav.appendChild(el("polygon",{points:pts(D.domek),fill:"var(--build)","fill-opacity":.55,
+    stroke:"var(--build-line)","stroke-width":2,"stroke-dasharray":"6 3",
+    "vector-effect":"non-scaling-stroke"}));
+
+  // vstup do domku ze zapadni strany
+  gNav.appendChild(el("line",{x1:19.94,y1:sy(52.6),x2:19.94,y2:sy(54.8),stroke:"var(--accent)",
+    "stroke-width":3.2,"vector-effect":"non-scaling-stroke"}));
+  gNav.appendChild(el("path",{d:`M18.5,${sy(53.7)} L19.8,${sy(53.7)} M19.2,${sy(54.2)} L19.8,${sy(53.7)} L19.2,${sy(53.2)}`,
+    fill:"none",stroke:"var(--accent)","stroke-width":1.6,"vector-effect":"non-scaling-stroke"}));
+
+  const gUZ=group("uzitkova","Užitková zahrada");
+  D.uz.vyvysene_zahony.forEach(z=>{
+    const P=[[z.x[0],z.y[0]],[z.x[1],z.y[0]],[z.x[1],z.y[1]],[z.x[0],z.y[1]]];
+    gUZ.appendChild(el("polygon",{points:pts(P),fill:"#8a6a44","fill-opacity":.28,
+      stroke:"#8a6a44","stroke-width":1.8,"vector-effect":"non-scaling-stroke"}));
+    const P2=[[z.x[0]+.14,z.y[0]+.14],[z.x[1]-.14,z.y[0]+.14],[z.x[1]-.14,z.y[1]-.14],[z.x[0]+.14,z.y[1]-.14]];
+    gUZ.appendChild(el("polygon",{points:pts(P2),fill:"#4a3a2a","fill-opacity":.3,stroke:"none"}));
+  });
+  const sk=D.uz.sklenik, skP=[[sk.x[0],sk.y[0]],[sk.x[1],sk.y[0]],[sk.x[1],sk.y[1]],[sk.x[0],sk.y[1]]];
+  gUZ.appendChild(el("polygon",{points:pts(skP),fill:"var(--water)","fill-opacity":.22,
+    stroke:"var(--water)","stroke-width":1.6,"vector-effect":"non-scaling-stroke"}));
+  const ko=D.uz.kompost, koP=[[ko.x[0],ko.y[0]],[ko.x[1],ko.y[0]],[ko.x[1],ko.y[1]],[ko.x[0],ko.y[1]]];
+  gUZ.appendChild(el("polygon",{points:pts(koP),fill:"var(--build)","fill-opacity":.5,
+    stroke:"var(--build-line)","stroke-width":1.3,"vector-effect":"non-scaling-stroke"}));
+  const ob=D.uz.oblouk;
+  gUZ.appendChild(el("path",{d:`M${ob.x-ob.sirka_m/2},${sy(ob.y)} A${ob.sirka_m/2},${ob.sirka_m/2} 0 0 1 ${ob.x+ob.sirka_m/2},${sy(ob.y)}`,
+    fill:"none",stroke:"var(--ink-2)","stroke-width":2,"vector-effect":"non-scaling-stroke"}));
+  for(let yy=63.2;yy<74;yy+=0.6)
+    gUZ.appendChild(el("rect",{x:22.8,y:sy(yy)-0.2,width:0.4,height:0.4,fill:"var(--paving)",
+      stroke:"var(--build-line)","stroke-width":.5,"vector-effect":"non-scaling-stroke"}));
+
+  group("ohniste","Ohniště");
+  group("hamaka","Hamaka a houpačky");
+  const gH=group("hriste","Bazén – rezervy");
+  if(layers.hriste.on!==false) D.bazeny.forEach(bz=>{
+    const cx=(bz.x[0]+bz.x[1])/2, cy=(bz.y[0]+bz.y[1])/2;
+    const r=Math.min(bz.x[1]-bz.x[0],bz.y[1]-bz.y[0])/2;
+    gH.appendChild(el("circle",{cx,cy:sy(cy),r,fill:"var(--water)","fill-opacity":.13,
+      stroke:"var(--water)","stroke-width":1.5,"stroke-dasharray":"5 4","vector-effect":"non-scaling-stroke"}));
+    const t=el("text",{x:cx,y:sy(cy)+.5,"font-size":1.6,fill:"var(--water)","text-anchor":"middle",
+      "font-family":"Barlow Condensed, sans-serif","font-weight":600});
+    t.textContent=bz.id; gH.appendChild(t);});
+
+  const hh=D.hh, gHam=layers.hamaka.g;
+  for(let i=0;i<2;i++){
+    const a=hh.sloupky[i], b=hh.sloupky[i+1];
+    gHam.appendChild(el("line",{x1:a[0],y1:sy(a[1]),x2:b[0],y2:sy(b[1]),
+      stroke:"#a8825a","stroke-width":3,"vector-effect":"non-scaling-stroke"}));
+  }
+  hh.sloupky.forEach(q=>gHam.appendChild(el("rect",{x:q[0]-0.12,y:sy(q[1])-0.12,width:0.24,height:0.24,
+    fill:"#8a6a44",stroke:"none"})));
+
+  const gSad=group("sad","Ovocné stromy v louce");
+  const strom2D=(g,x,y,dnes,cil)=>{
+    g.appendChild(el("circle",{cx:x,cy:sy(y),r:cil/2,fill:"none",stroke:"var(--tree)",
+      "stroke-width":.9,"stroke-dasharray":"2 2",opacity:.55,"vector-effect":"non-scaling-stroke"}));
+    g.appendChild(el("circle",{cx:x,cy:sy(y),r:dnes/2,fill:"var(--tree)","fill-opacity":.22,
+      stroke:"var(--tree)","stroke-width":1.2,"vector-effect":"non-scaling-stroke"}));
+    g.appendChild(el("circle",{cx:x,cy:sy(y),r:.28,fill:"var(--tree)"}));
+    // popisky druhů se nekreslí – jsou v plan/stromy.md a v pozemek.json
+  };
+  D.sad.forEach(([n,x,y,druh,dnes,cil])=>strom2D(gSad,x,y,dnes,cil));
+
+  const gV=group("val","Val na severní hranici");
+  gV.appendChild(el("polygon",{points:pts([[0,95.25],[26.01,95.25],[26.01,97.75],[0,97.75]]),
+    fill:"var(--scarp)","fill-opacity":.28,stroke:"var(--scarp)","stroke-width":1.2,
+    "vector-effect":"non-scaling-stroke"}));
+  gV.appendChild(el("line",{x1:0,y1:sy(96.5),x2:26.01,y2:sy(96.5),stroke:"var(--scarp)",
+    "stroke-width":1,"stroke-dasharray":"3 2","vector-effect":"non-scaling-stroke"}));
+
+  const gK=group("kopecek","Kopeček a ovocné stromy");
+  gK.appendChild(el("polygon",{points:pts(D.kopecek),fill:"var(--scarp)","fill-opacity":.3,
+    stroke:"var(--scarp)","stroke-width":1.4,"vector-effect":"non-scaling-stroke"}));
+  gK.appendChild(el("polygon",{points:pts(D.vrsek),fill:"var(--scarp)","fill-opacity":.25,
+    stroke:"var(--scarp)","stroke-width":1,"stroke-dasharray":"3 2","vector-effect":"non-scaling-stroke"}));
+  D.stromy.forEach(([x,y,druh,dnes,cil])=>strom2D(gK,x,y,dnes,cil));
+
+  // okna a dvere v pudorysu domu
+  D.otvory.forEach(([st,x,y,w,hh,par,dv])=>{
+    const vodorovna = st==='j'||st==='s';
+    const dx = vodorovna ? w/2 : 0, dy = vodorovna ? 0 : w/2;
+    gS.appendChild(el("line",{x1:x-dx,y1:sy(y-dy),x2:x+dx,y2:sy(y+dy),
+      stroke: dv ? "var(--ink-2)" : "var(--water)", "stroke-width": dv ? 4 : 3.4,
+      "stroke-linecap":"butt","vector-effect":"non-scaling-stroke"}));
+  });
+
+  gS.appendChild(el("line",{x1:D.zed[0][0],y1:sy(D.zed[0][1]),x2:D.zed[1][0],y2:sy(D.zed[1][1]),
+    stroke:"var(--build-line)","stroke-width":3.4,"vector-effect":"non-scaling-stroke"}));
+  [D.plot,D.plotZ].forEach(L=>gS.appendChild(el("line",{x1:L[0][0],y1:sy(L[0][1]),x2:L[1][0],y2:sy(L[1][1]),
+    stroke:"var(--tree)","stroke-width":2,"stroke-dasharray":"2 3","vector-effect":"non-scaling-stroke"})));
+
+  const gT=group("popisky","Popisky");
+  const txt=(x,y,t,s=2,c="var(--ink-2)",anchor="middle",w=500)=>{
+    const e=el("text",{x,y:sy(y),"font-size":s,fill:c,"text-anchor":anchor,
+      "font-family":"Barlow Condensed, sans-serif","font-weight":w});
+    e.textContent=t;gT.appendChild(e);return e;};
+  const gTN=group("popiskyN","Popisky – návrh");
+  const txtN=(x,y,t,s=2,c="var(--ink-2)",anchor="middle",w=500)=>{
+    const e=el("text",{x,y:sy(y),"font-size":s,fill:c,"text-anchor":anchor,
+      "font-family":"Barlow Condensed, sans-serif","font-weight":w});
+    e.textContent=t;gTN.appendChild(e);return e;};
+  txt(17.7,35.7,"DŮM",2.4,"var(--build-line)");
+  txt(18.64,42.5,"terasa 3,8×7 + pergola",1.3,"var(--build-line)");
+  txt(22.7,51.4,"sklep",1.3,"var(--build-line)");
+  txt(24.4,48.6,"schody",1.2,"var(--build-line)","start");
+  txt(25.4,20,"betonová zeď",1.3,"var(--build-line)","middle").setAttribute("transform",`rotate(-90 25.4 ${sy(20)})`);
+  txt(25.4,70,"plot – pletivo",1.3,"var(--tree)","middle").setAttribute("transform",`rotate(-90 25.4 ${sy(70)})`);
+  txt(4.2,39,"plechový domek 3×2,5",1.2,"var(--build-line)","start");
+  txt(-0.7,22,"plot",1.3,"var(--tree)","middle").setAttribute("transform",`rotate(-90 -0.7 ${sy(22)})`);
+  txt(-0.7,62,"neoploceno",1.2,"var(--ink-3)","middle").setAttribute("transform",`rotate(-90 -0.7 ${sy(62)})`);
+  txtN(21.9,56.3,"zahradní domek",1.5,"var(--build-line)");
+  txtN(23,75,"skleník",1.1,"var(--water)");
+  txtN(21.9,77.3,"kompost",1,"var(--build-line)");
+  txtN(23,61.4,"vstup pod obloukem",1.1,"var(--ink-3)");
+  txtN(14.7,44.4,"bazén – rezervy A a B",1.1,"var(--water)");
+  txtN(8.2,80.2,"hamaka + houpačky",1.1,"#8a6a44");
+  txtN(21.9,54.9,"4 × 10 m",1.2,"var(--ink-3)");
+  txtN(18.3,53.7,"vstup",1.2,"var(--accent)","end");
+  txtN(18.2,51.6,"opěrná zeď",1.3,"#6e6c64");
+  txt(24.6,49.0,"skok",1.3,"var(--scarp)","end");
+  txt(11.0,45.5,"nájezd",1.3,"var(--scarp)","start");
+  txt(14,25.5,"srovnáno na úroveň domu",1.5,"var(--scarp)");
+  txt(17.7,11,"příjezd",1.5,"var(--build-line)");
+  txt(17.7,24.4,"konec zpevnění",1.2,"var(--ink-3)");
+  txt(13,92.0,"vysetá louka  9,5 m",1.9,"var(--meadow-line)");
+  txt(7,96.5,"val 2,5 × 0,75 m – šeříky a bez",1.3,"var(--scarp)");
+  txt(19.2,85,"kopeček +1,2 m",1.5,"var(--scarp)","end");
+  txt(2.0,68,"louka 4,5 m",1.6,"var(--meadow-line)").setAttribute("transform",`rotate(-90 1.5 ${sy(70)})`);
+  txt(5.2,64,"P2",2.6,"var(--p81-line)");
+  txt(19,70,"P1",2.8,"var(--p19-line)");
+  txt(13,101.4,"↑ pole",2,"var(--ink-3)");
+  txt(20.9,-3.9,"brána, komunikace",1.7,"var(--ink-3)");
+
+  const gA=group("osy","Čísla os");
+  const ax=(x,y,t,anchor)=>{const e=el("text",{x,y:sy(y),"font-size":1.7,fill:"var(--ink-3)","text-anchor":anchor,
+    "font-family":"IBM Plex Mono, monospace","dominant-baseline":"middle"});e.textContent=t;gA.appendChild(e);};
+  for(let x=0;x<=25;x+=5) ax(x,-1.6,x,"middle");
+  for(let y=0;y<=95;y+=5) ax(-1.3,y,y,"end");
+  ax(28.2,-1.6,"X →","middle"); ax(-1.3,101,"Y","end");
+
+  const gN=group("sever","Severka");
+  const n=el("g",{transform:`translate(28.6,${sy(93)}) rotate(11.6)`});
+  n.appendChild(el("path",{d:"M0,-3.4 L1.1,1.2 L0,.5 L-1.1,1.2 Z",fill:"var(--ink-2)"}));
+  const nt=el("text",{y:3.6,"font-size":2,fill:"var(--ink-2)","text-anchor":"middle",
+    "font-family":"Barlow Condensed, sans-serif"});nt.textContent="S";n.appendChild(nt);
+  gN.appendChild(n);
+
+  group("trvalky","Trvalkové záhony");
+  group("kere","Keře a podrost");
+  group("stromy","Stromy a vícekmeny");
+  group("zony","Zóny");
+  group("prvky","Umístěné prvky");
+  group("mereni","Pravítko");
+  group("tvary","Nakreslené tvary");
+  group("body","Body");
+  svg.appendChild(el("g",{id:"scalebar"}));
+  const cross=el("g",{id:"cross",opacity:0});
+  cross.appendChild(el("line",{id:"chx",stroke:"var(--accent)","stroke-width":.9,"vector-effect":"non-scaling-stroke"}));
+  cross.appendChild(el("line",{id:"chy",stroke:"var(--accent)","stroke-width":.9,"vector-effect":"non-scaling-stroke"}));
+  svg.appendChild(cross);
+}
+build();
+
+/* --- vrstvy --- */
+const box=document.getElementById("layers");
+/* Rezim zamerovani: jen to, co uz na pozemku je (louka, kopecek, stavby, teren).
+   Vsechen navrh a vysadba se schova, aby slo do plánu zakreslit skutecne stromy. */
+const NAVRZENE=["navrh","uzitkova","ohniste","hamaka","hriste","trvalky","kere","stromy","zony","prvky","popiskyN"];
+function prepniVrstvy(ids,on){
+  ids.forEach(id=>{
+    const L=layers[id]; if(!L) return;
+    L.on=on; L.g.style.display=on?"":"none";
+    const ch=box.querySelector(`[data-l="${id}"]`); if(ch) ch.checked=on;
+  });
+  if(mode3d) kresli3D();
+}
+{
+  const rada=document.createElement("div");
+  rada.style.cssText="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px";
+  const btn=(t,fn)=>{const b=document.createElement("button");b.type="button";b.textContent=t;
+    b.style.cssText="padding:2px 8px;font-size:13px";b.onclick=fn;rada.appendChild(b);};
+  btn("jen co už roste",()=>prepniVrstvy(NAVRZENE,false));
+  btn("vše zpět",()=>prepniVrstvy(NAVRZENE,true));
+  box.appendChild(rada);
+}
+Object.entries(layers).forEach(([id,L])=>{
+  if(id==="body") return;
+  const lab=document.createElement("label");
+  lab.innerHTML=`<input type="checkbox" checked data-l="${id}"> ${L.label}`;
+  box.appendChild(lab);
+});
+box.addEventListener("change",e=>{
+  const id=e.target.dataset.l;
+  layers[id].on=e.target.checked;
+  layers[id].g.style.display=e.target.checked?"":"none";
+  if(mode3d) kresli3D();
+});
+
+/* --- legenda --- */
+const LEG=[["var(--p19)","var(--p19-line)","P1 — hlavní pozemek"],
+  ["var(--p81)","var(--p81-line)","P2 — vedlejší pozemek"],
+  ["var(--meadow)","var(--meadow-line)","vysetá louka (8 m sever, 3 m západ)"],
+  ["var(--build)","var(--build-line)","dům, sklep"],
+  ["var(--paving)","var(--build-line)","terasa, příjezd"],
+  ["var(--scarp)","var(--scarp)","srovnaná plocha, terénní skok, kopeček"],
+  ["var(--tree)","var(--tree)","ovocné stromy (jabloň, hrušeň, 2025)"],
+  ...Object.entries(POVRCHY).map(([n,p])=>[povBarva(n),"var(--build-line)",p.nazev]),
+  ["transparent","var(--accent)","náčrt (čárkovaně, dočasný)"],
+  ["var(--water)","var(--water)","umístěné prvky – voda, oheň, stavby, zeleň"],
+  ["var(--z-uzitek)","var(--z-uzitek)","záhon na slunci"],
+  ["var(--z-klid)","var(--z-klid)","záhon ve stínu"],
+  ["var(--tree)","var(--tree)","navržené stromy (kruh = koruna)"]];
+document.getElementById("legend").innerHTML=LEG.map(([f,s,t])=>
+  `<div class="key"><span class="sw" style="background:${f};border:1px solid ${s}"></span>${t}</div>`).join("");
+
+/* --- tabulka --- */
+const bbox=P=>{const xs=P.map(p=>p[0]),ys=P.map(p=>p[1]);
+  return[Math.min(...xs),Math.max(...xs),Math.min(...ys),Math.max(...ys)];};
+const fmt=n=>n.toFixed(1).replace(".",",");
+const rows=[["Dům",D.dum],["Terasa",D.terasa],["Sklep",D.sklep],["Příjezd",D.cesta]];
+document.getElementById("tab").innerHTML=rows.map(([n,P])=>{const[a,b,c,d]=bbox(P);
+  return `<tr><td>${n}</td><td class="n">${fmt(a)}–${fmt(b)}</td><td class="n">${fmt(c)}–${fmt(d)}</td></tr>`;}).join("")
+  +`<tr><td>Zahradní domek</td><td class="n">19,9–23,9</td><td class="n">49,7–59,7</td></tr>`
+  +`<tr><td>Kopeček</td><td class="n">20,1–24,6</td><td class="n">81,2–88,9</td></tr>`
+  +`<tr><td>Strom jižní</td><td class="n">22,62</td><td class="n">82,57</td></tr>`
+  +`<tr><td>Strom severní</td><td class="n">22,02</td><td class="n">87,54</td></tr>`
+  +`<tr><td>Louka</td><td class="n">0–26,0</td><td class="n">49,7–97,9</td></tr>`;
+
+/* --- interakce --- */
+const toM=e=>{const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;
+  const q=p.matrixTransform(svg.getScreenCTM().inverse());return{x:q.x,y:YMAX-q.y};};
+const cxEl=document.getElementById("cx"),cyEl=document.getElementById("cy"),cross=document.getElementById("cross");
+const dist=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
+const COLORS=["#1D6274","#B4552A","#5E7442","#7A4B7E","#2F7A5A","#9A6A1E"];
+
+let tool="cur", pins=[], shapes=[], items=[], selItem=-1, drawing=null, down=null, moved=false, dragIt=null, mer=null, merAktiv=null;
+
+/* --- ulozeni --- */
+const ROZMISTENI=[{"id": "ohniste-k", "x": 13.4, "y": 66.8, "rot": 0, "lock": true}, {"id": "pisk-ram", "x": 5.5, "y": 60.0, "rot": 90, "lock": true}, {"id": "domek-deti", "x": 13.0, "y": 88.2, "rot": 0, "lock": true}];   // trvale rozmisteni z repa (plan/rozmisteni.json)
+const KEY="zahrada-897-19-v1";
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify({pins,shapes,items}));}catch(e){}
+  const ta=document.getElementById("exp-json");
+  if(ta){ta.value=exportText();
+    document.getElementById("exp").hidden=!shapes.length&&!items.length;}
+}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));
+  if(d){pins=d.pins||[];shapes=d.shapes||[];items=d.items||[];}}catch(e){}
+  if(!items.length) items=ROZMISTENI.map(o=>Object.assign({},o));}
+
+/* --- vyhlazeni --- */
+function rdp(P,eps){
+  if(P.length<3) return P.slice();
+  let imax=0,dmax=0;
+  const [a,b]=[P[0],P[P.length-1]];
+  for(let i=1;i<P.length-1;i++){
+    const num=Math.abs((b[0]-a[0])*(a[1]-P[i][1])-(a[0]-P[i][0])*(b[1]-a[1]));
+    const den=dist(a,b)||1e-9, d=num/den;
+    if(d>dmax){dmax=d;imax=i;}
+  }
+  if(dmax>eps) return rdp(P.slice(0,imax+1),eps).slice(0,-1).concat(rdp(P.slice(imax),eps));
+  return [a,b];
+}
+function chaikin(P,closed,iters){
+  let R=P.slice();
+  for(let k=0;k<iters;k++){
+    if(R.length<3) break;
+    const out=[];
+    if(!closed) out.push(R[0]);
+    const n=R.length, last=closed?n:n-1;
+    for(let i=0;i<last;i++){
+      const p=R[i], q=R[(i+1)%n];
+      out.push([p[0]*.75+q[0]*.25, p[1]*.75+q[1]*.25]);
+      out.push([p[0]*.25+q[0]*.75, p[1]*.25+q[1]*.75]);
+    }
+    if(!closed) out.push(R[n-1]);
+    R=out;
+  }
+  return R;
+}
+function simplify(P,closed,eps){
+  if(!closed) return rdp(P,eps);
+  if(P.length<6) return P.slice();
+  let far=0,dm=0;
+  for(let i=1;i<P.length;i++){const d=dist(P[0],P[i]);if(d>dm){dm=d;far=i;}}
+  const A=rdp(P.slice(0,far+1),eps), B=rdp(P.slice(far),eps);
+  return A.concat(B.slice(1));
+}
+function finish(raw){
+  if(raw.length<3) return null;
+  const closed = raw.length>8 && dist(raw[0],raw[raw.length-1])<2.5;
+  let P=raw.slice();
+  if(closed) P.pop();
+  P=simplify(P,closed,0.3);
+  if(P.length<2 || (closed && P.length<4)) return null;
+  const sm=chaikin(P,closed,3);
+  const out=[];
+  sm.forEach((q,i)=>{ if(!i || dist(q,out[out.length-1])>0.3 || (!closed && i===sm.length-1)) out.push(q); });
+  return {pts:out.map(q=>[+q[0].toFixed(2),+q[1].toFixed(2)]),closed,
+          name:"", color:COLORS[shapes.length%COLORS.length]};
+}
+const shapeLen=sh=>{let L=0;const n=sh.pts.length;
+  for(let i=0;i<(sh.closed?n:n-1);i++) L+=dist(sh.pts[i],sh.pts[(i+1)%n]);return L;};
+const shapeArea=sh=>{if(!sh.closed)return 0;let a=0;const P=sh.pts;
+  for(let i=0;i<P.length;i++){const q=P[(i+1)%P.length];a+=P[i][0]*q[1]-q[0]*P[i][1];}
+  return Math.abs(a)/2;};
+
+/* --- ukazatel --- */
+svg.addEventListener("pointermove",e=>{
+  const m=toM(e);cxEl.textContent=fmt(m.x);cyEl.textContent=fmt(m.y);
+  cross.setAttribute("opacity",1);
+  const hx=document.getElementById("chx"),hy=document.getElementById("chy");
+  hx.setAttribute("x1",view.x);hx.setAttribute("x2",view.x+view.w);hx.setAttribute("y1",sy(m.y));hx.setAttribute("y2",sy(m.y));
+  hy.setAttribute("y1",view.y);hy.setAttribute("y2",view.y+view.h);hy.setAttribute("x1",m.x);hy.setAttribute("x2",m.x);
+});
+svg.addEventListener("pointerleave",()=>{cross.setAttribute("opacity",0);cxEl.textContent=cyEl.textContent="—";});
+
+/* --- kresleni / body / posun --- */
+svg.addEventListener("pointerdown",e=>{
+  try{svg.setPointerCapture(e.pointerId);}catch(err){}
+  if(tool==="draw"){const m=toM(e);drawing=[[m.x,m.y]];return;}
+  if(tool==="mer"){const m=toM(e);mer={a:[m.x,m.y],b:[m.x,m.y]};kresliMer();return;}
+  const gi=e.target.closest&&e.target.closest("g.item");
+  if(gi){const i=+gi.dataset.i,m=toM(e);
+    selItem=i;
+    if(!items[i].lock) dragIt={i,ox:items[i].x-m.x,oy:items[i].y-m.y};
+    renderItems();return;}
+  if(selItem>=0){selItem=-1;renderItems();}
+  down={x:e.clientX,y:e.clientY,vx:view.x,vy:view.y};moved=false;
+});
+svg.addEventListener("pointermove",e=>{
+  if(dragIt){const m=toM(e),it=items[dragIt.i];
+    it.x=Math.round((m.x+dragIt.ox)*10)/10; it.y=Math.round((m.y+dragIt.oy)*10)/10;
+    renderItems(); return;}
+  if(mer){const m=toM(e);mer.b=[m.x,m.y];kresliMer();return;}
+  if(drawing){
+    const m=toM(e),last=drawing[drawing.length-1];
+    if(dist([m.x,m.y],last)>0.25){drawing.push([m.x,m.y]);drawPreview();}
+    return;
+  }
+  if(!down)return;
+  const dx=e.clientX-down.x,dy=e.clientY-down.y;
+  if(Math.abs(dx)+Math.abs(dy)>4){moved=true;
+    const r=svg.getBoundingClientRect();
+    view.x=down.vx-dx*view.w/r.width;view.y=down.vy-dy*view.h/r.height;
+    svg.setAttribute("viewBox",`${view.x} ${view.y} ${view.w} ${view.h}`);scaleBar();}
+});
+svg.addEventListener("pointerup",e=>{
+  if(dragIt){dragIt=null;save();return;}
+  if(mer){
+    const d=Math.hypot(mer.b[0]-mer.a[0],mer.b[1]-mer.a[1]);
+    merAktiv=d>0.15?mer:null; mer=null; kresliMer(); return;}
+  if(drawing){
+    const sh=finish(drawing);drawing=null;
+    layers.tvary.g.querySelector("#preview")?.remove();
+    if(sh){shapes.push(sh);render();save();}
+    return;
+  }
+  if(down&&!moved&&tool==="pin"){const m=toM(e);pins.push(m);render();save();}
+  down=null;
+});
+svg.addEventListener("wheel",e=>{e.preventDefault();zoom(e.deltaY>0?1.15:1/1.15,toM(e));},{passive:false});
+function zoom(f,c){
+  const cxm=c?c.x:view.x+view.w/2, cym=c?YMAX-c.y:view.y+view.h/2;
+  view.x=cxm-(cxm-view.x)*f; view.y=cym-(cym-view.y)*f;
+  view.w*=f; view.h*=f;
+  svg.setAttribute("viewBox",`${view.x} ${view.y} ${view.w} ${view.h}`); scaleBar();
+}
+function setView(x,y,w,h,btn){
+  Object.assign(view,{x,y,w,h});
+  svg.setAttribute("viewBox",`${x} ${y} ${w} ${h}`); scaleBar();
+  ["v-all","v-low","v-high"].forEach(id=>
+    document.getElementById(id).setAttribute("aria-pressed",id===btn));
+}
+function setTool(t){
+  tool=t;
+  ["cur","pin","mer","draw"].forEach(x=>{
+    const b=document.getElementById("t-"+x); if(b) b.setAttribute("aria-pressed",t===x);});
+  svg.style.cursor=t==="draw"?"cell":(t==="pin"||t==="mer"?"crosshair":"default");
+}
+document.getElementById("t-mer").onclick=()=>setTool("mer");
+document.getElementById("t-cur").onclick=()=>setTool("cur");
+document.getElementById("t-pin").onclick=()=>setTool("pin");
+document.getElementById("t-draw").onclick=()=>setTool("draw");
+document.getElementById("v-all").onclick=()=>setView(X0,Y0,X1-X0,Y1-Y0,"v-all");
+document.getElementById("v-low").onclick=()=>setView(-5,sy(52),36,54,"v-low");
+document.getElementById("v-high").onclick=()=>setView(-5,sy(100),36,54,"v-high");
+document.getElementById("zoom-in").onclick=()=>zoom(1/1.3);
+document.getElementById("zoom-out").onclick=()=>zoom(1.3);
+document.getElementById("undo").onclick=()=>{
+  if(shapes.length) shapes.pop(); else pins.pop();
+  render();save();
+};
+document.getElementById("clear").onclick=()=>{pins=[];shapes=[];render();save();};
+
+/* --- vysadba --- */
+function kresliVysadbu(){
+  const gT=layers.trvalky.g, gK=layers.kere.g, gS2=layers.stromy.g;
+  [gT,gK,gS2].forEach(x=>x.textContent="");
+  VYSADBA.zahony.forEach(z=>{
+    const g = (z.typ==="trvalky") ? gT : gK;
+    const [x1,x2]=z.x,[y1,y2]=z.y;
+    const barva = z.st==="stin"?"var(--z-klid)":(z.st==="louka"?"var(--meadow-line)":"var(--z-uzitek)");
+    const vypln = z.st==="stin"?"var(--z-klid)":(z.st==="louka"?"var(--meadow)":"var(--z-uzitek)");
+    if(z.p2){                                  // organicky tvar – lomena cara po obvodu
+      g.appendChild(el("polygon",{points:z.p2.map(q=>q[0]+","+sy(q[1])).join(" "),
+        fill:vypln,"fill-opacity":.22,stroke:barva,"stroke-width":1.6,
+        "stroke-linejoin":"round","vector-effect":"non-scaling-stroke"}));
+    } else {
+      g.appendChild(el("rect",{x:x1,y:sy(y2),width:x2-x1,height:y2-y1,rx:.4,
+        fill:vypln,"fill-opacity":.22,stroke:barva,"stroke-width":1.2,
+        "vector-effect":"non-scaling-stroke"}));
+    }
+    const fs=Math.min(1.5,(x2-x1)/Math.max(z.n.length*.44,1));
+    const t=el("text",{x:(x1+x2)/2,y:sy((y1+y2)/2),"font-size":Math.max(fs,.9),
+      fill:z.st==="stin"?"var(--z-klid)":(z.st==="louka"?"var(--meadow-line)":"var(--z-uzitek)"),
+      "text-anchor":"middle",
+      "font-family":"Barlow Condensed, sans-serif","font-weight":600});
+    t.textContent=z.n; g.appendChild(t);
+    const t2=el("text",{x:(x1+x2)/2,y:sy((y1+y2)/2)+Math.max(fs,.9)*1.2,
+      "font-size":Math.max(fs,.9)*.72,fill:"var(--ink-3)","text-anchor":"middle",
+      "font-family":"IBM Plex Mono, monospace"});
+    t2.textContent=z.ks+" ks · "+z.p+" m²"; g.appendChild(t2);
+  });
+  VYSADBA.stromy.forEach(s=>{
+    const g=gS2, barva=s.podzim?"var(--fire)":"var(--tree)";
+    g.appendChild(el("circle",{cx:s.x,cy:sy(s.y),r:s.d/2,fill:barva,"fill-opacity":.2,
+      stroke:barva,"stroke-width":1.4,"stroke-dasharray":s.t==="jehlicnan"?"3 2":"",
+      "vector-effect":"non-scaling-stroke"}));
+    g.appendChild(el("circle",{cx:s.x,cy:sy(s.y),r:.22,fill:barva}));
+    const t=el("text",{x:s.x,y:sy(s.y)-s.d/2-.5,"font-size":1.2,fill:barva,
+      "text-anchor":"middle","font-family":"Barlow Condensed, sans-serif"});
+    t.textContent=s.n; g.appendChild(t);
+  });
+}
+
+/* --- zony --- */
+let zonaAktiv=null;
+function kresliZony(){
+  const g=layers.zony.g; g.textContent="";
+  const info=document.getElementById("zona-info");
+  if(layers.popisky) layers.popisky.g.style.opacity = zonaAktiv ? .32 : 1;
+  if(layers.parcely) layers.parcely.g.style.opacity = zonaAktiv ? .7 : 1;
+  if(!zonaAktiv){ if(info) info.hidden=true; return; }
+  const V=ZONY[zonaAktiv];
+  const r=svg.getBoundingClientRect(), pxm=r.width/Math.max(view.w,1);
+  V.zony.forEach(z=>{
+    const [x1,x2]=z.x,[y1,y2]=z.y;
+    g.appendChild(el("rect",{x:x1,y:sy(y2),width:x2-x1,height:y2-y1,
+      fill:`var(--z-${z.typ})`,"fill-opacity":.28,stroke:`var(--z-${z.typ})`,
+      "stroke-width":1.4,"vector-effect":"non-scaling-stroke"}));
+    const fs=Math.min(1.9,(x2-x1)/Math.max(z.nazev.length*.42,1));
+    const t=el("text",{x:(x1+x2)/2,y:sy((y1+y2)/2),"font-size":Math.max(fs,1.1),
+      fill:`var(--z-${z.typ})`,"text-anchor":"middle","font-family":"Barlow Condensed, sans-serif",
+      "font-weight":600});
+    t.textContent=z.nazev; g.appendChild(t);
+    const t2=el("text",{x:(x1+x2)/2,y:sy((y1+y2)/2)+Math.max(fs,1.1)*1.15,"font-size":Math.max(fs,1.1)*.72,
+      fill:`var(--z-${z.typ})`,"text-anchor":"middle","font-family":"IBM Plex Mono, monospace",opacity:.8});
+    t2.textContent=z.plocha_m2+" m²"; g.appendChild(t2);
+  });
+  if(info){info.hidden=false;
+    info.innerHTML="";
+    const h=document.createElement("b"); h.textContent=zonaAktiv+" — "+V.nazev; info.appendChild(h);
+    const p=document.createElement("span"); p.textContent=" "+V.myslenka; info.appendChild(p);}
+}
+["none","D","A","B","C"].forEach(k=>{
+  const b=document.getElementById("z-"+k); if(!b) return;
+  b.onclick=()=>{ zonaAktiv=(k==="none")?null:k;
+    ["none","D","A","B","C"].forEach(x=>document.getElementById("z-"+x)
+      .setAttribute("aria-pressed", x===k));
+    kresliZony(); };
+});
+
+/* --- pravitko --- */
+function kresliMer(){
+  const g=layers.mereni.g; g.textContent="";
+  const m=mer||merAktiv; if(!m) return;
+  const [ax,ay]=m.a,[bx,by]=m.b;
+  const d=Math.hypot(bx-ax,by-ay); if(d<0.02) return;
+  const r=svg.getBoundingClientRect(), pxm=r.width/view.w, fs=14/pxm, t=7/pxm;
+  const st={stroke:"var(--accent)","stroke-width":1.8,"vector-effect":"non-scaling-stroke"};
+  g.appendChild(el("line",Object.assign({x1:ax,y1:sy(ay),x2:bx,y2:sy(by)},st)));
+  const ux=(bx-ax)/d, uy=(by-ay)/d;
+  [[ax,ay],[bx,by]].forEach(([x,y])=>g.appendChild(el("line",Object.assign(
+    {x1:x-uy*t,y1:sy(y)-ux*t,x2:x+uy*t,y2:sy(y)+ux*t},st))));
+  const mx=(ax+bx)/2, my=(ay+by)/2;
+  const bg=el("rect",{x:mx-fs*1.5,y:sy(my)-fs*1.6,width:fs*3,height:fs*1.35,
+    fill:"var(--card)",opacity:.9,rx:fs*.15});
+  g.appendChild(bg);
+  const tx=el("text",{x:mx,y:sy(my)-fs*.6,"font-size":fs,fill:"var(--accent)","text-anchor":"middle",
+    "font-family":"IBM Plex Mono, monospace","font-weight":500});
+  tx.textContent=fmt(d)+" m"; g.appendChild(tx);
+  const info=document.getElementById("mer-info");
+  if(info){info.textContent=`${fmt(d)} m  ·  Δx ${fmt(Math.abs(bx-ax))}  Δy ${fmt(Math.abs(by-ay))}`;
+    info.hidden=false;}
+}
+
+/* --- graficke meritko --- */
+function scaleBar(){
+  const g=document.getElementById("scalebar"); if(!g) return;
+  g.textContent="";
+  const r=svg.getBoundingClientRect(); if(!r.width) return;
+  const pxm=r.width/view.w;
+  const kroky=[.5,1,2,5,10,20,50];
+  let L=kroky.find(k=>k*pxm>=70&&k*pxm<=170) ?? kroky.reduce((a,b)=>Math.abs(b*pxm-110)<Math.abs(a*pxm-110)?b:a);
+  const x0=view.x+view.w*.04, y0=view.y+view.h*.955, fs=13/pxm, t=6/pxm;
+  const st={stroke:"var(--ink-2)","stroke-width":1.6,"vector-effect":"non-scaling-stroke"};
+  g.appendChild(el("line",Object.assign({x1:x0,y1:y0,x2:x0+L,y2:y0},st)));
+  g.appendChild(el("line",Object.assign({x1:x0,y1:y0-t,x2:x0,y2:y0+t},st)));
+  g.appendChild(el("line",Object.assign({x1:x0+L,y1:y0-t,x2:x0+L,y2:y0+t},st)));
+  g.appendChild(el("line",Object.assign({x1:x0+L/2,y1:y0,x2:x0+L/2,y2:y0+t*.6},st)));
+  const tx=el("text",{x:x0+L/2,y:y0-t*1.4,"font-size":fs,fill:"var(--ink-2)","text-anchor":"middle",
+    "font-family":"IBM Plex Mono, monospace"});
+  tx.textContent=(L<1?String(L).replace(".",","):L)+" m"; g.appendChild(tx);
+}
+
+/* --- kolik zbyva vedle prvku --- */
+function sirkaPozemkuV(y){
+  const P=D.p19, prus=[];
+  for(let i=0;i<P.length;i++){
+    const a=P[i], b=P[(i+1)%P.length];
+    if((a[1]-y)*(b[1]-y)<=0 && a[1]!==b[1])
+      prus.push(a[0]+(b[0]-a[0])*(y-a[1])/(b[1]-a[1]));
+  }
+  if(prus.length<2) return null;
+  return [Math.min(...prus),Math.max(...prus)];
+}
+function volnoKolem(it){
+  const k=katById(it.id); if(!k) return null;
+  const a=(it.rot||0)*Math.PI/180, c=Math.cos(a), s2=Math.sin(a);
+  const rohy=[[-k.w/2,-k.h/2],[k.w/2,-k.h/2],[k.w/2,k.h/2],[-k.w/2,k.h/2]]
+    .map(([x,y])=>[it.x+x*c-y*s2, it.y+x*s2+y*c]);
+  const xs=rohy.map(p=>p[0]), ys=rohy.map(p=>p[1]);
+  const hr=sirkaPozemkuV(it.y); if(!hr) return null;
+  return {vlevo:+(Math.min(...xs)-hr[0]).toFixed(1), vpravo:+(hr[1]-Math.max(...xs)).toFixed(1),
+          sever:+(97.9-Math.max(...ys)).toFixed(1)};
+}
+
+/* --- katalog prvku (funkcni rozmery dle predlohy kurzu; symboly vlastni) --- */
+const ROSTLINY={
+ "Šalvěj hajní":[[112,92,158],.55,.28], "Šalvěj hajní 'Caradonna'":[[96,76,148],.6,.26],
+ "Kakost":[[108,142,86],.35,.34], "Kakost krvavý":[[152,104,140],.35,.32],
+ "Pěchava podzimní":[[150,164,104],.4,.26], "Ostřice":[[124,146,96],.45,.28],
+ "Ostřice Morrowova":[[136,158,110],.4,.26],
+ "Bergénie":[[86,112,74],.35,.34], "Funkie":[[128,158,118],.45,.4],
+ "Dlužicha":[[142,104,110],.3,.26], "Čemeřice":[[92,118,86],.35,.28],
+ "Plicník":[[112,134,120],.3,.26], "Konvalinka":[[118,150,104],.22,.22],
+ "Denivka":[[196,152,66],.6,.34], "Denivka nízká":[[204,168,72],.4,.28],
+ "Kosatec sibiřský":[[118,116,168],.7,.28], "Pivoňka":[[196,130,150],.7,.4],
+ "Kopretina bílá":[[222,222,206],.55,.28], "Třapatka zářivá":[[214,176,64],.6,.3],
+ "Hvězdnice novoanglická":[[146,110,166],.9,.36], "Krvavec":[[142,78,80],1.0,.28],
+ "Oman":[[206,182,72],1.3,.4], "Mordovník":[[136,146,180],1.0,.34],
+ "Sporýš argentinský":[[150,116,170],1.4,.22], "Rozchodník":[[168,146,120],.4,.28],
+ "Mochna":[[196,182,96],.4,.3],
+ "Proso prutnaté":[[168,164,118],1.3,.34], "Třtina ostrokvětá 'Karl Foerster'":[[186,172,120],1.5,.3],
+ "Dochan psárkovitý 'Hameln'":[[178,170,132],.8,.36],
+ "Tavolník japonský":[[124,140,88],1.0,.6], "Tavolník nízký":[[132,148,94],.6,.5],
+ "Kalina obecná":[[96,124,80],2.0,1.0], "Líska obecná":[[104,132,84],3.0,1.4],
+ "Pustoryl":[[112,136,92],2.2,1.0], "Mahónie cesmínolistá":[[72,102,68],1.0,.6],
+ "Maliník":[[118,140,86],1.6,.5], "Ostružiník beztrnný":[[110,132,82],1.5,.6],
+ "Rybíz červený":[[110,136,84],1.2,.6], "Rybíz černý":[[104,130,80],1.2,.6],
+ "Angrešt":[[116,138,88],1.0,.5], "Dřín obecný":[[100,128,80],3.0,1.4],
+ "Jahodník":[[126,152,96],.2,.2], "Květnatá louka – výsev":[[178,180,110],.45,.3]
+};
+const VYSADBA={"zahony": [{"n": "Předzahrádka", "x": [19.5, 25.5], "y": [14, 22], "p": 48, "ks": 72, "typ": "trvalky", "st": "slunce", "r": [["Třtina ostrokvětá 'Karl Foerster'", 9], ["Pěchava podzimní", 18], ["Šalvěj hajní 'Caradonna'", 14], ["Kosatec sibiřský", 9], ["Kakost krvavý", 12], ["Třapatka zářivá", 10]]}, {"n": "Clona od ulice", "x": [20, 26], "y": [1, 5], "p": 24, "ks": 14, "typ": "trvalky", "st": "slunce", "r": [["Tavolník japonský", 5], ["Pustoryl", 3], ["Kalina obecná", 2], ["Mahónie cesmínolistá", 4]]}, {"n": "Před domem – západ", "x": [11, 16], "y": [24, 30], "p": 30, "ks": 40, "typ": "trvalky", "st": "stin", "r": [["Kakost krvavý", 14], ["Bergénie", 9], ["Ostřice", 10], ["Denivka", 7]]}, {"n": "Před domem – východ", "x": [19.5, 26], "y": [24, 30], "p": 39, "ks": 38, "typ": "trvalky", "st": "slunce", "r": [["Třtina ostrokvětá 'Karl Foerster'", 9], ["Šalvěj hajní", 14], ["Kopretina bílá", 10], ["Pivoňka", 5]]}, {"n": "U terasy – západ", "x": [10.5, 15.5], "y": [41, 51.1], "p": 51, "ks": 45, "typ": "trvalky", "st": "stin", "r": [["Funkie", 11], ["Bergénie", 9], ["Čemeřice", 5], ["Ostřice Morrowova", 12], ["Dlužicha", 8]]}, {"n": "U terasy – východ", "x": [22.5, 26], "y": [41, 51.1], "p": 35, "ks": 32, "typ": "trvalky", "st": "stin", "r": [["Pěchava podzimní", 14], ["Kakost", 12], ["Plicník", 6]]}, {"n": "Doprovod cesty", "x": [10.5, 14], "y": [51.1, 64], "p": 45, "ks": 58, "typ": "trvalky", "st": "slunce", "r": [["Pěchava podzimní", 22], ["Kakost", 16], ["Mochna", 10], ["Denivka nízká", 10]]}, {"n": "Kolem ohniště", "x": [10.5, 17.0], "y": [64, 66], "p": 13, "ks": 36, "typ": "trvalky", "st": "slunce", "r": [["Dochan psárkovitý 'Hameln'", 12], ["Mordovník", 6], ["Krvavec", 8], ["Šalvěj hajní", 10]]}, {"n": "Velký trvalkový záhon u kopečku", "x": [12, 19.5], "y": [78, 88], "p": 75, "ks": 114, "typ": "trvalky", "st": "slunce", "r": [["Proso prutnaté", 14], ["Třtina ostrokvětá 'Karl Foerster'", 12], ["Hvězdnice novoanglická", 14], ["Oman", 8], ["Třapatka zářivá", 16], ["Šalvěj hajní", 16], ["Mordovník", 7], ["Krvavec", 10], ["Sporýš argentinský", 12], ["Mahónie cesmínolistá", 5]]}, {"n": "Jedlý kout", "x": [3, 10.5], "y": [55.5, 78.0], "p": 169, "ks": 58, "typ": "trvalky", "st": "slunce", "r": [["Maliník", 12], ["Ostružiník beztrnný", 4], ["Rybíz červený", 4], ["Rybíz černý", 3], ["Angrešt", 3], ["Dřín obecný", 2], ["Jahodník", 30]]}, {"n": "Skryté zákoutí", "x": [3, 10.5], "y": [78, 89], "p": 82, "ks": 57, "typ": "trvalky", "st": "stin", "r": [["Ostřice", 12], ["Kakost", 16], ["Konvalinka", 15], ["Bergénie", 8], ["Denivka", 6]]}, {"n": "Rovina za terasou – západ", "x": [10.5, 12.7], "y": [45, 51.1], "p": 13, "ks": 19, "typ": "podrost", "st": "stin", "r": [["Kakost", 8], ["Bergénie", 4], ["Pěchava podzimní", 6], ["Tavolník nízký", 1]]}, {"n": "Rovina za terasou – východ", "x": [16.8, 26.0], "y": [45, 51.1], "p": 56, "ks": 79, "typ": "podrost", "st": "stin", "r": [["Kakost", 35], ["Bergénie", 15], ["Pěchava podzimní", 24], ["Tavolník nízký", 5]]}, {"n": "Keře a podrost při západní hranici", "x": [3, 10.5], "y": [20, 30], "p": 75, "ks": 72, "typ": "kere", "st": "slunce", "r": [["Tavolník japonský", 9], ["Kalina obecná", 4], ["Kakost", 45], ["Mochna", 14]]}, {"n": "Podrost pod vícekmeny u cesty", "x": [3, 10.5], "y": [78, 89], "p": 82, "ks": 100, "typ": "podrost", "st": "stin", "r": [["Kakost", 50], ["Ostřice", 30], ["Konvalinka", 20]]}, {"n": "Keřový pás u východního plotu", "x": [23, 26], "y": [51.1, 62], "p": 33, "ks": 11, "typ": "kere", "st": "slunce", "r": [["Líska obecná", 2], ["Kalina obecná", 3], ["Tavolník japonský", 6]]}, {"n": "Podrost kolem ohniště", "x": [10.5, 17.0], "y": [66, 73], "p": 46, "ks": 84, "typ": "podrost", "st": "slunce", "r": [["Dochan psárkovitý 'Hameln'", 18], ["Rozchodník", 22], ["Šalvěj hajní", 20], ["Kakost krvavý", 24]]}, {"n": "Předzahrádka – rozšíření", "x": [11, 15.5], "y": [8, 23], "p": 68, "ks": 73, "typ": "podrost", "st": "slunce", "r": [["Pěchava podzimní", 30], ["Mochna", 12], ["Kakost krvavý", 25], ["Tavolník japonský", 6]]}, {"n": "Louka a keře u vjezdu", "x": [0, 15.5], "y": [3, 20], "p": 264, "ks": 18, "typ": "louka", "st": "louka", "r": [["Květnatá louka – výsev", 0], ["Tavolník japonský", 10], ["Kalina obecná", 5], ["Líska obecná", 3]]}, {"n": "Pásy podél domu", "x": [10.5, 12.2], "y": [30, 45], "p": 25, "ks": 58, "typ": "podrost", "st": "stin", "r": [["Kakost", 40], ["Ostřice", 18]]}, {"n": "Pás za východní stěnou domu", "x": [23.3, 26], "y": [30, 45], "p": 40, "ks": 60, "typ": "podrost", "st": "stin", "r": [["Bergénie", 16], ["Kakost", 30], ["Ostřice", 14]]}, {"n": "Volná plocha mezi ohništěm a sadem", "x": [10.5, 17.0], "y": [73, 78], "p": 32, "ks": 62, "typ": "podrost", "st": "slunce", "r": [["Proso prutnaté", 12], ["Hvězdnice novoanglická", 14], ["Šalvěj hajní", 16], ["Kakost krvavý", 20]]}, {"n": "Podrost u domku – západ", "x": [13.6, 14], "y": [51.1, 62], "p": 4, "ks": 0, "typ": "podrost", "st": "slunce", "r": []}], "stromy": [{"n": "Javor babyka", "x": 11.5, "y": 74.0, "d": 8, "h": 9, "t": "listnaty", "v": 1, "podzim": 0}, {"n": "Muchovník Lamarckův", "x": 4.0, "y": 43.5, "d": 4, "h": 5, "t": "listnaty", "v": 1, "podzim": 0}, {"n": "Muchovník Lamarckův", "x": 3.5, "y": 81, "d": 4, "h": 5, "t": "listnaty", "v": 1, "podzim": 0}, {"n": "Muchovník Lamarckův", "x": 3.5, "y": 85.5, "d": 4, "h": 5, "t": "listnaty", "v": 1, "podzim": 0}, {"n": "Jabloň okrasná", "x": 22, "y": 18, "d": 4, "h": 4.5, "t": "listnaty", "v": 0, "podzim": 0}, {"n": "Habr obecný", "x": 24.5, "y": 79, "d": 6, "h": 8, "t": "listnaty", "v": 1, "podzim": 0}, {"n": "Jasan zimnář", "x": 2.5, "y": 47.0, "d": 6, "h": 7, "t": "listnaty", "v": 1, "podzim": 0}, {"n": "Jasan zimnář", "x": 2.5, "y": 57.0, "d": 6, "h": 7, "t": "listnaty", "v": 1, "podzim": 0}, {"n": "Moruše bílá", "x": 16.0, "y": 76.5, "d": 7, "h": 8, "t": "listnaty", "v": 1, "podzim": 0}, {"n": "Dřín obecný", "x": 24.8, "y": 68.0, "d": 4, "h": 5, "t": "listnaty", "v": 1, "podzim": 0}, {"n": "Oskeruše", "x": 14.0, "y": 92.0, "d": 7, "h": 8, "t": "listnaty", "v": 0, "podzim": 0}, {"n": "Muchovník Lamarckův", "x": 2.5, "y": 67.0, "d": 4, "h": 5, "t": "listnaty", "v": 1, "podzim": 0}, {"n": "Líska obecná", "x": 25.0, "y": 86.0, "d": 5, "h": 4.5, "t": "listnaty", "v": 1, "podzim": 0}, {"n": "Javor babyka", "x": 21.5, "y": 8.0, "d": 6, "h": 9, "t": "listnaty", "v": 1, "podzim": 0}, {"n": "Javor ginnala", "x": 16.0, "y": 53.0, "d": 5, "h": 6, "t": "listnaty", "v": 1, "podzim": 1}]};
+const ZONY={"A": {"nazev": "Užitek blízko, oheň dál", "myslenka": "Práce hned nad nájezdem, kam se dá dojet s kolečkem. Oheň a posezení až dál, jako cíl procházky.", "zony": [{"nazev": "vjezd a předzahrádka", "typ": "provoz", "x": [15.5, 26], "y": [1, 23], "plocha_m2": 231, "poznamka": "stání pro auto, popelnice vpravo u domu, trvalky, clona od ulice"}, {"nazev": "předzahrádka a trvalky", "typ": "pobyt", "x": [11, 26], "y": [23, 30.5], "plocha_m2": 112, "poznamka": "to, co vidíme při příjezdu; trvalky u domu"}, {"nazev": "pobyt za terasou", "typ": "pobyt", "x": [10.5, 26], "y": [45, 51.1], "plocha_m2": 95, "poznamka": "navazuje na terasu, končí u terénního skoku"}, {"nazev": "trávník na hraní (teď)", "typ": "hra", "x": [3, 10.5], "y": [30, 51.1], "plocha_m2": 158, "poznamka": "na P2 vedle domu – na dohled, dokud je dítě malé"}, {"nazev": "užitková zahrada", "typ": "uzitek", "x": [10.5, 19.9], "y": [51.1, 66], "plocha_m2": 140, "poznamka": "vyvýšené záhony, skleník, kompost – hned nad nájezdem, blízko vody"}, {"nazev": "zázemí domku", "typ": "provoz", "x": [19.9, 26], "y": [51.1, 60], "plocha_m2": 54, "poznamka": "domek, venkovní sprcha, sušák"}, {"nazev": "ohniště a posezení", "typ": "ohen", "x": [13, 24], "y": [66, 76], "plocha_m2": 110, "poznamka": "společenský střed, 16 m od domku"}, {"nazev": "jedlý kout", "typ": "uzitek", "x": [3, 13], "y": [66, 80], "plocha_m2": 140, "poznamka": "maliny, ostružiny, rybíz – při západní straně"}, {"nazev": "skryté zákoutí", "typ": "klid", "x": [3, 10], "y": [80, 89], "plocha_m2": 63, "poznamka": "lavička nebo hamaka mimo dohled z domu"}, {"nazev": "sad a kopeček", "typ": "sad", "x": [13, 26], "y": [76, 89], "plocha_m2": 169, "poznamka": "stávající ovocné stromy a kopeček s jabloní a hrušní"}, {"nazev": "louka a clona u pole", "typ": "louka", "x": [0, 26], "y": [89, 97.9], "plocha_m2": 231, "poznamka": "setá louka, val se šeříky a bezem, případně slepice"}]}, "B": {"nazev": "Oheň hned u domku, užitek dál", "myslenka": "Společenská část hned nad skokem u domku, kde je zázemí. Práce se odsune výš.", "zony": [{"nazev": "vjezd a předzahrádka", "typ": "provoz", "x": [15.5, 26], "y": [1, 23], "plocha_m2": 231, "poznamka": "stání pro auto, popelnice vpravo u domu, trvalky, clona od ulice"}, {"nazev": "předzahrádka a trvalky", "typ": "pobyt", "x": [11, 26], "y": [23, 30.5], "plocha_m2": 112, "poznamka": "to, co vidíme při příjezdu; trvalky u domu"}, {"nazev": "pobyt za terasou", "typ": "pobyt", "x": [10.5, 26], "y": [45, 51.1], "plocha_m2": 95, "poznamka": "navazuje na terasu, končí u terénního skoku"}, {"nazev": "trávník na hraní (teď)", "typ": "hra", "x": [3, 10.5], "y": [30, 51.1], "plocha_m2": 158, "poznamka": "na P2 vedle domu – na dohled, dokud je dítě malé"}, {"nazev": "ohniště a posezení", "typ": "ohen", "x": [10.5, 19.9], "y": [51, 63], "plocha_m2": 113, "poznamka": "hned za skokem u domku – zázemí po ruce, kratší nošení"}, {"nazev": "zázemí domku", "typ": "provoz", "x": [19.9, 26], "y": [51.1, 60], "plocha_m2": 54, "poznamka": "domek, venkovní sprcha, sušák"}, {"nazev": "trávník na hraní (později)", "typ": "hra", "x": [3, 13], "y": [63, 80], "plocha_m2": 170, "poznamka": "velká plocha na běhání, až dítě povyroste"}, {"nazev": "užitková zahrada", "typ": "uzitek", "x": [13, 22], "y": [64, 78], "plocha_m2": 126, "poznamka": "vyvýšené záhony, skleník, kompost"}, {"nazev": "jedlý kout", "typ": "uzitek", "x": [22, 26], "y": [60, 78], "plocha_m2": 72, "poznamka": "pruh malin a ostružin podél východní hranice"}, {"nazev": "skryté zákoutí", "typ": "klid", "x": [3, 10], "y": [80, 89], "plocha_m2": 63, "poznamka": "lavička nebo hamaka mimo dohled z domu"}, {"nazev": "sad a kopeček", "typ": "sad", "x": [13, 26], "y": [78, 89], "plocha_m2": 143, "poznamka": "stávající ovocné stromy a kopeček"}, {"nazev": "louka a clona u pole", "typ": "louka", "x": [0, 26], "y": [89, 97.9], "plocha_m2": 231, "poznamka": "setá louka, val se šeříky a bezem, případně slepice"}]}, "C": {"nazev": "Podélné pruhy – provoz vs. klid", "myslenka": "Všechna práce a doprava při západní straně, klidová a společenská část na východě u domku.", "zony": [{"nazev": "vjezd a předzahrádka", "typ": "provoz", "x": [15.5, 26], "y": [1, 23], "plocha_m2": 231, "poznamka": "stání pro auto, popelnice vpravo u domu, trvalky, clona od ulice"}, {"nazev": "předzahrádka a trvalky", "typ": "pobyt", "x": [11, 26], "y": [23, 30.5], "plocha_m2": 112, "poznamka": "to, co vidíme při příjezdu; trvalky u domu"}, {"nazev": "pobyt za terasou", "typ": "pobyt", "x": [10.5, 26], "y": [45, 51.1], "plocha_m2": 95, "poznamka": "navazuje na terasu, končí u terénního skoku"}, {"nazev": "trávník na hraní (teď)", "typ": "hra", "x": [3, 10.5], "y": [30, 51.1], "plocha_m2": 158, "poznamka": "na P2 vedle domu – na dohled, dokud je dítě malé"}, {"nazev": "provozní pruh", "typ": "uzitek", "x": [3, 13], "y": [51.1, 80], "plocha_m2": 289, "poznamka": "cesta, záhony, skleník, kompost, jedlý kout – všechna práce při západní straně"}, {"nazev": "zázemí domku", "typ": "provoz", "x": [19.9, 26], "y": [51.1, 60], "plocha_m2": 54, "poznamka": "domek, venkovní sprcha, sušák"}, {"nazev": "ohniště a posezení", "typ": "ohen", "x": [14, 26], "y": [62, 74], "plocha_m2": 144, "poznamka": "klidová strana – oheň i posezení stranou od provozu"}, {"nazev": "trávník na hraní (později)", "typ": "hra", "x": [13, 26], "y": [51.1, 62], "plocha_m2": 142, "poznamka": "rovná plocha hned nad skokem, na dohled od domku"}, {"nazev": "skryté zákoutí", "typ": "klid", "x": [3, 10], "y": [80, 89], "plocha_m2": 63, "poznamka": "lavička nebo hamaka mimo dohled z domu"}, {"nazev": "sad a kopeček", "typ": "sad", "x": [13, 26], "y": [74, 89], "plocha_m2": 195, "poznamka": "stávající ovocné stromy a kopeček"}, {"nazev": "louka a clona u pole", "typ": "louka", "x": [0, 26], "y": [89, 97.9], "plocha_m2": 231, "poznamka": "setá louka, val se šeříky a bezem, případně slepice"}]}, "D": {"nazev": "Naše varianta", "doporucena": true, "myslenka": "Ohniště ve středu zahrady, užitková zahrada při východní hranici hned nad domkem. Trávník na hraní dvakrát: vedle domu na P2 a vedle domku. Vedlejší pozemek osázený, se skrytým zákoutím a hamakou.", "zony": [{"nazev": "vjezd a předzahrádka", "typ": "provoz", "x": [15.5, 26], "y": [1, 23], "plocha_m2": 231, "poznamka": "stání pro auto (později carport vpravo od cesty), popelnice u domu vpravo, trvalky, clona od ulice"}, {"nazev": "předzahrádka a trvalky", "typ": "pobyt", "x": [11, 26], "y": [23, 30.5], "plocha_m2": 112, "poznamka": "to, co vidíme při příjezdu"}, {"nazev": "pobyt za terasou", "typ": "pobyt", "x": [10.5, 26], "y": [45, 51.1], "plocha_m2": 95, "poznamka": "navazuje na terasu, končí u terénního skoku"}, {"nazev": "trávník na hraní", "typ": "hra", "x": [3, 10.5], "y": [30, 51.1], "plocha_m2": 158, "poznamka": "P2 vedle domu – na dohled, dokud je dítě malé"}, {"nazev": "cesta a doprovodné trvalky", "typ": "provoz", "x": [10.5, 14], "y": [51.1, 64], "plocha_m2": 45, "poznamka": "navazuje na nájezd; pojezdná část končí u hrany skoku"}, {"nazev": "trávník u domku", "typ": "hra", "x": [14, 19.9], "y": [51.1, 62], "plocha_m2": 64, "poznamka": "druhá herní plocha, na dohled od domku"}, {"nazev": "zázemí domku", "typ": "provoz", "x": [19.9, 26], "y": [51.1, 62], "plocha_m2": 66, "poznamka": "domek, venkovní sprcha, sušák"}, {"nazev": "užitková zahrada", "typ": "uzitek", "x": [20, 26], "y": [61.1, 73.7], "plocha_m2": 76, "poznamka": "Vyvýšené záhony, skleník a kompost mezi domkem a jižní patou kopečku. Posunuto 27. 8. 2026 – původní poloha zasahovala do skutečného kopečku."}, {"nazev": "výsadby a jedlý kout", "typ": "uzitek", "x": [3, 10.5], "y": [51.1, 78], "plocha_m2": 202, "poznamka": "P2 – stromy, keře, květiny, maliny a ostružiny"}, {"nazev": "ohniště a posezení", "typ": "ohen", "x": [11.5, 17], "y": [62, 70], "plocha_m2": 44, "poznamka": "Uprostřed horní zahrady, 7 m od domku a 4,8 m od záhonů; z ohniště je výhled na kopeček."}, {"nazev": "skryté zákoutí", "typ": "klid", "x": [3, 10.5], "y": [74, 86], "plocha_m2": 90, "poznamka": "P2 – hamaka a houpačky jižně od koruny třešně, mimo dohled z domu."}, {"nazev": "sad a kopeček", "typ": "sad", "x": [14.5, 24.5], "y": [73, 86], "plocha_m2": 130, "poznamka": "Změřený kopeček (elipsa 8,7 × 12,1 m) s hrušní a jabloní."}, {"nazev": "louka a clona u pole", "typ": "louka", "x": [0, 26], "y": [89, 97.9], "plocha_m2": 231, "poznamka": "setá louka, val se šeříky a bezem, 6 ovocných stromů, případně slepice"}, {"nazev": "trvalky u kopečku", "typ": "pobyt", "x": [10.5, 14.5], "y": [70, 80], "plocha_m2": 40, "poznamka": "Zmenšeno – původní obdélník X 12–19,5 / Y 78–88 z velké části leží na skutečném kopečku. K přepracování."}], "poznamka_2026_08_27": "Zóny upraveny po zaměření kopečku, louky a stromů. Rozvržení zón je hrubá vrstva – po přesunu prvků je potřeba ji celou přebrat, hlavně trvalkové plochy kolem kopečku."}};
+const KAT=[
+ {id:"ohniste-c",n:"Ohniště čtvercové 4×4 m",s:"ohniště",sk:"Posezení",w:4,h:4,sym:"ohnisteC"},
+ {id:"ohniste-k",n:"Ohniště kruhové ⌀ 4 m",s:"ohniště",sk:"Posezení",w:4,h:4,sym:"ohnisteK"},
+ {id:"pergola",n:"Pergola 4×4 m (6–8 osob)",s:"pergola",sk:"Posezení",w:4,h:4,sym:"pergola"},
+ {id:"terasa-p",n:"Terasa 3×4 m (6–8 osob)",s:"terasa",sk:"Posezení",w:3,h:4,sym:"terasaP"},
+ {id:"altan",n:"Altán 3×3 m (3–4 osoby)",s:"altán",sk:"Posezení",w:3,h:3,sym:"altan"},
+ {id:"lavicka",n:"Lavička 1,5×0,5 m",s:"lavička",sk:"Posezení",w:1.5,h:.5,sym:"lavicka"},
+ {id:"kuchyne",n:"Venkovní kuchyně 3×1 m",s:"kuchyně",sk:"Posezení",w:3,h:1,sym:"kuchyne"},
+ {id:"bazen",n:"Bazén – vodní plocha 8×4 m",s:"bazén",sk:"Voda",w:8,h:4,sym:"bazen"},
+ {id:"jezero",n:"Koupací jezero 3,5×6 m",s:"jezero",sk:"Voda",w:3.5,h:6,sym:"jezero"},
+ {id:"poklop",n:"Technologie bazénu 1,2×1,2 m",s:"technologie",sk:"Voda",w:1.2,h:1.2,sym:"poklop"},
+ {id:"zastreseni",n:"Zastřešení bazénu 3×5 m",s:"zastřešení",sk:"Voda",w:3,h:5,sym:"zastreseni"},
+ {id:"zahony3",n:"Vyvýšené záhony 5,6×3 m",s:"záhony",sk:"Užitek",w:5.6,h:3,sym:"zahony3"},
+ {id:"zahony4",n:"Vyvýšené záhony 4,8×4,8 m",s:"záhony",sk:"Užitek",w:4.8,h:4.8,sym:"zahony4"},
+ {id:"sklenik",n:"Skleník 4×2 m",s:"skleník",sk:"Užitek",w:4,h:2,sym:"domek"},
+ {id:"kulna",n:"Kůlna 4×2 m",s:"kůlna",sk:"Užitek",w:4,h:2,sym:"domek"},
+ {id:"drevnik",n:"Dřevník 4×0,7 m",s:"dřevník",sk:"Užitek",w:4,h:.7,sym:"drevnik"},
+ {id:"kompost2",n:"Kompostér dvoukomorový 2×1 m",s:"kompost",sk:"Užitek",w:2,h:1,sym:"kompost2"},
+ {id:"kompost3",n:"Kompostér tříkomorový 3×1 m",s:"kompost",sk:"Užitek",w:3,h:1,sym:"kompost3"},
+ {id:"pisk-ram",n:"Pískoviště s trámovým rámem 4×3 m",s:"pískoviště",sk:"Hra",w:4,h:3,sym:"piskRam"},
+ {id:"pisk-k",n:"Pískoviště kruhové ⌀ 3 m",s:"pískoviště",sk:"Hra",w:3,h:3,sym:"piskK"},
+ {id:"pisk-c",n:"Pískoviště čtvercové 3×3 m",s:"pískoviště",sk:"Hra",w:3,h:3,sym:"piskC"},
+ {id:"prulezka",n:"Lanová průlezka 4×3 m",s:"průlezka",sk:"Hra",w:4,h:3,sym:"prulezka"},
+ {id:"domek-deti",n:"Domek pro děti 2×2 m",s:"dětský domek",sk:"Hra",w:2,h:2,sym:"domek"},
+ {id:"vrba",n:"Vrbová stavba ⌀ 2 m",s:"vrbová stavba",sk:"Hra",w:2,h:2,sym:"vrba"},
+ {id:"strom-v",n:"Strom listnatý velký ⌀ 4 m",s:"strom",sk:"Zeleň",w:4,h:4,sym:"strom"},
+ {id:"strom-m",n:"Strom listnatý malý ⌀ 2 m",s:"strom",sk:"Zeleň",w:2,h:2,sym:"strom"},
+ {id:"jehlicnan",n:"Strom jehličnatý ⌀ 4 m",s:"jehličnan",sk:"Zeleň",w:4,h:4,sym:"jehlicnan"},
+ {id:"ker",n:"Keř kulatý ⌀ 1 m",s:"keř",sk:"Zeleň",w:1,h:1,sym:"ker"},
+ {id:"carport-k",n:"Carport kolmý 5×2,5 m",s:"carport",sk:"Auto",w:5,h:2.5,sym:"carport"},
+ {id:"carport-s",n:"Carport šikmý 6,5×2,5 m",s:"carport",sk:"Auto",w:6.5,h:2.5,sym:"carport"},
+];
+const SW={"stroke-width":1.3,"vector-effect":"non-scaling-stroke"};
+const rc=(x,y,w,h,a={})=>el("rect",Object.assign({x,y,width:w,height:h},SW,a));
+const ci=(x,y,r,a={})=>el("circle",Object.assign({cx:x,cy:y,r},SW,a));
+const ln=(x1,y1,x2,y2,a={})=>el("line",Object.assign({x1,y1,x2,y2},SW,a));
+const plocha={fill:"var(--paving)","fill-opacity":.85,stroke:"var(--build-line)"};
+const stavba={fill:"var(--build)","fill-opacity":.9,stroke:"var(--build-line)"};
+const voda={fill:"var(--water)","fill-opacity":.45,stroke:"var(--water)"};
+const zelen={fill:"var(--tree)","fill-opacity":.3,stroke:"var(--tree)"};
+function stul(w,h){ // stul + zidle kolem
+  const o=[rc(-w/2,-h/2,w,h,{fill:"var(--build-line)","fill-opacity":.35,stroke:"var(--build-line)"})];
+  for(const sx of[-1,1]) for(const t of[-.6,0,.6])
+    o.push(rc(sx*(w/2+.15)-(sx<0?.5:0),t*h/2-.25,.5,.5,{fill:"none",stroke:"var(--build-line)"}));
+  return o;
+}
+const SYM={
+ box:k=>[rc(-k.w/2,-k.h/2,k.w,k.h,stavba)],
+ ohnisteC:k=>[rc(-2,-2,4,4,plocha),ci(0,0,.75,{fill:"var(--fire)","fill-opacity":.5,stroke:"var(--fire)"}),
+   rc(-1.9,-1.75,1.5,.45,{fill:"none",stroke:"var(--build-line)"}),
+   rc(.4,-1.75,1.5,.45,{fill:"none",stroke:"var(--build-line)"}),
+   rc(-1.9,1.3,1.5,.45,{fill:"none",stroke:"var(--build-line)"}),
+   rc(.4,1.3,1.5,.45,{fill:"none",stroke:"var(--build-line)"})],
+ ohnisteK:k=>{const o=[ci(0,0,2,plocha),ci(0,0,.75,{fill:"var(--fire)","fill-opacity":.5,stroke:"var(--fire)"})];
+   for(let i=0;i<4;i++){const a=i*Math.PI/2+Math.PI/4;
+     const g=el("g",{transform:`rotate(${a*180/Math.PI}) translate(0,-1.5)`});
+     g.appendChild(rc(-.7,-.22,1.4,.44,{fill:"none",stroke:"var(--build-line)"}));o.push(g);}
+   return o;},
+ pergola:k=>[rc(-2,-2,4,4,plocha),
+   ...[[-2,-2],[2,-2],[-2,2],[2,2]].map(([x,y])=>ci(x*.92,y*.92,.22,{fill:"var(--build-line)"})),
+   ...stul(1.8,.9)],
+ terasaP:k=>[rc(-1.5,-2,3,4,plocha),...stul(1.8,.9)],
+ altan:k=>[rc(-1.5,-1.5,3,3,plocha),ln(-1.5,-1.5,1.5,1.5,{stroke:"var(--build-line)",opacity:.5}),
+   ln(1.5,-1.5,-1.5,1.5,{stroke:"var(--build-line)",opacity:.5}),
+   ci(0,0,.6,{fill:"var(--build-line)","fill-opacity":.35,stroke:"var(--build-line)"})],
+ lavicka:k=>[rc(-.75,-.25,1.5,.5,{fill:"var(--build)",stroke:"var(--build-line)"})],
+ kuchyne:k=>[rc(-1.5,-.5,3,1,stavba),ci(-.6,0,.22,{fill:"none",stroke:"var(--fire)"}),
+   ci(0,0,.22,{fill:"none",stroke:"var(--fire)"}),rc(.7,-.3,.6,.6,{fill:"none",stroke:"var(--build-line)"})],
+ bazen:k=>[rc(-4,-2,8,4,voda),rc(-4.6,-2.6,9.2,5.2,{fill:"none",stroke:"var(--build-line)","stroke-dasharray":"4 3"})],
+ jezero:k=>[el("ellipse",Object.assign({cx:0,cy:0,rx:1.75,ry:3},voda)),
+   rc(-.5,-3.4,1,1.2,{fill:"var(--build)",stroke:"var(--build-line)"})],
+ poklop:k=>[rc(-.6,-.6,1.2,1.2,{fill:"var(--build)",stroke:"var(--build-line)"})],
+ zastreseni:k=>[rc(-1.5,-2.5,3,5,{fill:"var(--water)","fill-opacity":.15,stroke:"var(--water)","stroke-dasharray":"4 3"})],
+ zahony3:k=>[rc(-2.8,-1.5,5.6,3,plocha),rc(-2.5,-.5,2,1,zelen),rc(-.5,-.5,2,1,zelen),rc(1.5,-.5,1,1,zelen)],
+ zahony4:k=>[rc(-2.4,-2.4,4.8,4.8,plocha),rc(-2,-2,1.5,1.5,zelen),rc(.5,-2,1.5,1.5,zelen),
+   rc(-2,.5,1.5,1.5,zelen),rc(.5,.5,1.5,1.5,zelen)],
+ domek:k=>[rc(-k.w/2,-k.h/2,k.w,k.h,stavba),ln(-k.w/2,-k.h/2,k.w/2,k.h/2,{stroke:"var(--build-line)",opacity:.45})],
+ drevnik:k=>[rc(-2,-.35,4,.7,stavba),ln(-1,-.35,-1,.35,{stroke:"var(--build-line)",opacity:.5}),
+   ln(0,-.35,0,.35,{stroke:"var(--build-line)",opacity:.5}),ln(1,-.35,1,.35,{stroke:"var(--build-line)",opacity:.5})],
+ kompost2:k=>[rc(-1,-.5,2,1,stavba),ln(0,-.5,0,.5,{stroke:"var(--build-line)"})],
+ kompost3:k=>[rc(-1.5,-.5,3,1,stavba),ln(-.5,-.5,-.5,.5,{stroke:"var(--build-line)"}),
+   ln(.5,-.5,.5,.5,{stroke:"var(--build-line)"})],
+ piskK:k=>[ci(0,0,1.5,{fill:"var(--meadow)","fill-opacity":.5,stroke:"var(--meadow-line)"})],
+ piskC:k=>[rc(-1.5,-1.5,3,3,{fill:"var(--meadow)","fill-opacity":.5,stroke:"var(--meadow-line)"})],
+ piskRam:k=>[rc(-2,-1.5,4,3,{fill:"#9c7a4e","fill-opacity":.55,stroke:"#8a6a44","stroke-width":2}),
+   rc(-1.75,-1.25,3.5,2.5,{fill:"#ded0ac",stroke:"none"})],
+ prulezka:k=>[el("polygon",Object.assign({points:"-2,1.5 0,-1.5 2,1.5",fill:"var(--play)",
+   "fill-opacity":.22,stroke:"var(--play)"},SW)),ci(-2,1.5,.2,{fill:"var(--play)"}),
+   ci(0,-1.5,.2,{fill:"var(--play)"}),ci(2,1.5,.2,{fill:"var(--play)"})],
+ vrba:k=>{const o=[ci(0,0,1,{fill:"var(--play)","fill-opacity":.25,stroke:"var(--play)"})];
+   for(let i=0;i<8;i++){const a=i*Math.PI/4;o.push(ln(0,0,Math.cos(a),Math.sin(a),{stroke:"var(--play)",opacity:.6}));}
+   return o;},
+ strom:k=>[ci(0,0,k.w/2,zelen),ci(0,0,.18,{fill:"var(--tree)"})],
+ jehlicnan:k=>{const o=[];const r=k.w/2,pts=[];
+   for(let i=0;i<12;i++){const a=i*Math.PI/6, rr=i%2?r*.72:r;pts.push(`${(Math.cos(a)*rr).toFixed(2)},${(Math.sin(a)*rr).toFixed(2)}`);}
+   o.push(el("polygon",Object.assign({points:pts.join(" ")},zelen,SW)));
+   o.push(ci(0,0,.18,{fill:"var(--tree)"}));return o;},
+ ker:k=>[ci(0,0,.5,{fill:"var(--tree)","fill-opacity":.22,stroke:"var(--tree)"})],
+ carport:k=>[rc(-k.w/2,-k.h/2,k.w,k.h,{fill:"var(--paving)","fill-opacity":.6,
+   stroke:"var(--build-line)","stroke-dasharray":"5 3"}),
+   rc(-k.w/2+.4,-k.h/2+.35,k.w-.8,k.h-.7,{fill:"none",stroke:"var(--build-line)",opacity:.5})],
+};
+const katById=id=>KAT.find(k=>k.id===id);
+
+/* --- dropdown --- */
+(()=>{
+  const sel=document.getElementById("kat"); const sk=[...new Set(KAT.map(k=>k.sk))];
+  sk.forEach(g=>{const og=document.createElement("optgroup");og.label=g;
+    KAT.filter(k=>k.sk===g).forEach(k=>{const o=document.createElement("option");
+      o.value=k.id;o.textContent=k.n;og.appendChild(o);});
+    sel.appendChild(og);});
+})();
+
+/* --- vykresleni prvku --- */
+function renderItems(){
+  const g=layers.prvky.g; g.textContent="";
+  items.forEach((it,i)=>{
+    const k=katById(it.id); if(!k) return;
+    const gi=el("g",{class:"item"+(i===selItem?" sel":"")+(it.lock?" lock":""),"data-i":i,
+      transform:`translate(${it.x},${sy(it.y)}) rotate(${it.rot||0})`});
+    gi.appendChild(rc(-k.w/2-.3,-k.h/2-.3,k.w+.6,k.h+.6,{fill:"transparent",stroke:"none"}));
+    (SYM[k.sym]||SYM.box)(k).forEach(e=>gi.appendChild(e));
+    if(i===selItem)
+      gi.appendChild(rc(-k.w/2-.35,-k.h/2-.35,k.w+.7,k.h+.7,
+        {fill:"none",stroke:"var(--accent)","stroke-dasharray":"4 3"}));
+    if(it.lock)
+      gi.appendChild(rc(-k.w/2,-k.h/2,k.w,k.h,
+        {fill:"none",stroke:"var(--ink-3)","stroke-width":2.4,opacity:.55}));
+    const t=el("text",{y:k.h/2+1.5,"font-size":1.3,fill:"var(--ink-2)","text-anchor":"middle",
+      "font-family":"Barlow Condensed, sans-serif"});
+    t.textContent=(it.lock?"🔒 ":"")+k.s; gi.appendChild(t);
+    g.appendChild(gi);
+  });
+  const lb=document.getElementById("lock-sel");
+  if(lb) lb.textContent=(selItem>=0&&items[selItem]&&items[selItem].lock)?"Odemknout":"Zamknout";
+  const box=document.getElementById("items"); box.textContent="";
+  document.getElementById("items-empty").style.display=items.length?"none":"";
+  document.getElementById("itembar").hidden=!items.length;
+  items.forEach((it,i)=>{
+    const k=katById(it.id); if(!k) return;
+    const row=document.createElement("div");
+    row.className="item-row"+(i===selItem?" sel":"")+(it.lock?" lock":"");
+    row.onclick=e=>{if(e.target.tagName!=="BUTTON"){selItem=i;renderItems();}};
+    const nm=document.createElement("span");nm.textContent=k.n;row.appendChild(nm);
+    const lk=document.createElement("button");lk.className="lockbtn";
+    lk.textContent=it.lock?"🔒":"🔓";lk.title=it.lock?"Odemknout":"Zamknout proti posunu";
+    lk.setAttribute("aria-pressed",it.lock?"true":"false");
+    lk.onclick=()=>{it.lock=!it.lock;renderItems();save();};row.appendChild(lk);
+    const rot=document.createElement("button");rot.textContent="↻";rot.title=
+      it.lock?"Nejdřív odemkni":"Otočit o 15°";rot.disabled=!!it.lock;
+    rot.onclick=()=>{if(it.lock)return;it.rot=((it.rot||0)+15)%360;renderItems();save();};
+    row.appendChild(rot);
+    const del=document.createElement("button");del.textContent="×";del.title="Odebrat";
+    del.onclick=()=>{items.splice(i,1);if(selItem>=items.length)selItem=-1;renderItems();save();};
+    row.appendChild(del);
+    const pos=document.createElement("span");pos.className="pos";
+    pos.style.whiteSpace="pre-line";
+    pos.textContent=`X ${fmt(it.x)} · Y ${fmt(it.y)}`+(it.rot?` · ${it.rot}°`:"");
+    if(i===selItem){const v=volnoKolem(it);
+      if(v){
+        const br=document.createElement("span");br.textContent="\nzbývá  ";pos.appendChild(br);
+        [["◀",v.vlevo],["▶",v.vpravo],["▲",v.sever]].forEach(([sym,val])=>{
+          const sp=document.createElement("span");
+          sp.textContent=` ${sym} ${fmt(val)} `;
+          if(val<0){sp.style.color="var(--fire)";sp.style.fontWeight="500";}
+          pos.appendChild(sp);});
+        const mm=document.createElement("span");mm.textContent=" m";pos.appendChild(mm);
+        if(v.vlevo<0||v.vpravo<0){
+          const w=document.createElement("span");w.style.color="var(--fire)";
+          w.textContent="\npřesahuje hranici pozemku";pos.appendChild(w);}
+      }}
+    row.appendChild(pos);
+    box.appendChild(row);
+  });
+}
+document.getElementById("lock-all").onclick=()=>{items.forEach(i=>i.lock=true);renderItems();save();};
+document.getElementById("unlock-all").onclick=()=>{items.forEach(i=>i.lock=false);renderItems();save();};
+document.getElementById("del-unlocked").onclick=()=>{
+  const b=document.getElementById("del-unlocked");
+  const zbyde=items.filter(i=>i.lock);
+  if(zbyde.length===items.length){b.textContent="Vše zamčené";
+    setTimeout(()=>b.textContent="Odebrat odemčené",1600);return;}
+  items=zbyde;selItem=-1;renderItems();save();
+};
+document.getElementById("lock-sel").onclick=()=>{
+  const b=document.getElementById("lock-sel");
+  if(selItem<0){b.textContent="Vyber prvek";setTimeout(()=>b.textContent="Zamknout",1600);return;}
+  items[selItem].lock=!items[selItem].lock;renderItems();save();
+};
+document.getElementById("add").onclick=()=>{
+  const id=document.getElementById("kat").value;
+  const x=Math.round((view.x+view.w/2)*10)/10;
+  let y=Math.round((YMAX-(view.y+view.h/2))*10)/10;
+  while(items.some(it=>Math.abs(it.x-x)<.6&&Math.abs(it.y-y)<.6)) y=Math.round((y-2.5)*10)/10;
+  items.push({id,x,y,rot:0}); selItem=items.length-1; renderItems(); save();
+};
+addEventListener("keydown",e=>{
+  if(selItem<0||["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName))return;
+  const it=items[selItem]; if(!it) return;
+  if(e.key==="l"||e.key==="L"){it.lock=!it.lock;renderItems();save();}
+  if((e.key==="r"||e.key==="R")&&!it.lock){
+    it.rot=(((it.rot||0)+(e.shiftKey?-15:15))%360+360)%360;renderItems();save();}
+  if((e.key==="Backspace"||e.key==="Delete")&&!it.lock){
+    items.splice(selItem,1);selItem=-1;renderItems();save();e.preventDefault();}
+});
+
+/* --- vykresleni --- */
+function drawPreview(){
+  const g=layers.tvary.g;
+  g.querySelector("#preview")?.remove();
+  g.appendChild(el("polyline",{id:"preview",points:pts(drawing),fill:"none",
+    stroke:"var(--accent)","stroke-width":1.6,"stroke-linecap":"round","stroke-linejoin":"round",
+    opacity:.65,"vector-effect":"non-scaling-stroke"}));
+}
+function render(){
+  renderItems();
+  const gs=layers.tvary.g;gs.textContent="";
+  shapes.forEach((sh,i)=>{
+    const d=pts(sh.pts);
+    gs.appendChild(el(sh.closed?"polygon":"polyline",{points:d,
+      fill:sh.closed?sh.color:"none","fill-opacity":sh.closed?.16:0,
+      stroke:sh.color,"stroke-width":2,"stroke-dasharray":"7 4",
+      "stroke-linecap":"round","stroke-linejoin":"round","vector-effect":"non-scaling-stroke"}));
+    const c=sh.pts.reduce((a,p)=>[a[0]+p[0]/sh.pts.length,a[1]+p[1]/sh.pts.length],[0,0]);
+    const t=el("text",{x:c[0],y:sy(c[1]),"font-size":2,fill:sh.color,"text-anchor":"middle",
+      "font-family":"Barlow Condensed, sans-serif","font-weight":500});
+    t.textContent=sh.name||String(i+1);gs.appendChild(t);
+  });
+
+  const g=layers.body.g;g.textContent="";
+  if(pins.length>1)
+    g.appendChild(el("polyline",{points:pts(pins.map(p=>[p.x,p.y])),fill:"none",stroke:"var(--accent)",
+      "stroke-width":1.2,"stroke-dasharray":"5 3","vector-effect":"non-scaling-stroke"}));
+  pins.forEach((p,i)=>{
+    g.appendChild(el("circle",{cx:p.x,cy:sy(p.y),r:.85,fill:"var(--accent)"}));
+    const t=el("text",{x:p.x+1.4,y:sy(p.y)+.6,"font-size":2,fill:"var(--accent)",
+      "font-family":"IBM Plex Mono, monospace"});t.textContent=i+1;g.appendChild(t);
+  });
+
+  const ul=document.getElementById("pins");ul.textContent="";
+  document.getElementById("pins-empty").style.display=pins.length?"none":"";
+  pins.forEach((p,i)=>{
+    const d=i?Math.hypot(p.x-pins[i-1].x,p.y-pins[i-1].y):0;
+    const li=document.createElement("li");
+    li.innerHTML=`<b>${i+1}</b><span>X ${fmt(p.x)} &nbsp; Y ${fmt(p.y)}</span>`+(i?`<em>+${fmt(d)} m</em>`:"");
+    ul.appendChild(li);
+  });
+
+  const box=document.getElementById("shapes");box.textContent="";
+  document.getElementById("shapes-empty").style.display=shapes.length?"none":"";
+  document.getElementById("exp").hidden=!shapes.length&&!items.length;
+  shapes.forEach((sh,i)=>{
+    const row=document.createElement("div");row.className="shape";
+    const dot=document.createElement("span");dot.className="dot";
+    dot.style.background=sh.closed?sh.color:"transparent";
+    dot.style.border="2px solid "+sh.color;row.appendChild(dot);
+    const inp=document.createElement("input");
+    inp.value=sh.name;inp.placeholder="tvar "+(i+1);
+    inp.oninput=()=>{sh.name=inp.value;save();
+      const t=layers.tvary.g.querySelectorAll("text")[i];if(t)t.textContent=sh.name||String(i+1);};
+    row.appendChild(inp);
+    const meta=document.createElement("span");meta.className="meta";
+    meta.textContent=sh.closed?`${Math.round(shapeArea(sh))} m²`:`${fmt(shapeLen(sh))} m`;
+    row.appendChild(meta);
+    const del=document.createElement("button");del.textContent="×";del.title="Smazat tvar";
+    del.onclick=()=>{shapes.splice(i,1);render();save();};
+    row.appendChild(del);
+    const xs=sh.pts.map(q=>q[0]), ys=sh.pts.map(q=>q[1]);
+    const rng=document.createElement("span");rng.className="range";
+    rng.textContent=`X ${fmt(Math.min(...xs))}–${fmt(Math.max(...xs))} · `+
+                    `Y ${fmt(Math.min(...ys))}–${fmt(Math.max(...ys))}`;
+    row.appendChild(rng);
+    box.appendChild(row);
+  });
+  document.getElementById("exp-json").value=exportText();
+}
+function exportText(){
+  const n=v=>String(+v.toFixed(1));
+  const prvky=items.map(it=>{const k=katById(it.id);
+    return `${k.n}  →  střed X ${n(it.x)} / Y ${n(it.y)}`+(it.rot?`, otočeno ${it.rot}°`:"");});
+  const nacrty=shapes.map((sh,i)=>{
+    const xs=sh.pts.map(q=>q[0]), ys=sh.pts.map(q=>q[1]);
+    const b=simplify(sh.pts,sh.closed,0.45).map(q=>`[${n(q[0])}, ${n(q[1])}]`).join(" ");
+    return [`${sh.name||"náčrt "+(i+1)} — ${sh.closed?"plocha":"čára"}`,
+      sh.closed?`plocha ${Math.round(shapeArea(sh))} m², obvod ${n(shapeLen(sh))} m`
+               :`délka ${n(shapeLen(sh))} m`,
+      `rozsah  X ${n(Math.min(...xs))}–${n(Math.max(...xs))}   Y ${n(Math.min(...ys))}–${n(Math.max(...ys))}`,
+      `body    ${b}`].join("\n");
+  });
+  const A=prvky.length?"UMÍSTĚNÉ PRVKY\n"+prvky.join("\n"):"";
+  const B=nacrty.length?"NÁČRTY\n"+nacrty.join("\n\n"):"";
+  return [A,B].filter(Boolean).join("\n\n");
+}
+async function copyShapes(btn,label){
+  const ta=document.getElementById("exp-json");
+  const det=document.getElementById("exp");
+  if(!shapes.length&&!items.length){btn.textContent="Není co poslat";
+    setTimeout(()=>btn.textContent=label,1800);return;}
+  det.hidden=false;det.open=true;
+  ta.value=exportText();
+  let ok=false;
+  try{await navigator.clipboard.writeText(ta.value);ok=true;}catch(e){}
+  ta.focus();ta.select();
+  if(!ok){try{ok=document.execCommand("copy");}catch(e){}}
+  btn.textContent=ok?"Zkopírováno":"Označeno — Cmd+C";
+  setTimeout(()=>btn.textContent=label,ok?1600:3200);
+  ta.scrollIntoView({block:"nearest"});
+}
+document.getElementById("copy-top").onclick=e=>copyShapes(e.target,"Zkopírovat náčrt");
+document.getElementById("copy-shapes").onclick=async()=>{
+  copyShapes(document.getElementById("copy-shapes"),"Kopírovat");
+};
+/* ============ 3D pohled ============ */
+/* opěrná zeď může mít mezery (schody) – vrátí seznam úseků.
+   Musí být uvnitř bloku 3D, protože reporty si ten blok vyřezávají. */
+function zedUseky(zw){ return zw.useky&&zw.useky.length ? zw.useky
+                                                        : [{x_od:zw.x_od, x_do:zw.x_do}]; }
+
+const C3={az:-0.35, el:0.62, zoom:7.2, cx:13, cy:55, off:[0,0]};
+const cv=document.getElementById("scena"), ovl=document.getElementById("ovladani3d");
+let mode3d=false, ctx=null;
+
+/* --- teren --- */
+const zDol=y=> y<=22.8 ? 223.54+(y/22.8)*2.26 : 225.80+(y-22.8)/27.2*0.50;
+const zHor=y=> 227.15+(y-50)/47.9*1.30;
+function kopecek(x,y){          // elipsa prolozena sesti zmerenymi body, 1,2 m ve stredu
+  const dx=x-19.38, dy=y-79.53;
+  const u=(dx*-0.12360+dy*-0.99233)/6.07, v=(-dx*-0.99233+dy*-0.12360)/4.33;
+  const r=Math.hypot(u,v);
+  return r<1 ? 1.2*Math.cos(r*Math.PI/2) : 0;
+}
+function val(x,y){                     // zemni val na severni hranici: sirka 2,5 m, vyska 0,75 m
+  const d=Math.abs(y-96.5);
+  return d<1.25 ? 0.75*Math.cos(d/1.25*Math.PI/2) : 0;
+}
+function mez(x,y){                     // vysoka mez, kterou je prijezd prokopany
+  if(y>12) return 0;
+  const h=2.0*(1-y/12);                // 2 m u brany, k nule kolem Y 12
+  const d=Math.max(0, Math.max(16.24-x, x-19.24));   // vzdalenost od okraje cesty
+  return d<=0 ? 0 : h*Math.min(1,d/1.5);             // svah rezu 1,5 m
+}
+function vyska(x,y){
+  if(y<12) return zDol(y)+mez(x,y);
+  if(y>=50) return zHor(y)+kopecek(x,y)+val(x,y);
+  const t=Math.max(0,Math.min(1,(x-10.5)/4.4));
+  const yStart=41.5+t*8.5;                       // najezd: siroky na zapade, zadny na X 14.9
+  if(x<14.9 && y>yStart){
+    const k=(y-yStart)/(50-yStart);
+    return zDol(y)*(1-k)+zHor(50)*k;
+  }
+  return zDol(y);
+}
+/* --- povrch --- */
+function uvnitr(P,x,y){
+  let c=false;
+  for(let i=0,j=P.length-1;i<P.length;j=i++){
+    const [xi,yi]=P[i],[xj,yj]=P[j];
+    if(((yi>y)!==(yj>y)) && x<(xj-xi)*(y-yi)/(yj-yi)+xi) c=!c;
+  }
+  return c;
+}
+const vBox=(o,x,y)=>x>=o.x[0]&&x<=o.x[1]&&y>=o.y[0]&&y<=o.y[1];
+// zahon je bud obdelnik (x,y), nebo organicky tvar (p2) s obdelnikem jako rychlym filtrem
+const vZahonu=(z,x,y)=> vBox(z,x,y) && (!z.p2 || uvnitr(z.p2,x,y));
+function dSeg(x,y,a,b){
+  const dx=b[0]-a[0], dy=b[1]-a[1], L2=dx*dx+dy*dy;
+  const t=L2?Math.max(0,Math.min(1,((x-a[0])*dx+(y-a[1])*dy)/L2)):0;
+  return Math.hypot(x-(a[0]+dx*t), y-(a[1]+dy*t));
+}
+function naCeste(x,y){                 // vrati povrch cesty, nebo null
+  for(const c of CESTY){
+    const w=(c.sirka_m||1)/2;
+    for(let i=0;i<c.body.length-1;i++)
+      if(dSeg(x,y,c.body[i],c.body[i+1])<=w) return c.povrch||"mlat";
+  }
+  return null;
+}
+function povrch(x,y){
+  const c=naCeste(x,y); if(c) return c;
+  const u=D.uz.rozsah;
+  if(x>=u.x[0]&&x<=u.x[1]&&y>=u.y[0]&&y<=u.y[1]) return "sterk";
+  if(uvnitr(D.cesta,x,y)||uvnitr(D.terasa,x,y)||uvnitr(D.schody,x,y)) return "dlazba";
+  if(uvnitr(D.louka,x,y)) return "louka";
+  for(const z of VYSADBA.zahony) if(vZahonu(z,x,y)){
+    if(z.st==="louka") return "louka";
+    if(z.typ==="trvalky" && layers.trvalky.on===false) return "travnik";
+    if(z.typ!=="trvalky" && layers.kere.on===false) return "travnik";
+    return "zahon";
+  }
+  if(!uvnitr(D.p19,x,y)&&!uvnitr(D.p81,x,y)) return "okoli";
+  return "travnik";
+}
+const BARVY={travnik:[122,150,86],louka:[190,168,86],zahon:[120,132,74],
+             okoli:[158,166,140],mimo:[196,198,186]};
+for(const [n,p] of Object.entries(POVRCHY)) BARVY[n]=p.rgb3d;   // povrchy cest z dat
+const SOUSED={dum:[[29,10.5],[41.5,10.5],[41.5,23.5],[29,23.5]]};   // orientačně
+
+/* --- projekce --- */
+let VW=800, VH=600;
+function proj(x,y,z){
+  const X=x-C3.cx, Y=y-C3.cy, Z=(z-226.3);
+  const ca=Math.cos(C3.az), sa=Math.sin(C3.az);
+  const x1=X*ca-Y*sa, y1=X*sa+Y*ca;
+  const ce=Math.cos(C3.el), se=Math.sin(C3.el);
+  // svisle: sever i vyska smeruji nahoru (zaporny smer obrazovky)
+  return [VW/2+C3.off[0]+x1*C3.zoom,
+          VH/2+C3.off[1]-(y1*se+Z*ce*1.3)*C3.zoom,
+          -y1*ce+Z*se];
+}
+const barva=(rgb,f)=>{const c=rgb||BARVY.travnik;   // neznamy povrch nesmi shodit cely 3D render
+  return `rgb(${Math.round(c[0]*f)},${Math.round(c[1]*f)},${Math.round(c[2]*f)})`;};
+
+function kresli3D(){
+  if(!ctx) return;
+  const r=cv.getBoundingClientRect(), dpr=Math.min(devicePixelRatio||1,2);
+  if(cv.width!==Math.round(r.width*dpr)){cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr);}
+  const css=getComputedStyle(document.body);
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.fillStyle=css.getPropertyValue("--card")||"#F7F8F4";
+  ctx.fillRect(0,0,cv.width,cv.height);
+  ctx.scale(dpr,dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
+  const W=cv.width/dpr, H=cv.height/dpr;  VW=W; VH=H;
+  const P=[];   // {d, draw}
+
+  /* teren */
+  const KROK=2.0;
+  for(let y=-6;y<104;y+=KROK) for(let x=-10;x<44;x+=KROK){
+    const typ=povrch(x+KROK/2,y+KROK/2);
+    const rohy=[[x,y],[x+KROK,y],[x+KROK,y+KROK],[x,y+KROK]].map(([a,b])=>proj(a,b,vyska(a,b)));
+    const d=rohy.reduce((s,p)=>s+p[2],0)/4;
+    const sklon=1-Math.min(.28,Math.abs(vyska(x,y+KROK)-vyska(x,y))*.35);
+    P.push({d,draw:()=>{
+      ctx.beginPath(); ctx.moveTo(rohy[0][0],rohy[0][1]);
+      rohy.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
+      ctx.fillStyle=barva(BARVY[typ],sklon); ctx.fill();
+      ctx.strokeStyle=barva(BARVY[typ],sklon*0.94); ctx.lineWidth=.6; ctx.stroke();
+    }});
+  }
+  /* cesty – pas polozeny na teren */
+  CESTY.forEach(c=>{
+    const w=(c.sirka_m||1)/2, rgb=BARVY[c.povrch]||BARVY.mlat;
+    for(let i=0;i<c.body.length-1;i++){
+      const a=c.body[i], b=c.body[i+1];
+      const dx=b[0]-a[0], dy=b[1]-a[1], L=Math.hypot(dx,dy); if(!L) continue;
+      const nx=-dy/L*w, ny=dx/L*w, kroku=Math.max(1,Math.ceil(L/1.5));
+      for(let k=0;k<kroku;k++){
+        const t0=k/kroku, t1=(k+1)/kroku;
+        const p0=[a[0]+dx*t0,a[1]+dy*t0], p1=[a[0]+dx*t1,a[1]+dy*t1];
+        const rohy=[[p0[0]+nx,p0[1]+ny],[p1[0]+nx,p1[1]+ny],[p1[0]-nx,p1[1]-ny],[p0[0]-nx,p0[1]-ny]];
+        const q=rohy.map(e=>proj(e[0],e[1],vyska(e[0],e[1])+0.04));
+        const d=q.reduce((s2,e)=>s2+e[2],0)/4+0.03;
+        P.push({d,draw:()=>{
+          ctx.beginPath(); ctx.moveTo(q[0][0],q[0][1]); q.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath();
+          ctx.fillStyle=`rgb(${rgb})`; ctx.fill();
+          ctx.strokeStyle=`rgba(${rgb.map(v=>Math.round(v*0.86)).join(",")},.9)`;
+          ctx.lineWidth=.7; ctx.stroke();}});
+      }
+    }
+  });
+
+  /* kvadry */
+  function kvadr(pol,h0,h,rgb,strecha){
+    const zb=pol.reduce((m,p)=>Math.min(m,vyska(p[0],p[1])),999)+h0;
+    const dol=pol.map(p=>proj(p[0],p[1],zb)), hor=pol.map(p=>proj(p[0],p[1],zb+h));
+    for(let i=0;i<pol.length;i++){
+      const j=(i+1)%pol.length;
+      const q=[dol[i],dol[j],hor[j],hor[i]];
+      const d=q.reduce((s,p)=>s+p[2],0)/4;
+      const f=.72+.28*Math.abs(Math.cos(C3.az+i*Math.PI/2));
+      P.push({d,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(q[0][0],q[0][1]); q.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
+        ctx.fillStyle=barva(rgb,f); ctx.fill();
+        ctx.strokeStyle=barva(rgb,f*.8); ctx.lineWidth=.8; ctx.stroke();}});
+    }
+  }
+  function plotDil(usek,h,rgb,pruhledne){
+    const [a,b]=usek, KROK=3;
+    const dl=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.ceil(dl/KROK);
+    for(let i=0;i<n;i++){
+      const t0=i/n, t1=(i+1)/n;
+      const p0=[a[0]+(b[0]-a[0])*t0, a[1]+(b[1]-a[1])*t0];
+      const p1=[a[0]+(b[0]-a[0])*t1, a[1]+(b[1]-a[1])*t1];
+      const z0=vyska(p0[0],p0[1]), z1=vyska(p1[0],p1[1]);
+      const q=[proj(p0[0],p0[1],z0),proj(p1[0],p1[1],z1),
+               proj(p1[0],p1[1],z1+h),proj(p0[0],p0[1],z0+h)];
+      const d=q.reduce((s2,p)=>s2+p[2],0)/4+.1;
+      P.push({d,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(q[0][0],q[0][1]); q.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
+        ctx.globalAlpha=pruhledne?.42:1;
+        ctx.fillStyle=barva(rgb,.86); ctx.fill();
+        ctx.globalAlpha=1;
+        ctx.strokeStyle=barva(rgb,.62); ctx.lineWidth=pruhledne?.7:1; ctx.stroke();}});
+    }
+  }
+  function strecha(pol,h0,hh,rgb,typ){
+    const zb=pol.reduce((m,p)=>Math.min(m,vyska(p[0],p[1])),999)+h0;
+    const okap=pol.map(p=>proj(p[0],p[1],zb));
+    const dist=(a,b)=>Math.hypot(b[0]-a[0],b[1]-a[1]);
+    const d01=dist(pol[0],pol[1]), d12=dist(pol[1],pol[2]);
+    const cx=(pol[0][0]+pol[2][0])/2, cy=(pol[0][1]+pol[2][1])/2;
+    let ux,uy,dlouha,kratka;
+    if(d01>=d12){ ux=(pol[1][0]-pol[0][0])/d01; uy=(pol[1][1]-pol[0][1])/d01; dlouha=d01; kratka=d12; }
+    else        { ux=(pol[2][0]-pol[1][0])/d12; uy=(pol[2][1]-pol[1][1])/d12; dlouha=d12; kratka=d01; }
+    // valba: hreben je kratsi o polovinu rozponu na kazde strane; sedlo: hreben pres celou delku
+    const pul = typ==="sedlo" ? dlouha/2 : Math.max(0.15,(dlouha-kratka)/2);
+    const h1=proj(cx-ux*pul, cy-uy*pul, zb+hh);
+    const h2=proj(cx+ux*pul, cy+uy*pul, zb+hh);
+    const podel=(p)=>(p[0]-cx)*ux+(p[1]-cy)*uy;     // souradnice podel hrebene
+    for(let i=0;i<4;i++){
+      const j=(i+1)%4;
+      const sx=pol[j][0]-pol[i][0], sy=pol[j][1]-pol[i][1], sl=Math.hypot(sx,sy);
+      const rovnobezna = Math.abs((sx*ux+sy*uy)/sl) > 0.7;
+      let plocha;
+      if(rovnobezna){                                // dlouha strana -> lichobeznik k obema koncum hrebene
+        plocha=[okap[i], okap[j], podel(pol[j])>0?h2:h1, podel(pol[i])>0?h2:h1];
+      }else{                                         // kratka strana -> trojuhelnik (valba) / stit (sedlo)
+        const t=podel([(pol[i][0]+pol[j][0])/2,(pol[i][1]+pol[j][1])/2]);
+        plocha=[okap[i], okap[j], t>0?h2:h1];
+      }
+      const d=plocha.reduce((s2,q)=>s2+q[2],0)/plocha.length+.3;
+      const norm=Math.abs(Math.cos(Math.atan2(sy,sx)+C3.az));
+      const f=rovnobezna ? .58+.34*norm : .52+.3*norm;
+      P.push({d,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(plocha[0][0],plocha[0][1]);
+        plocha.forEach(q=>ctx.lineTo(q[0],q[1])); ctx.closePath();
+        ctx.fillStyle=barva(rgb,f); ctx.fill();
+        ctx.strokeStyle=barva(rgb,f*.72); ctx.lineWidth=1; ctx.stroke();}});
+    }
+  }
+  kvadr(D.zaklady,0,2.8,[214,206,192]);          // stěny bungalovu
+  strecha(D.dum,2.8,2.7,[132,104,88],'valba');   // valbová střecha s přesahem 47 cm
+  D.otvory.forEach(([st,x,y,w,hh,par,dv])=>otvor(x,y,st,w,hh,par,dv));
+  kvadr(D.domek,0,2.4,[188,178,164]);
+  pult(D.domek,2.4,1.1,[122,98,84]);            // pultová, vyšší na západě, spád k východu
+  kvadr(D.terasa,0,.12,[196,192,184]);
+  pergola(D.terasa,2.6);
+  kvadr(D.schody,-.3,.15,[186,182,174]);
+  kvadr(D.kulna,0,1.95,[176,182,186]);           // stavajici plechovy domek na P2
+  strecha(D.kulna,1.95,0.35,[158,166,172],'sedlo');
+  kvadr(SOUSED.dum,0,3.0,[186,180,172]);         // sousední dům, orientačně
+  strecha(SOUSED.dum,3.0,2.0,[128,104,92],'valba');
+  plotDil(D.zed,2.0,[196,194,188],false);        // betonova zed po zadni hranu domu
+  plotDil(D.plot,1.5,[126,146,110],true);        // zelene pletivo dal na sever
+  plotDil(D.plotZ,1.5,[126,146,110],true);       // plot na zapadni hranici P2
+
+  /* stromy */
+  function pergola(pol,h){
+    const zb=pol.reduce((m,q)=>Math.min(m,vyska(q[0],q[1])),999)+0.12;
+    const drevo=[142,116,86];
+    // sloupky v rozích
+    pol.forEach(q=>{
+      const a=proj(q[0],q[1],zb), b=proj(q[0],q[1],zb+h);
+      P.push({d:a[2]+.5,draw:()=>{
+        ctx.strokeStyle=`rgb(${drevo})`; ctx.lineWidth=Math.max(2,0.14*C3.zoom);
+        ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke();}});
+    });
+    // obvodové trámy
+    for(let i=0;i<pol.length;i++){
+      const j=(i+1)%pol.length;
+      const a=proj(pol[i][0],pol[i][1],zb+h), b=proj(pol[j][0],pol[j][1],zb+h);
+      P.push({d:(a[2]+b[2])/2+.6,draw:()=>{
+        ctx.strokeStyle=`rgb(${drevo})`; ctx.lineWidth=Math.max(1.8,0.11*C3.zoom);
+        ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke();}});
+    }
+    // příčné latě
+    const n=8;
+    for(let k=1;k<n;k++){
+      const t=k/n;
+      const p0=[pol[0][0]+(pol[1][0]-pol[0][0])*t, pol[0][1]+(pol[1][1]-pol[0][1])*t];
+      const p1=[pol[3][0]+(pol[2][0]-pol[3][0])*t, pol[3][1]+(pol[2][1]-pol[3][1])*t];
+      const a=proj(p0[0],p0[1],zb+h), b=proj(p1[0],p1[1],zb+h);
+      P.push({d:(a[2]+b[2])/2+.55,draw:()=>{
+        ctx.strokeStyle=`rgba(${drevo},.85)`; ctx.lineWidth=Math.max(1,0.06*C3.zoom);
+        ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke();}});
+    }
+  }
+  function pult(pol,h0,hh,rgb){
+    // pultova strecha: vyssi na zapade (mensi X), spad k vychodu
+    const zb=pol.reduce((m,p)=>Math.min(m,vyska(p[0],p[1])),999)+h0;
+    const xs=pol.map(p=>p[0]), xmin=Math.min(...xs), xmax=Math.max(...xs);
+    const zTop=x=>zb+hh*(1-(x-xmin)/(xmax-xmin));
+    const hor=pol.map(p=>proj(p[0],p[1],zTop(p[0])));
+    // stitove trojuhelniky na severni a jizni stene
+    for(let i=0;i<pol.length;i++){
+      const j=(i+1)%pol.length;
+      if(Math.abs(pol[i][1]-pol[j][1])>0.01) continue;      // jen steny podel X
+      const t=[proj(pol[i][0],pol[i][1],zb), proj(pol[j][0],pol[j][1],zb), hor[j], hor[i]];
+      const d=t.reduce((s2,p)=>s2+p[2],0)/4+.25;
+      P.push({d,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(t[0][0],t[0][1]); t.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
+        ctx.fillStyle=`rgb(${rgb.map(v=>Math.round(v*0.92)).join(",")})`; ctx.fill();
+        ctx.strokeStyle=`rgb(${rgb.map(v=>Math.round(v*0.7)).join(",")})`; ctx.lineWidth=.8; ctx.stroke();}});
+    }
+    // rovina strechy
+    P.push({d:hor.reduce((s2,p)=>s2+p[2],0)/4+.45,draw:()=>{
+      ctx.beginPath(); ctx.moveTo(hor[0][0],hor[0][1]); hor.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
+      ctx.fillStyle=`rgb(${rgb.map(v=>Math.round(v*1.12)).join(",")})`; ctx.fill();
+      ctx.strokeStyle=`rgb(${rgb.map(v=>Math.round(v*0.72)).join(",")})`; ctx.lineWidth=1; ctx.stroke();}});
+  }
+  function otvor(x,y,strana,w,h,par,dvere){
+    // okna a dvere podle pudorysu; parapet muze byt zaporny (francouzske okno)
+    const vodorovna = strana==='j'||strana==='s';
+    const dx = vodorovna ? w/2 : 0, dy = vodorovna ? 0 : w/2;
+    const ven = 0.06;                                  // posun pred lice steny, at nebliká
+    const ox = vodorovna ? 0 : (strana==='v' ? ven : -ven);
+    const oy = vodorovna ? (strana==='s' ? ven : -ven) : 0;
+    const z = vyska(x,y)+0.02+Math.max(0,par);
+    const a=[x-dx+ox, y-dy+oy], b=[x+dx+ox, y+dy+oy];
+    const q=[proj(a[0],a[1],z),proj(b[0],b[1],z),proj(b[0],b[1],z+h),proj(a[0],a[1],z+h)];
+    P.push({d:q.reduce((s2,p)=>s2+p[2],0)/4+.6,draw:()=>{
+      ctx.beginPath(); ctx.moveTo(q[0][0],q[0][1]); q.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
+      ctx.fillStyle = dvere ? "rgba(72,86,96,.88)" : "rgba(150,178,190,.72)"; ctx.fill();
+      ctx.strokeStyle="rgba(58,70,78,.9)"; ctx.lineWidth=1.1; ctx.stroke();
+      if(!dvere && h>1.6){                            // priprava francouzskeho okna: svisla pricka
+        const m=[(q[0][0]+q[1][0])/2,(q[0][1]+q[1][1])/2], n=[(q[3][0]+q[2][0])/2,(q[3][1]+q[2][1])/2];
+        ctx.beginPath(); ctx.moveTo(m[0],m[1]); ctx.lineTo(n[0],n[1]);
+        ctx.strokeStyle="rgba(58,70,78,.55)"; ctx.lineWidth=.8; ctx.stroke();
+      }
+    }});
+  }
+  function rnd(seed){ let v=Math.sin(seed)*43758.5453; return ()=>{ v=Math.sin(v*12.9898+78.233)*43758.5453; return v-Math.floor(v); }; }
+  function strom(x,y,d,jehl,rgb,vicekmen,h){
+    const z=vyska(x,y), r=d/2, R=rnd(x*137.1+y*49.7);
+    // vyska je vlastnost druhu (z dat), ne odvozena od sirky koruny
+    const vysCelk = h || d*(vicekmen?1.05:1.4);
+    const kmenH   = vysCelk*(vicekmen?0.20:0.52);
+    const pocet   = vicekmen?3:1;
+    const zk = C3.zoom;
+
+    // stin na zemi
+    const st0=proj(x,y,z);
+    P.push({d:st0[2]-0.6,draw:()=>{
+      ctx.beginPath();
+      ctx.ellipse(st0[0]+r*zk*0.25, st0[1]+r*zk*0.12, r*zk*0.92, r*zk*0.34*Math.cos(C3.el), 0,0,7);
+      ctx.fillStyle="rgba(40,52,34,.13)"; ctx.fill();
+    }});
+
+    // kmeny
+    const vrcholy=[];
+    for(let i=0;i<pocet;i++){
+      const a  = vicekmen ? (i-(pocet-1)/2)*1.15 + (R()-.5)*0.4 : 0;
+      const bx = x + Math.cos(a)*(vicekmen?0.16:0), by = y + Math.sin(a)*(vicekmen?0.16:0);
+      const tx = x + Math.cos(a)*r*(vicekmen?0.42:0.06)*(0.7+R()*0.6);
+      const ty = y + Math.sin(a)*r*(vicekmen?0.42:0.06)*(0.7+R()*0.6);
+      const tz = z+kmenH*(vicekmen?(0.85+R()*0.4):1);
+      vrcholy.push([tx,ty,tz]);
+      const w = (vicekmen?0.085:0.20)*d;
+      const p0=proj(bx-w/2,by,z), p1=proj(bx+w/2,by,z);
+      const p2=proj(tx+w*0.28,ty,tz), p3=proj(tx-w*0.28,ty,tz);
+      const dep=(p0[2]+p2[2])/2;
+      P.push({d:dep-0.05,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(p0[0],p0[1]); ctx.lineTo(p1[0],p1[1]);
+        ctx.lineTo(p2[0],p2[1]); ctx.lineTo(p3[0],p3[1]); ctx.closePath();
+        ctx.fillStyle="#6f5c46"; ctx.fill();
+        ctx.strokeStyle="#5a4a38"; ctx.lineWidth=.6; ctx.stroke();
+      }});
+      // vetve
+      for(let b=0;b<2;b++){
+        const ba=a+(R()-.5)*1.6, bl=r*(0.3+R()*0.25);
+        const q0=proj(tx,ty,tz), q1=proj(tx+Math.cos(ba)*bl, ty+Math.sin(ba)*bl, tz+bl*0.8);
+        P.push({d:(q0[2]+q1[2])/2-0.04,draw:()=>{
+          ctx.strokeStyle="#6f5c46"; ctx.lineWidth=Math.max(.9,w*zk*0.18);
+          ctx.beginPath(); ctx.moveTo(q0[0],q0[1]); ctx.lineTo(q1[0],q1[1]); ctx.stroke();
+        }});
+      }
+    }
+
+    // koruna: shluk elips kolem vrcholu kmenu
+    const N = jehl?7:(vicekmen?14:9);
+    for(let j=0;j<N;j++){
+      const v = vrcholy[j%pocet];
+      const ang = (j/N)*Math.PI*2 + R()*0.8;
+      // vicekmen: vic mensich chomacu rozprostrenych do sirky
+      // kminek: min vetsich, tesne u sebe -> kompaktni koruna
+      const rad = r*(jehl?0.30:(vicekmen?0.30+R()*0.18:0.44+R()*0.16));
+      const dist= r*(vicekmen?(0.22+R()*0.72):(0.05+R()*0.34));
+      const cx = v[0]+Math.cos(ang)*dist*(jehl?0.5:1);
+      const cy = v[1]+Math.sin(ang)*dist*(jehl?0.5:1);
+      const t  = vicekmen ? 0.10+R()*0.9 : 0.25+R()*0.75;
+      const cz = v[2] + t*(vysCelk-kmenH)*(jehl?1.15:0.92);
+      const c  = proj(cx,cy,cz);
+      const f  = 0.72 + 0.34*t;
+      const col= [Math.min(255,rgb[0]*f), Math.min(255,rgb[1]*f), Math.min(255,rgb[2]*f)];
+      P.push({d:c[2]+0.1+t*0.2,draw:()=>{
+        ctx.beginPath();
+        ctx.ellipse(c[0],c[1], rad*zk, rad*zk*0.86, 0,0,7);
+        ctx.fillStyle=`rgb(${col.map(Math.round).join(",")})`; ctx.fill();
+        ctx.strokeStyle=`rgba(${Math.round(col[0]*.72)},${Math.round(col[1]*.72)},${Math.round(col[2]*.72)},.55)`;
+        ctx.lineWidth=.7; ctx.stroke();
+      }});
+    }
+  }
+  // trsy v zahonech - objem a barevna variace
+  VYSADBA.zahony.forEach((z,zi)=>{
+    if(z.typ==="trvalky" && layers.trvalky.on===false) return;
+    if(z.typ!=="trvalky" && layers.kere.on===false) return;
+    const seznam=z.r.filter(r=>r[1]>0); if(!seznam.length) return;
+    const celkem=seznam.reduce((a,r)=>a+r[1],0);
+    const plocha=(z.x[1]-z.x[0])*(z.y[1]-z.y[0]);
+    const N=Math.min(46, Math.max(8, Math.round(plocha/2.2)));
+    const R=rnd(zi*911.3+z.x[0]*17.7+z.y[0]*29.1);
+    for(let i=0;i<N;i++){
+      // vyber druh podle zastoupeni
+      let k=R()*celkem, druh=seznam[0][0];
+      for(const [nm,ks] of seznam){ k-=ks; if(k<=0){ druh=nm; break; } }
+      const def=ROSTLINY[druh]||[[124,146,96],.5,.3];
+      let px, py, pokus=0;
+      do{                                      // u organickeho tvaru se trefuji dovnitr
+        px=z.x[0]+ (0.04+R()*0.92)*(z.x[1]-z.x[0]);
+        py=z.y[0]+ (0.04+R()*0.92)*(z.y[1]-z.y[0]);
+      } while(z.p2 && !uvnitr(z.p2,px,py) && ++pokus<12);
+      if(z.p2 && pokus>=12) continue;
+      const zz=vyska(px,py);
+      const h=def[1]*(0.75+R()*0.5), rr=def[2]*(0.8+R()*0.45);
+      const a=proj(px,py,zz), b=proj(px,py,zz+h);
+      const col=def[0].map(c=>Math.max(0,Math.min(255,c*(0.86+R()*0.28))));
+      P.push({d:a[2]+0.15+h*0.1,draw:()=>{
+        ctx.beginPath();
+        ctx.ellipse(b[0],b[1], rr*C3.zoom, rr*C3.zoom*0.82, 0,0,7);
+        ctx.fillStyle=`rgb(${col.map(Math.round).join(",")})`; ctx.fill();
+        ctx.strokeStyle=`rgba(${col.map(c=>Math.round(c*0.7)).join(",")},.6)`;
+        ctx.lineWidth=.6; ctx.stroke();
+        if(h>0.7){   // stonky u vyssich
+          ctx.strokeStyle=`rgba(${col.map(c=>Math.round(c*0.62)).join(",")},.75)`;
+          ctx.lineWidth=Math.max(.7,rr*C3.zoom*0.12);
+          ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke();
+        }
+      }});
+    }
+  });
+
+  if(layers.stromy.on!==false)
+    VYSADBA.stromy.forEach(s=>strom(s.x,s.y,s.d,s.t==="jehlicnan",
+      s.podzim?[186,88,54]:[92,128,72],s.v,s.h));
+  D.stromy.forEach(([x,y,druh,dnes,cil])=>strom(x,y,cil,false,[104,140,80],0,cil*1.25));
+  if(layers.sad?.on!==false)
+    D.sad.forEach(([n,x,y,druh,dnes,cil])=>strom(x,y,cil,false,[110,146,84],0,cil*1.25));
+  for(let x=1;x<25;x+=2.6) strom(x,96.6,2.2,false,[118,140,92],1,2.6);  // serik a bez na valu
+
+  /* --- uzitkova zahrada: vyvysene zahony, sklenik, oblouk --- */
+  if(layers.uzitkova.on!==false){
+    D.uz.vyvysene_zahony.forEach((z,zi)=>{
+      const pol=[[z.x[0],z.y[0]],[z.x[1],z.y[0]],[z.x[1],z.y[1]],[z.x[0],z.y[1]]];
+      kvadr(pol,0,z.vyska_m,[152,118,82]);
+      // hlina + sazenice
+      const zb=Math.min(...pol.map(q=>vyska(q[0],q[1])))+z.vyska_m;
+      const hl=pol.map(q=>proj(q[0],q[1],zb));
+      P.push({d:hl.reduce((a,q)=>a+q[2],0)/4+.35,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(hl[0][0],hl[0][1]); hl.forEach(q=>ctx.lineTo(q[0],q[1])); ctx.closePath();
+        ctx.fillStyle="#463a2c"; ctx.fill();}});
+      const R=rnd(zi*77.7+z.x[0]*13.3);
+      const nx=Math.max(2,Math.round((z.x[1]-z.x[0])/0.45)), ny2=Math.max(2,Math.round((z.y[1]-z.y[0])/0.45));
+      for(let a=0;a<nx;a++) for(let b=0;b<ny2;b++){
+        const px=z.x[0]+0.22+a*((z.x[1]-z.x[0]-0.44)/Math.max(1,nx-1));
+        const py=z.y[0]+0.22+b*((z.y[1]-z.y[0]-0.44)/Math.max(1,ny2-1));
+        const h=0.16+R()*0.18, q=proj(px,py,zb+h);
+        const g2=118+Math.round(R()*46);
+        P.push({d:q[2]+.45,draw:()=>{
+          ctx.beginPath(); ctx.ellipse(q[0],q[1],0.13*C3.zoom,0.11*C3.zoom,0,0,7);
+          ctx.fillStyle=`rgb(${Math.round(g2*0.62)},${g2},${Math.round(g2*0.5)})`; ctx.fill();}});
+      }
+    });
+    // opory: A-ram a trelaz
+    D.uz.opory.forEach(o=>{
+      const zo2=vyska(o.x,(o.y[0]+o.y[1])/2), drevo=[158,132,96];
+      if(o.typ.startsWith("A-")){
+        const w=o.sirka_m/2;
+        [[-1,0],[1,0]].forEach(([sgn])=>{
+          const a=proj(o.x+sgn*w,o.y[0],zo2), b=proj(o.x,o.y[0],zo2+o.vyska_m);
+          const c2=proj(o.x+sgn*w,o.y[1],zo2), e2=proj(o.x,o.y[1],zo2+o.vyska_m);
+          [[a,b],[c2,e2]].forEach(([p0,p1])=>{
+            P.push({d:(p0[2]+p1[2])/2+.7,draw:()=>{
+              ctx.strokeStyle=`rgb(${drevo})`; ctx.lineWidth=Math.max(1.5,0.07*C3.zoom);
+              ctx.beginPath(); ctx.moveTo(p0[0],p0[1]); ctx.lineTo(p1[0],p1[1]); ctx.stroke();}});
+          });
+        });
+        // hrebenova tyc a pricky
+        const h0=proj(o.x,o.y[0],zo2+o.vyska_m), h1=proj(o.x,o.y[1],zo2+o.vyska_m);
+        P.push({d:(h0[2]+h1[2])/2+.75,draw:()=>{
+          ctx.strokeStyle=`rgb(${drevo})`; ctx.lineWidth=Math.max(1.5,0.07*C3.zoom);
+          ctx.beginPath(); ctx.moveTo(h0[0],h0[1]); ctx.lineTo(h1[0],h1[1]); ctx.stroke();}});
+        for(let k=1;k<=3;k++){
+          const t=k/4, hh=zo2+o.vyska_m*t, ww=o.sirka_m/2*(1-t);
+          const q0=proj(o.x-ww,o.y[0],hh), q1=proj(o.x+ww,o.y[0],hh);
+          P.push({d:(q0[2]+q1[2])/2+.72,draw:()=>{
+            ctx.strokeStyle=`rgba(${drevo},.9)`; ctx.lineWidth=Math.max(1,0.045*C3.zoom);
+            ctx.beginPath(); ctx.moveTo(q0[0],q0[1]); ctx.lineTo(q1[0],q1[1]); ctx.stroke();}});
+        }
+      } else {
+        // trelaz: svisla mrizka
+        const n=6;
+        for(let k=0;k<=n;k++){
+          const yy=o.y[0]+(o.y[1]-o.y[0])*k/n;
+          const p0=proj(o.x,yy,zo2), p1=proj(o.x,yy,zo2+o.vyska_m);
+          P.push({d:(p0[2]+p1[2])/2+.7,draw:()=>{
+            ctx.strokeStyle=`rgba(${drevo},.95)`; ctx.lineWidth=Math.max(1.2,0.05*C3.zoom);
+            ctx.beginPath(); ctx.moveTo(p0[0],p0[1]); ctx.lineTo(p1[0],p1[1]); ctx.stroke();}});
+        }
+        for(let k=1;k<=4;k++){
+          const hh=zo2+o.vyska_m*k/5;
+          const p0=proj(o.x,o.y[0],hh), p1=proj(o.x,o.y[1],hh);
+          P.push({d:(p0[2]+p1[2])/2+.71,draw:()=>{
+            ctx.strokeStyle=`rgba(${drevo},.8)`; ctx.lineWidth=Math.max(.9,0.035*C3.zoom);
+            ctx.beginPath(); ctx.moveTo(p0[0],p0[1]); ctx.lineTo(p1[0],p1[1]); ctx.stroke();}});
+        }
+        // popinava zelen na trelazi
+        const R2=rnd(o.x*53.1+o.y[0]*17.9);
+        for(let k=0;k<26;k++){
+          const yy=o.y[0]+R2()*(o.y[1]-o.y[0]), hh=zo2+0.2+R2()*(o.vyska_m-0.2);
+          const q=proj(o.x,yy,hh);
+          P.push({d:q[2]+.73,draw:()=>{
+            ctx.beginPath(); ctx.ellipse(q[0],q[1],0.16*C3.zoom,0.13*C3.zoom,0,0,7);
+            ctx.fillStyle=`rgba(${86+Math.round(R2()*40)},${132+Math.round(R2()*40)},70,.92)`; ctx.fill();}});
+        }
+      }
+    });
+
+    // sklenik
+    const sk=D.uz.sklenik, skP=[[sk.x[0],sk.y[0]],[sk.x[1],sk.y[0]],[sk.x[1],sk.y[1]],[sk.x[0],sk.y[1]]];
+    const zs=Math.min(...skP.map(q=>vyska(q[0],q[1])));
+    const dolS=skP.map(q=>proj(q[0],q[1],zs)), horS=skP.map(q=>proj(q[0],q[1],zs+sk.vyska_m*0.62));
+    for(let i=0;i<4;i++){
+      const j=(i+1)%4, q=[dolS[i],dolS[j],horS[j],horS[i]];
+      P.push({d:q.reduce((a,e)=>a+e[2],0)/4+.4,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(q[0][0],q[0][1]); q.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath();
+        ctx.fillStyle="rgba(206,222,226,.55)"; ctx.fill();
+        ctx.strokeStyle="rgba(120,138,142,.9)"; ctx.lineWidth=1.1; ctx.stroke();}});
+    }
+    strecha(skP, sk.vyska_m*0.62, sk.vyska_m*0.38, [188,206,212], 'sedlo');
+    // kompost
+    const ko=D.uz.kompost;
+    kvadr([[ko.x[0],ko.y[0]],[ko.x[1],ko.y[0]],[ko.x[1],ko.y[1]],[ko.x[0],ko.y[1]]],0,0.9,[128,104,76]);
+    // kovovy oblouk se svetly
+    const ob=D.uz.oblouk, zo=vyska(ob.x,ob.y);
+    const kroky=14, body=[];
+    for(let i=0;i<=kroky;i++){
+      const t=i/kroky, a=Math.PI*t;
+      body.push(proj(ob.x-Math.cos(a)*ob.sirka_m/2, ob.y, zo+Math.sin(a)*ob.vyska_m*0.55+ob.vyska_m*0.45*Math.min(1,t*2,(1-t)*2+0.5)));
+    }
+    P.push({d:body[Math.floor(kroky/2)][2]+.8,draw:()=>{
+      ctx.strokeStyle="#3a4046"; ctx.lineWidth=Math.max(1.4,0.05*C3.zoom);
+      ctx.beginPath(); ctx.moveTo(body[0][0],body[0][1]);
+      body.forEach(q=>ctx.lineTo(q[0],q[1])); ctx.stroke();
+      // svetla
+      for(let i=2;i<kroky-1;i+=3){
+        const q=body[i];
+        ctx.beginPath(); ctx.arc(q[0],q[1]+0.12*C3.zoom,Math.max(1.6,0.09*C3.zoom),0,7);
+        ctx.fillStyle="rgba(255,214,138,.95)"; ctx.fill();
+      }
+    }});
+    // naslapne desky (trasa z dat, ne zadratovana)
+    const dsk=D.uz.desky||{x:23,y:[63.2,74]};
+    for(let yy=dsk.y[0];yy<dsk.y[1];yy+=0.6){
+      const zz=vyska(dsk.x,yy);
+      const q=[proj(dsk.x-0.2,yy-0.2,zz+0.03),proj(dsk.x+0.2,yy-0.2,zz+0.03),
+               proj(dsk.x+0.2,yy+0.2,zz+0.03),proj(dsk.x-0.2,yy+0.2,zz+0.03)];
+      P.push({d:q.reduce((a,e)=>a+e[2],0)/4+.05,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(q[0][0],q[0][1]); q.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath();
+        ctx.fillStyle="#b0a894"; ctx.fill();
+        ctx.strokeStyle="#948c78"; ctx.lineWidth=.6; ctx.stroke();}});
+    }
+  }
+
+  /* --- dubova konstrukce: hamaka + houpacky --- */
+  if(layers.hamaka.on!==false){
+    const hh=D.hh, w=hh.prurez_m[0], H=hh.vyska_m, drevo=[176,142,98];
+    const zb=Math.min(...hh.sloupky.map(q=>vyska(q[0],q[1])));
+    // sloupky
+    hh.sloupky.forEach(q=>{
+      const rohy=[[q[0]-w/2,q[1]-w/2],[q[0]+w/2,q[1]-w/2],[q[0]+w/2,q[1]+w/2],[q[0]-w/2,q[1]+w/2]];
+      const dol=rohy.map(e=>proj(e[0],e[1],zb)), hor=rohy.map(e=>proj(e[0],e[1],zb+H));
+      for(let i=0;i<4;i++){
+        const j=(i+1)%4, f=.68+.28*Math.abs(Math.cos(i*Math.PI/2+C3.az));
+        const qq=[dol[i],dol[j],hor[j],hor[i]];
+        P.push({d:qq.reduce((a,e)=>a+e[2],0)/4+.9,draw:()=>{
+          ctx.beginPath(); ctx.moveTo(qq[0][0],qq[0][1]); qq.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath();
+          ctx.fillStyle=`rgb(${drevo.map(c=>Math.round(c*f)).join(",")})`; ctx.fill();
+          ctx.strokeStyle="rgba(112,88,58,.8)"; ctx.lineWidth=.8; ctx.stroke();}});
+      }
+    });
+    // dva vodorovne tramy
+    const tramy=[[hh.sloupky[0],hh.sloupky[1]],[hh.sloupky[1],hh.sloupky[2]]];
+    tramy.forEach(([a,b])=>{
+      const dx=b[0]-a[0], dy=b[1]-a[1], L=Math.hypot(dx,dy), nx=-dy/L*w/2, ny=dx/L*w/2;
+      const rohy=[[a[0]+nx,a[1]+ny],[b[0]+nx,b[1]+ny],[b[0]-nx,b[1]-ny],[a[0]-nx,a[1]-ny]];
+      const dol=rohy.map(e=>proj(e[0],e[1],zb+H-w)), hor=rohy.map(e=>proj(e[0],e[1],zb+H));
+      for(let i=0;i<4;i++){
+        const j=(i+1)%4, qq=[dol[i],dol[j],hor[j],hor[i]];
+        const f=.7+.26*Math.abs(Math.cos(Math.atan2(dy,dx)+i*Math.PI/2+C3.az));
+        P.push({d:qq.reduce((a2,e)=>a2+e[2],0)/4+1.0,draw:()=>{
+          ctx.beginPath(); ctx.moveTo(qq[0][0],qq[0][1]); qq.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath();
+          ctx.fillStyle=`rgb(${drevo.map(c=>Math.round(c*f)).join(",")})`; ctx.fill();
+          ctx.strokeStyle="rgba(112,88,58,.8)"; ctx.lineWidth=.8; ctx.stroke();}});
+      }
+      P.push({d:hor.reduce((a2,e)=>a2+e[2],0)/4+1.1,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(hor[0][0],hor[0][1]); hor.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath();
+        ctx.fillStyle="#c8a476"; ctx.fill();}});
+    });
+    // hamaka pod prvnim tramem
+    const [ha,hb]=[hh.rameno_hamaka.od, hh.rameno_hamaka.do];
+    const kroku=12, prohyb=0.75, krivka=[];
+    for(let i=0;i<=kroku;i++){
+      const t=i/kroku, x2=ha[0]+(hb[0]-ha[0])*t, y2=ha[1]+(hb[1]-ha[1])*t;
+      const z2=zb+H-0.35-prohyb*Math.sin(Math.PI*t);
+      krivka.push(proj(x2,y2,z2));
+    }
+    P.push({d:krivka[6][2]+1.05,draw:()=>{
+      ctx.beginPath(); ctx.moveTo(krivka[0][0],krivka[0][1]);
+      krivka.forEach(q=>ctx.lineTo(q[0],q[1]));
+      for(let i=kroku;i>=0;i--) ctx.lineTo(krivka[i][0],krivka[i][1]-0.42*C3.zoom);
+      ctx.closePath();
+      ctx.fillStyle="rgba(238,232,214,.94)"; ctx.fill();
+      ctx.strokeStyle="rgba(186,176,152,.9)"; ctx.lineWidth=.8; ctx.stroke();}});
+    // dve houpacky pod druhym tramem
+    const [sa2,sb2]=[hh.rameno_houpacky.od, hh.rameno_houpacky.do];
+    for(let k=0;k<2;k++){
+      const t=0.32+k*0.36;
+      const x2=sa2[0]+(sb2[0]-sa2[0])*t, y2=sa2[1]+(sb2[1]-sa2[1])*t;
+      const zs=zb+H-1.55;
+      [-0.22,0.22].forEach(o=>{
+        const p0=proj(x2,y2+o,zb+H-w), p1=proj(x2,y2+o,zs);
+        P.push({d:(p0[2]+p1[2])/2+1.02,draw:()=>{
+          ctx.strokeStyle="rgba(226,220,204,.95)"; ctx.lineWidth=Math.max(.9,0.02*C3.zoom);
+          ctx.beginPath(); ctx.moveTo(p0[0],p0[1]); ctx.lineTo(p1[0],p1[1]); ctx.stroke();}});
+      });
+      const sed=[[x2-0.24,y2-0.24],[x2+0.24,y2-0.24],[x2+0.24,y2+0.24],[x2-0.24,y2+0.24]]
+        .map(q=>proj(q[0],q[1],zs));
+      P.push({d:sed.reduce((a,q)=>a+q[2],0)/4+1.03,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(sed[0][0],sed[0][1]); sed.forEach(q=>ctx.lineTo(q[0],q[1])); ctx.closePath();
+        ctx.fillStyle="#c8a476"; ctx.fill();
+        ctx.strokeStyle="rgba(112,88,58,.85)"; ctx.lineWidth=.8; ctx.stroke();}});
+    }
+  }
+
+  /* --- operna zed na hrane skoku --- */
+  {
+    const zw=D.zed_op, t=zw.tloustka_odhad_m, h=zw.vyska_odhad_m;
+    zedUseky(zw).forEach(us=>{
+    const rohy=[[us.x_od,zw.y-t/2],[us.x_do,zw.y-t/2],[us.x_do,zw.y+t/2],[us.x_od,zw.y+t/2]];
+    const zb=Math.min(...rohy.map(q=>vyska(q[0],q[1])));
+    const dol=rohy.map(q=>proj(q[0],q[1],zb)), hor=rohy.map(q=>proj(q[0],q[1],zb+h));
+    for(let i=0;i<4;i++){
+      const j=(i+1)%4, q=[dol[i],dol[j],hor[j],hor[i]];
+      const f=.68+.26*Math.abs(Math.cos(i*Math.PI/2+C3.az));
+      P.push({d:q.reduce((a,e)=>a+e[2],0)/4+.5,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(q[0][0],q[0][1]); q.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath();
+        ctx.fillStyle=`rgb(${Math.round(150*f)},${Math.round(148*f)},${Math.round(140*f)})`; ctx.fill();
+        ctx.strokeStyle="rgba(88,86,80,.85)"; ctx.lineWidth=.9; ctx.stroke();
+        // struktura gabionu - kameny
+        if(i===0||i===2){
+          ctx.save(); ctx.beginPath();
+          ctx.moveTo(q[0][0],q[0][1]); q.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath(); ctx.clip();
+          const RG=rnd(i*31.7+us.x_od);
+          for(let k=0;k<34;k++){
+            const u=RG(), v2=RG();
+            const px=q[0][0]+(q[1][0]-q[0][0])*u+(q[3][0]-q[0][0])*v2;
+            const py=q[0][1]+(q[1][1]-q[0][1])*u+(q[3][1]-q[0][1])*v2;
+            ctx.beginPath(); ctx.arc(px,py,Math.max(1.2,0.06*C3.zoom),0,7);
+            ctx.fillStyle=`rgba(${118+Math.round(RG()*50)},${116+Math.round(RG()*46)},${108+Math.round(RG()*44)},.75)`;
+            ctx.fill();
+          }
+          ctx.restore();
+        }}});
+    }
+    P.push({d:hor.reduce((a,e)=>a+e[2],0)/4+.6,draw:()=>{
+      ctx.beginPath(); ctx.moveTo(hor[0][0],hor[0][1]); hor.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath();
+      ctx.fillStyle="#9c9a92"; ctx.fill();
+      ctx.strokeStyle="rgba(88,86,80,.9)"; ctx.lineWidth=.9; ctx.stroke();}});
+    });
+  }
+
+  /* --- rezervovane plochy pro sezonni bazen --- */
+  if(layers.hriste.on!==false) D.bazeny.forEach(bz=>{
+    const cx=(bz.x[0]+bz.x[1])/2, cy=(bz.y[0]+bz.y[1])/2;
+    const r=Math.min(bz.x[1]-bz.x[0], bz.y[1]-bz.y[0])/2;
+    const n=26, kruh=[];
+    for(let i=0;i<n;i++){
+      const a=i/n*Math.PI*2, x2=cx+Math.cos(a)*r, y2=cy+Math.sin(a)*r;
+      kruh.push(proj(x2,y2,vyska(x2,y2)+0.02));
+    }
+    P.push({d:kruh.reduce((a,q)=>a+q[2],0)/n-0.05,draw:()=>{
+      ctx.beginPath(); ctx.moveTo(kruh[0][0],kruh[0][1]);
+      kruh.forEach(q=>ctx.lineTo(q[0],q[1])); ctx.closePath();
+      ctx.fillStyle="rgba(96,158,186,.15)"; ctx.fill();
+      ctx.setLineDash([6,5]); ctx.strokeStyle="rgba(70,128,158,.7)"; ctx.lineWidth=1.5;
+      ctx.stroke(); ctx.setLineDash([]);
+      const t=proj(cx,cy,vyska(cx,cy)+0.1);
+      ctx.fillStyle="rgba(52,100,126,.85)"; ctx.font="bold 13px Barlow Condensed, sans-serif";
+      ctx.textAlign="center"; ctx.fillText(bz.id,t[0],t[1]);}});
+  });
+
+  /* --- piskoviste s tramovym ramem (jako prvek) --- */
+  function piskoviste3D(cx,cy,w,h){
+    const t=0.25, vy=0.35, zb=vyska(cx,cy);
+    const x0=cx-w/2, x1=cx+w/2, y0=cy-h/2, y1=cy+h/2;
+    const pis=[[x0+t,y0+t],[x1-t,y0+t],[x1-t,y1-t],[x0+t,y1-t]].map(q=>proj(q[0],q[1],zb+vy*0.55));
+    P.push({d:pis.reduce((a,q)=>a+q[2],0)/4+.2,draw:()=>{
+      ctx.beginPath(); ctx.moveTo(pis[0][0],pis[0][1]); pis.forEach(q=>ctx.lineTo(q[0],q[1])); ctx.closePath();
+      ctx.fillStyle="#ded0ac"; ctx.fill(); ctx.strokeStyle="#c9b98f"; ctx.lineWidth=.8; ctx.stroke();}});
+    const strany=[[[x0,y0],[x1,y0]],[[x1,y0],[x1,y1]],[[x1,y1],[x0,y1]],[[x0,y1],[x0,y0]]];
+    strany.forEach(([a,b])=>{
+      const dx=b[0]-a[0], dy=b[1]-a[1], L=Math.hypot(dx,dy), nx=-dy/L*t, ny=dx/L*t;
+      const rohy=[[a[0]-nx,a[1]-ny],[b[0]-nx,b[1]-ny],[b[0]+nx,b[1]+ny],[a[0]+nx,a[1]+ny]];
+      const dol=rohy.map(q=>proj(q[0],q[1],zb)), hor=rohy.map(q=>proj(q[0],q[1],zb+vy));
+      for(let i=0;i<4;i++){
+        const j=(i+1)%4, q=[dol[i],dol[j],hor[j],hor[i]];
+        const f=.66+.28*Math.abs(Math.cos(Math.atan2(dy,dx)+i*Math.PI/2+C3.az));
+        P.push({d:q.reduce((s2,e)=>s2+e[2],0)/4+.3,draw:()=>{
+          ctx.beginPath(); ctx.moveTo(q[0][0],q[0][1]); q.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath();
+          ctx.fillStyle=`rgb(${Math.round(156*f)},${Math.round(126*f)},${Math.round(92*f)})`; ctx.fill();
+          ctx.strokeStyle="rgba(96,76,54,.8)"; ctx.lineWidth=.7; ctx.stroke();}});
+      }
+      P.push({d:hor.reduce((s2,e)=>s2+e[2],0)/4+.42,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(hor[0][0],hor[0][1]); hor.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath();
+        ctx.fillStyle="#a9855e"; ctx.fill();
+        ctx.strokeStyle="rgba(96,76,54,.85)"; ctx.lineWidth=.8; ctx.stroke();}});
+    });
+    const RH=rnd(cx*57.3+cy*31.1), barvy=[[214,86,72],[236,182,60],[80,148,192],[92,168,104]];
+    for(let i=0;i<5;i++){
+      const px=x0+0.6+RH()*(w-1.2), py=y0+0.6+RH()*(h-1.2);
+      const q=proj(px,py,zb+vy*0.55+0.06), c=barvy[Math.floor(RH()*4)];
+      P.push({d:q[2]+.5,draw:()=>{
+        ctx.beginPath(); ctx.ellipse(q[0],q[1],0.11*C3.zoom,0.09*C3.zoom,0,0,7);
+        ctx.fillStyle=`rgb(${c})`; ctx.fill();}});
+    }
+  }
+
+  /* --- realisticke ohniste --- */
+  function ohniste3D(cx,cy,kruhove){
+    const zb=vyska(cx,cy), R=rnd(cx*311.7+cy*97.3);
+    const kruh=(r,n)=>Array.from({length:n},(_,i)=>{
+      const a=i/n*Math.PI*2; return [cx+Math.cos(a)*r, cy+Math.sin(a)*r];});
+
+    // 1) mlatova plocha
+    const okraj = kruhove ? kruh(2.0,24)
+      : [[cx-2,cy-2],[cx+2,cy-2],[cx+2,cy+2],[cx-2,cy+2]];
+    const pl=okraj.map(q=>proj(q[0],q[1],vyska(q[0],q[1])+0.03));
+    P.push({d:pl.reduce((a,q)=>a+q[2],0)/pl.length-0.1,draw:()=>{
+      ctx.beginPath(); ctx.moveTo(pl[0][0],pl[0][1]);
+      pl.forEach(q=>ctx.lineTo(q[0],q[1])); ctx.closePath();
+      ctx.fillStyle="#b6ab97"; ctx.fill();
+      ctx.strokeStyle="#9c917d"; ctx.lineWidth=1; ctx.stroke();
+    }});
+
+    // 2) popel uvnitr
+    const pop=kruh(0.64,16).map(q=>proj(q[0],q[1],zb+0.04));
+    P.push({d:pop.reduce((a,q)=>a+q[2],0)/pop.length+0.02,draw:()=>{
+      ctx.beginPath(); ctx.moveTo(pop[0][0],pop[0][1]);
+      pop.forEach(q=>ctx.lineTo(q[0],q[1])); ctx.closePath();
+      ctx.fillStyle="#4a453f"; ctx.fill();
+    }});
+
+    // 3) polena v ohni
+    for(let i=0;i<3;i++){
+      const a=R()*Math.PI, dl=0.42;
+      const p0=proj(cx-Math.cos(a)*dl, cy-Math.sin(a)*dl, zb+0.06);
+      const p1=proj(cx+Math.cos(a)*dl, cy+Math.sin(a)*dl, zb+0.16);
+      P.push({d:(p0[2]+p1[2])/2+0.06,draw:()=>{
+        ctx.strokeStyle="#6b5540"; ctx.lineWidth=Math.max(1.6,0.11*C3.zoom);
+        ctx.lineCap="round";
+        ctx.beginPath(); ctx.moveTo(p0[0],p0[1]); ctx.lineTo(p1[0],p1[1]); ctx.stroke();
+        ctx.lineCap="butt";
+      }});
+    }
+
+    // 4) kamenny venec
+    const n=16;
+    for(let i=0;i<n;i++){
+      const a=i/n*Math.PI*2 + (R()-0.5)*0.12;
+      const rr=0.82+(R()-0.5)*0.08;
+      const kx=cx+Math.cos(a)*rr, ky=cy+Math.sin(a)*rr;
+      const h=0.18+R()*0.10, w=0.14+R()*0.06;
+      const zk=vyska(kx,ky);
+      const dol=proj(kx,ky,zk), hor=proj(kx,ky,zk+h);
+      const odst=178+Math.round(R()*44);
+      P.push({d:dol[2]+0.14,draw:()=>{
+        ctx.beginPath();
+        ctx.ellipse(hor[0],hor[1], w*C3.zoom, w*C3.zoom*0.78, 0,0,7);
+        ctx.fillStyle=`rgb(${odst},${odst-6},${odst-16})`; ctx.fill();
+        ctx.strokeStyle=`rgb(${odst-46},${odst-52},${odst-58})`; ctx.lineWidth=.7; ctx.stroke();
+      }});
+    }
+
+    // 5) dubove tramy k sezeni
+    for(let i=0;i<4;i++){
+      const a=i/4*Math.PI*2+0.5, r0=1.62, dl=0.85, w=0.19;
+      const sx=cx+Math.cos(a)*r0, sy2=cy+Math.sin(a)*r0;
+      const tx=-Math.sin(a), ty=Math.cos(a);          // tangenta
+      const nx=Math.cos(a),  ny=Math.sin(a);
+      const rohy=[[sx-tx*dl-nx*w, sy2-ty*dl-ny*w],[sx+tx*dl-nx*w, sy2+ty*dl-ny*w],
+                  [sx+tx*dl+nx*w, sy2+ty*dl+ny*w],[sx-tx*dl+nx*w, sy2-ty*dl+ny*w]];
+      const zt=Math.min(...rohy.map(q=>vyska(q[0],q[1])));
+      const h=0.42;
+      const dol=rohy.map(q=>proj(q[0],q[1],zt)), hor=rohy.map(q=>proj(q[0],q[1],zt+h));
+      // boky
+      for(let j=0;j<4;j++){
+        const k2=(j+1)%4, q=[dol[j],dol[k2],hor[k2],hor[j]];
+        const f=.62+.3*Math.abs(Math.cos(a+j*Math.PI/2+C3.az));
+        P.push({d:q.reduce((s2,e)=>s2+e[2],0)/4+0.2,draw:()=>{
+          ctx.beginPath(); ctx.moveTo(q[0][0],q[0][1]); q.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath();
+          ctx.fillStyle=`rgb(${Math.round(150*f)},${Math.round(118*f)},${Math.round(82*f)})`; ctx.fill();
+          ctx.strokeStyle="rgba(90,70,48,.75)"; ctx.lineWidth=.7; ctx.stroke();
+        }});
+      }
+      // horni plocha (sedak)
+      P.push({d:hor.reduce((s2,e)=>s2+e[2],0)/4+0.3,draw:()=>{
+        ctx.beginPath(); ctx.moveTo(hor[0][0],hor[0][1]); hor.forEach(e=>ctx.lineTo(e[0],e[1])); ctx.closePath();
+        ctx.fillStyle="#a8825a"; ctx.fill();
+        ctx.strokeStyle="rgba(90,70,48,.8)"; ctx.lineWidth=.8; ctx.stroke();
+      }});
+    }
+  }
+
+  /* prvky z katalogu – jednoduche hmoty misto plochych znacek */
+  const PRV={
+    altan:{h:2.3,strecha:1.0,rgb:[168,142,104]},
+    pergola:{h:2.5,otevrena:true,rgb:[150,124,92]},
+    "terasa-p":{h:0.14,rgb:[196,192,184]},
+    kuchyne:{h:0.95,rgb:[152,146,136]},
+    lavicka:{h:0.45,rgb:[164,132,92]},
+    drevnik:{h:1.7,strecha:0.3,rgb:[146,120,88]},
+    kompost2:{h:0.9,rgb:[128,104,76]}, kompost3:{h:0.9,rgb:[128,104,76]},
+    sklenik:{h:1.5,strecha:0.8,rgb:[196,214,220],sklo:true},
+    kulna:{h:2.0,strecha:0.6,rgb:[176,182,186]},
+    "carport-k":{h:2.4,otevrena:true,rgb:[150,124,92]},
+    "carport-s":{h:2.4,otevrena:true,rgb:[150,124,92]},
+    zahony3:{h:0.45,rgb:[152,118,82]}, zahony4:{h:0.45,rgb:[152,118,82]},
+    vrba:{h:2.0,kupole:true,rgb:[104,140,80]},
+    "domek-deti":{h:1.5,strecha:0.9,rgb:[176,148,110]},
+    poklop:{h:0.25,rgb:[150,148,140]},
+    schody:{h:0.9,schody:true,rgb:[176,172,164]},
+  };
+  function prvek3D(it,k){
+    const def=PRV[it.id]||{h:0.6,rgb:[168,142,104]};
+    const w=k.w/2, hh2=k.h/2;
+    const pol=[[it.x-w,it.y-hh2],[it.x+w,it.y-hh2],[it.x+w,it.y+hh2],[it.x-w,it.y+hh2]];
+    if(def.kupole){                       // vrbova stavba – zeleny kopec
+      const z=vyska(it.x,it.y), c=proj(it.x,it.y,z+def.h*0.55);
+      P.push({d:c[2]+.4,draw:()=>{
+        ctx.beginPath(); ctx.ellipse(c[0],c[1],w*C3.zoom,def.h*0.5*C3.zoom,0,0,7);
+        ctx.fillStyle=`rgb(${def.rgb})`; ctx.fill();
+        ctx.strokeStyle=`rgba(${def.rgb.map(v=>Math.round(v*.7)).join(",")},.8)`;
+        ctx.lineWidth=.8; ctx.stroke();}});
+      return;
+    }
+    if(def.schody){                       // schodiste na hrane skoku
+      const n=4;
+      for(let i=0;i<n;i++){
+        const t0=i/n, t1=(i+1)/n;
+        const q=[[it.x-w,it.y-hh2+2*hh2*t0],[it.x+w,it.y-hh2+2*hh2*t0],
+                 [it.x+w,it.y-hh2+2*hh2*t1],[it.x-w,it.y-hh2+2*hh2*t1]];
+        kvadr(q,0,def.h*(1-t0),def.rgb);
+      }
+      return;
+    }
+    if(def.otevrena){                     // pergola, carport – sloupky a strop
+      kvadr(pol,0,0.08,[186,182,174]);
+      pergola(pol,def.h);
+      return;
+    }
+    kvadr(pol,0,def.h,def.rgb);
+    if(def.strecha) strecha(pol,def.h,def.strecha,def.rgb.map(v=>Math.round(v*.72)),'sedlo');
+  }
+
+  /* prvky */
+  items.forEach(it=>{
+    const k=katById(it.id); if(!k) return;
+    if(it.id==="ohniste-k"||it.id==="ohniste-c"){
+      if(layers.ohniste.on!==false) ohniste3D(it.x,it.y,it.id==="ohniste-k"); return; }
+    if(it.id==="pisk-ram"){ if(layers.hriste.on!==false) piskoviste3D(it.x,it.y,k.w,k.h); return; }
+    if(layers.prvky.on===false) return;
+    prvek3D(it,k);
+  });
+
+  P.sort((a,b)=>a.d-b.d).forEach(o=>o.draw());
+  /* severka */
+  const n0=proj(C3.cx,C3.cy,226.3), n1=proj(C3.cx,C3.cy+10,226.3);
+  const uhelS=Math.atan2(n1[0]-n0[0], -(n1[1]-n0[1]));
+  ctx.save(); ctx.translate(W-42,38); ctx.rotate(uhelS+0.202);
+  ctx.beginPath(); ctx.moveTo(0,-14); ctx.lineTo(4.5,6); ctx.lineTo(0,2.5); ctx.lineTo(-4.5,6); ctx.closePath();
+  ctx.fillStyle=css.getPropertyValue("--ink-2")||"#4E574F"; ctx.fill(); ctx.restore();
+  ctx.fillStyle=css.getPropertyValue("--ink-3")||"#7C857C"; ctx.font="11px Barlow Condensed, sans-serif";
+  ctx.textAlign="center"; ctx.fillText("S",W-42,60);
+}
+
+/* --- ovladani --- */
+function set3D(on){
+  mode3d=on;
+  svg.style.display=on?"none":"block";
+  cv.style.display=on?"block":"none"; cv.removeAttribute("hidden");
+  ovl.style.display=on?"block":"none"; ovl.removeAttribute("hidden");
+  document.getElementById("mode3d").textContent=on?"2D plán":"3D pohled";
+  document.getElementById("mode3d").setAttribute("aria-pressed",on?"true":"false");
+  if(on){ if(!ctx) ctx=cv.getContext("2d");
+    if(!C3.fit){ const r=cv.getBoundingClientRect();
+      C3.zoom=Math.min(r.width/34, r.height/(98*Math.cos(C3.el)*1.25));
+      C3.fit=true; }
+    kresli3D(); }
+}
+document.getElementById("mode3d").onclick=()=>set3D(!mode3d);
+let d3=null;
+cv.addEventListener("pointerdown",e=>{d3={x:e.clientX,y:e.clientY,az:C3.az,el:C3.el,off:[...C3.off],sh:e.shiftKey};
+  try{cv.setPointerCapture(e.pointerId);}catch(err){}});
+cv.addEventListener("pointermove",e=>{
+  if(!d3)return;
+  const dx=e.clientX-d3.x, dy=e.clientY-d3.y;
+  if(d3.sh||e.shiftKey){ C3.el=Math.max(.12,Math.min(1.45,d3.el+dy*0.004)); }
+  else { C3.az=d3.az+dx*0.006; C3.off=[d3.off[0],d3.off[1]-dy*0]; C3.el=Math.max(.12,Math.min(1.45,d3.el+dy*0.003)); }
+  kresli3D();
+});
+cv.addEventListener("pointerup",()=>{d3=null;});
+cv.addEventListener("wheel",e=>{e.preventDefault();
+  C3.zoom=Math.max(2.5,Math.min(26,C3.zoom*(e.deltaY>0?1/1.12:1.12))); kresli3D();},{passive:false});
+addEventListener("resize",()=>{if(mode3d)kresli3D();});
+
+load();render();scaleBar();kresliZony();kresliVysadbu();addEventListener('resize',scaleBar);
+</script>
