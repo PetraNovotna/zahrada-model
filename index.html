@@ -66,7 +66,9 @@ svg#plan{display:block;width:100%;height:clamp(420px,80vh,1120px);touch-action:n
 canvas#scena{display:block;width:100%;height:clamp(420px,80vh,1120px);touch-action:none;cursor:grab;background:var(--card)}
 canvas#scena:active{cursor:grabbing}
 svg#plan[hidden],canvas#scena[hidden]{display:none}
-#ovladani3d{padding:7px 12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3)}
+#ovladani3d{padding:7px 12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+#ovladani3d button{padding:3px 9px;font-size:12px}
 aside{position:sticky;top:18px;display:flex;flex-direction:column;gap:16px}
 @media (max-width:900px){aside{position:static}}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:2px;padding:13px 14px}
@@ -184,6 +186,7 @@ svg#plan #cross{pointer-events:none}
     <canvas id="scena" hidden aria-label="Prostorový pohled na zahradu"></canvas>
     <div id="ovladani3d" hidden>
       <span>Tažením se otáčí · kolečkem přiblížíš · <b>Shift</b> + tažení naklápí</span>
+      <button id="styl3d" aria-pressed="true" title="Přepnout mezi jednoduchým vykreslením zeleně (barevné elipsy) a sprity z vyrenderovaných dřevin a trvalek">Zeleň: sprity</button>
     </div>
   </div>
 
@@ -1365,6 +1368,7 @@ for(const[id,s] of Object.entries(SPRITY)){
 
 const cv=document.getElementById("scena"), ovl=document.getElementById("ovladani3d");
 let mode3d=false, ctx=null;
+let styl3d="sprity";   // "sprity" (billboardy z renderů) | "jednoduchy" (původní elipsy)
 
 /* --- teren --- */
 const zDol=y=> y<=22.8 ? 223.54+(y/22.8)*2.26 : 225.80+(y-22.8)/27.2*0.50;
@@ -1669,7 +1673,7 @@ function kresli3D(){
     // billboard z renderu cesty B, pokud pro druh existuje - jinak procedurální
     // koruna z elips níž. Jeden pevný úhel na druh (ušetří ~2/3 dat), billboard
     // se otáčí s kamerou vždy čelem - v axonometrii bez perspektivy stačí.
-    const spriteId = druh && DRUH_SPRITE[druh];
+    const spriteId = styl3d==="sprity" && druh && DRUH_SPRITE[druh];
     const sprite = spriteId && SPRITY[spriteId];
     const img = spriteId && SPRITY_IMG[spriteId];
     if(sprite && img && img.complete && img.naturalWidth>0){
@@ -1781,7 +1785,7 @@ function kresli3D(){
       const zz=vyska(px,py);
 
       // billboard z renderu cesty B misto nahodne elipsy, pokud pro druh existuje
-      const spriteId=DRUH_SPRITE[druh], sprite=spriteId&&SPRITY[spriteId], img=spriteId&&SPRITY_IMG[spriteId];
+      const spriteId=styl3d==="sprity" && DRUH_SPRITE[druh], sprite=spriteId&&SPRITY[spriteId], img=spriteId&&SPRITY_IMG[spriteId];
       if(sprite && img && img.complete && img.naturalWidth>0){
         const rr0=def[2]*(0.8+R()*0.45);
         const w=2*rr0*C3.zoom*(0.9+R()*0.2), hgt=w*(sprite.h/sprite.w), flip=R()<0.5?-1:1;
@@ -2281,6 +2285,13 @@ function set3D(on){
     kresli3D(); }
 }
 document.getElementById("mode3d").onclick=()=>set3D(!mode3d);
+document.getElementById("styl3d").onclick=()=>{
+  styl3d = styl3d==="sprity" ? "jednoduchy" : "sprity";
+  const b=document.getElementById("styl3d");
+  b.textContent = styl3d==="sprity" ? "Zeleň: sprity" : "Zeleň: jednoduchá";
+  b.setAttribute("aria-pressed", styl3d==="sprity" ? "true" : "false");
+  if(mode3d) kresli3D();
+};
 let d3=null;
 cv.addEventListener("pointerdown",e=>{d3={x:e.clientX,y:e.clientY,az:C3.az,el:C3.el,off:[...C3.off],sh:e.shiftKey};
   try{cv.setPointerCapture(e.pointerId);}catch(err){}});
