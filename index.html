@@ -272,7 +272,7 @@ svg#plan #cross{pointer-events:none}
 
 <footer>
   Geometrie odečtena z geodetického zaměření (10/2023), data v <b>plan/pozemek.json</b>.
-  Síť je natočená tak, aby pozemek stál svisle — <b>skutečný sever je od osy Y odkloněn o 11,6° k západu</b>.
+  Síť je natočená tak, aby pozemek stál svisle — <b>osa Y míří na azimut 348,4°, skutečný sever je od ní o 11,6° k východu</b>.
   Terasa je zakreslená ve skutečné velikosti 4 × 7 m, ale její přesná poloha je zatím odhad. Příjezd je 3 m široký.
   <b>Svejly z projektu se realizovat nebudou</b>, proto tu nejsou.
   Funkční rozměry prvků v katalogu vycházejí z předlohy kurzu <b>Žijte ve své zahradě</b>
@@ -288,7 +288,7 @@ const D={
  zaklady:[[12.47, 30.97], [23.01, 30.97], [23.01, 40.58], [12.47, 40.58]],
  terasa:[[15.14,40.58],[22.14,40.58],[22.14,44.38],[15.14,44.38]],
  sklep:[[21.54,51.08],[23.94,51.08],[23.94,54.59],[21.54,54.59]],
- cesta:[[16.24,0],[19.24,0],[19.24,22.8],[16.24,22.8]],
+ cesta:[[17.9,0],[21.6,0],[21.6,23.9],[17.9,23.9]],
  louka:[[0, 49.74], [4.5, 49.74], [4.5, 75.51], [4.56, 76.58], [4.72, 77.64], [5.0, 78.67], [5.39, 79.67], [5.87, 80.63], [6.46, 81.53], [7.13, 82.36], [7.89, 83.12], [8.72, 83.79], [9.62, 84.38], [10.58, 84.86], [11.58, 85.25], [12.61, 85.53], [13.67, 85.69], [14.74, 85.75], [26.01, 85.75], [26.01, 97.9], [0, 97.42]],
  rovina:[[10.5,27.94],[15.5,22.96],[26.01,22.96],[26.01,51.08],[10.5,51.08]],
  skok:[[14.9, 51.08], [26.01, 51.08]],
@@ -308,8 +308,8 @@ const D={
  otvory:[["j", 14.142, 30.97, 1.14, 1.275, 0.825, 0], ["j", 17.232, 30.97, 1.14, 1.275, 0.825, 0], ["j", 20.042, 30.97, 1.1, 2.165, 0.0, 1], ["j", 21.342, 30.97, 0.6, 1.275, 0.825, 0], ["s", 14.042, 40.58, 2.2, 2.16, -0.06, 0], ["s", 16.842, 40.58, 1.14, 2.16, -0.06, 0], ["s", 21.042, 40.58, 1.14, 2.16, -0.06, 0], ["z", 12.47, 34.277, 1.14, 1.275, 0.825, 0], ["z", 12.47, 39.412, 1.4, 2.16, -0.06, 0], ["v", 23.01, 32.92, 0.6, 1.275, 0.825, 0], ["v", 23.01, 35.177, 0.9, 1.275, 0.825, 0]],   // okna a dvere z pudorysu: [stena, X, Y, sirka, vyska, parapet, dvere?]
  stromy:[[18.81, 82.75, "hrušeň", 2.0, 5.0], [17.81, 78.25, "jabloň", 2.0, 5.0]],
  sad:[[1, 4.71, 86.45, "třešeň", 2.0, 7.0], [2, 7.61, 90.65, "hrušeň", 2.0, 5.0], [3, 13.51, 93.75, "mahalebka", 2.0, 5.0], [4, 16.71, 87.15, "mahalebka", 2.0, 7.0], [5, 21.41, 92.25, "bluma", 2.0, 5.0]],   // zamereno 27.8.2026: [cislo, X, Y, druh, koruna dnes, koruna cil]
- dum_foto:{"uroven_1NP": 226.25, "vyska_m": 5.5, "presah_strechy_m": 0.47, "vyska_okapu_odhad_m": 2.8, "barvy": {"fasada": "světle žlutá", "prvky": "šedé", "strecha": "antracitová", "okna": "antracitová"}, "tepelne_cerpadlo": {"x_odhad": [21.9, 22.9], "y_odhad": [30.1, 30.55], "vyska_s_podstavcem_odhad_m": 1.1}, "fotovoltaika": {"x_odhad": [15.9, 19.3]}, "vstup_schody": {"x_odhad": [19.1, 21.0], "y_spodni_hrana_odhad": 29.2, "prevyseni_odhad_m": 0.45}},   // stavajici.dum – barvy a to, co je videt na fotkach z 12. 11. 2026 (odhady)
- predek:{"popelnice": {"x_odhad": [11.0, 12.4], "y_odhad": [29.9, 31.0]}, "predprostor_domu": {"rozsah_sterku_odhad": {"x": [11.5, 23.0], "y": [22.8, 30.5]}, "vyska_teren_u_domu_m_n_m": 225.8, "vyska_konec_dlazby_odhad_m_n_m": 225.2}, "sachta_pred_domem": {"poloha_odhad": [20.6, 23.2], "prumer_poklopu_odhad_m": 0.6}},   // stavajici – predprostor domu z fotek (odhady)
+ dum_foto:{"uroven_1NP": 226.25, "vyska_m": 5.5, "presah_strechy_m": 0.47, "vyska_okapu_odhad_m": 2.8, "barvy": {"fasada": "světle žlutá", "prvky": "šedé", "strecha": "antracitová", "okna": "antracitová"}, "tepelne_cerpadlo": {"x_odhad": [22.05, 23.05], "y_odhad": [30.0, 30.5], "vyska_s_podstavcem_odhad_m": 1.1}, "fotovoltaika": {"x_odhad": [15.9, 19.3]}, "vstup_schody": {"x_odhad": [19.4, 21.1], "y_spodni_hrana_odhad": 29.5, "prevyseni_odhad_m": 0.45}},   // stavajici.dum – barvy a to, co je videt na fotkach z 12. 11. 2026 (odhady)
+ predek:{"popelnice": {"x_odhad": [11.0, 12.4], "y_odhad": [29.9, 31.0]}, "predprostor_domu": {"rozsah_sterku_odhad": {"x": [11.5, 23.0], "y": [23.9, 30.5]}, "vyska_teren_u_domu_m_n_m": 225.8, "vyska_konec_dlazby_odhad_m_n_m": 225.2}, "sachta_pred_domem": {"poloha_odhad": [22.7, 23.9], "prumer_poklopu_odhad_m": 0.6}},   // stavajici – predprostor domu z fotek (odhady)
  zed_v:{"x": 26.01, "y_od": 0, "y_do": 40.6, "vyska_odhad_m": 2.0, "vyska_z_fotky_odhad_m": 1.3},   // stavajici.oploceni.vychodni_hranice[0] – zed z tvarnic
  domek_strecha:{"typ": "pultová", "vyssi_strana": "západ", "vyska_steny_zapad_m": 3.5, "vyska_steny_vychod_m": 2.4},   // navrh.zahradni_domek.strecha
  schody_sklep:{"prevyseni_m": 1.83, "stupne": {"pocet": 7}},   // stavajici.schodiste_do_sklepa
@@ -343,7 +343,7 @@ const povBarva=n=>`var(--pov-${n})`;
 
 /* cesty a naslapy z plan/cesty.json – zaneseno 27. 8. 2026 z nacrtu ve vizualizaci */
 const CESTY_PLAN=[
- {"id": "C1", "nazev": "Vstup od příjezdu ke vchodovým dveřím", "povrch": "dlazba", "sirka_m": 1.4, "tvar": "primy", "body": [[18.1, 23.1], [20.2, 30.9]]},
+ {"id": "C1", "nazev": "Vstup od příjezdu ke vchodovým dveřím", "povrch": "dlazba", "sirka_m": 1.4, "tvar": "primy", "body": [[19.9, 23.9], [20.25, 29.5]]},
  {"id": "C2", "nazev": "Obchůzka domu ze vstupu na terasu", "povrch": "desky", "sirka_m": 0.5, "tvar": "organicky", "body": [[19.8, 29.6], [12.9, 29.5], [11.7, 30.8], [11.0, 36.2], [11.7, 40.7], [12.7, 41.9], [15.14, 42.2]]},
  {"id": "C3", "nazev": "Nášlapy přes trávník k plechovému domku", "povrch": "desky", "sirka_m": 0.5, "tvar": "organicky", "prohnuti_m": 0.6, "body": [[3.1, 39.9], [11.6, 41.3]]},
  {"id": "C4", "nazev": "Od roviny za terasou k patě schodů", "povrch": "desky", "sirka_m": 0.5, "tvar": "primy", "body": [[19.55, 49.38], [20.4, 45.1]]},
@@ -1404,7 +1404,7 @@ const K3SLUNCE={            // azimut od severu po smeru hodin, vyska nad obzore
   odpoledne:{n:"odpoledne", az:236, el:38, tint:[1,.985,.95]},
   vecer:    {n:"večer",     az:276, el:15, tint:[1,.90,.76]},
 };
-const K3SEVER=11.6;         // skutecny sever je od osy Y odklonen k zapadu (plan/pozemek.json, tools/slunce.py)
+const K3SEVER=11.6;         // osa Y miri na azimut 348,4°: skutecny sever je od ni 11,6° k vychodu (plan/pozemek.json, tools/slunce.py)
 const K3ZP=226.25;          // podlaha 1NP domu [m n. m.]
 const K3SKOK=51.08;         // hrana terenniho skoku = lic jizni steny sklepa (D.skok)
 function k3Nah(seed){ let v=Math.sin(seed)*43758.5453; return ()=>{ v=Math.sin(v*12.9898+78.233)*43758.5453; return v-Math.floor(v); }; }
@@ -1413,8 +1413,8 @@ function k3Prekresli(){ if(k3Raf) return; k3Raf=requestAnimationFrame(()=>{ k3Ra
 
 /* --- teren --- */
 // dolni cast: brana 223,54 – konec dlazby 225,20 – jizni stena domu 225,80 – hrana skoku 226,30
-const zDol=y=> y<=22.8 ? 223.54+(y/22.8)*1.66
-             : y<=30.97 ? 225.20+(y-22.8)/8.17*0.60
+const zDol=y=> y<=23.9 ? 223.54+(y/23.9)*1.66
+             : y<=30.97 ? 225.20+(y-23.9)/7.07*0.60
              : 225.80+Math.min(1,(y-30.97)/(K3SKOK-30.97))*0.50;
 const zHor=y=> 227.15+(y-50)/47.9*1.30;
 function kopecek(x,y){          // elipsa prolozena sesti zmerenymi body, 1,2 m ve stredu
@@ -1432,7 +1432,7 @@ function val(x,y){                     // zemni val na severni hranici: sirka 2,
 function mez(x,y){                     // vysoka mez, kterou je prijezd prokopany
   if(y>12) return 0;
   const h=y<0 ? 2.0*Math.max(0,1+y/2.4) : 2.0*(1-y/12);   // 2 m u brany, k nule kolem Y 12; k silnici spada svahem
-  const d=Math.max(0, Math.max(16.24-x, x-19.24));         // vzdalenost od okraje cesty
+  const d=Math.max(0, Math.max(17.9-x, x-21.6));         // vzdalenost od okraje cesty
   return d<=0 ? 0 : h*Math.min(1,d/1.5);                   // svah rezu 1,5 m
 }
 function vyska(x,y){
@@ -1504,7 +1504,7 @@ const K3ODHAD={
 /* --- svetlo --- */
 function k3Svetlo(){
   const s=K3SLUNCE[S3.slunce]||K3SLUNCE.odpoledne;
-  const t=(s.az-K3SEVER)*Math.PI/180, e=s.el*Math.PI/180;
+  const t=(s.az+K3SEVER)*Math.PI/180, e=s.el*Math.PI/180;
   const L=[Math.sin(t)*Math.cos(e), Math.cos(t)*Math.cos(e), Math.sin(e)];   // smer ke slunci
   const amb=.60, dif=.52, zem=amb+dif*L[2];
   let sx=-L[0]/L[2], sy2=-L[1]/L[2]; const sl=Math.hypot(sx,sy2);
@@ -1593,8 +1593,8 @@ function k3Sit(){
     extra.forEach(e=>{ L=L.filter(v=>Math.abs(v-e)>0.3); L.push(e); });
     return L.sort((p,q)=>p-q);
   };
-  const xs=osa(M.x0,M.x1,-2,28,[10.5,14.74,14.9,16.24,19.24,20.74]);
-  const ys=osa(M.y0,M.y1,-4,100,[0,12,22.8,30.97,41.5,K3SKOK,95.25,96.5,97.75]);
+  const xs=osa(M.x0,M.x1,-2,28,[10.5,14.9,16.4,17.9,21.6,23.1]);
+  const ys=osa(M.y0,M.y1,-4,100,[0,12,23.9,30.97,41.5,K3SKOK,95.25,96.5,97.75]);
   const radky=[];
   for(let j=0;j<ys.length-1;j++){
     const y0=ys[j], y1=ys[j+1], ya=y0+1e-4, yb=y1-1e-4;
@@ -2698,7 +2698,7 @@ function kresli3D(){
     ctx.textBaseline="alphabetic";
   }
   /* severka (skutecny sever je od osy Y odklonen k zapadu) */
-  const n0=proj(C3.cx,C3.cy,226.3), sr=K3SEVER*Math.PI/180, n1=proj(C3.cx-Math.sin(sr)*10,C3.cy+Math.cos(sr)*10,226.3);
+  const n0=proj(C3.cx,C3.cy,226.3), sr=K3SEVER*Math.PI/180, n1=proj(C3.cx+Math.sin(sr)*10,C3.cy+Math.cos(sr)*10,226.3);
   const uhelS=Math.atan2(n1[0]-n0[0], -(n1[1]-n0[1]));
   ctx.save(); ctx.translate(VW-34,34); ctx.rotate(uhelS);
   ctx.beginPath(); ctx.moveTo(0,-14); ctx.lineTo(4.5,6); ctx.lineTo(0,2.5); ctx.lineTo(-4.5,6); ctx.closePath();
