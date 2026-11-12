@@ -150,7 +150,7 @@ svg#plan #cross{pointer-events:none}
     <div class="fact"><b>1 138 m²</b><span>P2</span></div>
     <div class="fact"><b>15,5 m</b><span>šířka</span></div>
     <div class="fact"><b>97,9 m</b><span>délka</span></div>
-    <div class="fact"><b>+4,9 m</b><span>převýšení</span></div>
+    <div class="fact"><b>+5,9 m</b><span>převýšení</span></div>
   </div>
 </header>
 
@@ -273,7 +273,7 @@ svg#plan #cross{pointer-events:none}
 <footer>
   Geometrie odečtena z geodetického zaměření (10/2023), data v <b>plan/pozemek.json</b>.
   Síť je natočená tak, aby pozemek stál svisle — <b>osa Y míří na azimut 348,4°, skutečný sever je od ní o 11,6° k východu</b>.
-  Terasa je zakreslená ve skutečné velikosti 4 × 7 m, ale její přesná poloha je zatím odhad. Příjezd je 3 m široký.
+  Terasa je zakreslená ve skutečné velikosti 4 × 7 m, ale její přesná poloha je zatím odhad. Příjezd je podle fotek asi 3,7 m široký a míří na vchodové dveře (odhad ± 0,5 m).
   <b>Svejly z projektu se realizovat nebudou</b>, proto tu nejsou.
   Funkční rozměry prvků v katalogu vycházejí z předlohy kurzu <b>Žijte ve své zahradě</b>
   (Flera s. r. o.); symboly jsou kreslené vlastní.
@@ -606,8 +606,8 @@ function build(){
   txt(24.6,49.0,"skok",1.3,"var(--scarp)","end");
   txt(11.0,45.5,"nájezd",1.3,"var(--scarp)","start");
   txt(14,25.5,"srovnáno na úroveň domu",1.5,"var(--scarp)");
-  txt(17.7,11,"příjezd",1.5,"var(--build-line)");
-  txt(17.7,24.4,"konec zpevnění",1.2,"var(--ink-3)");
+  txt(19.75,11,"příjezd",1.5,"var(--build-line)");
+  txt(19.75,25.3,"konec zpevnění",1.2,"var(--ink-3)");
   txt(13,92.0,"vysetá louka  9,5 m",1.9,"var(--meadow-line)");
   txt(7,96.5,"val 2,5 × 0,75 m – šeříky a bez",1.3,"var(--scarp)");
   txt(19.2,85,"kopeček +1,2 m",1.5,"var(--scarp)","end");
@@ -706,10 +706,10 @@ const fmt=n=>n.toFixed(1).replace(".",",");
 const rows=[["Dům",D.dum],["Terasa",D.terasa],["Sklep",D.sklep],["Příjezd",D.cesta]];
 document.getElementById("tab").innerHTML=rows.map(([n,P])=>{const[a,b,c,d]=bbox(P);
   return `<tr><td>${n}</td><td class="n">${fmt(a)}–${fmt(b)}</td><td class="n">${fmt(c)}–${fmt(d)}</td></tr>`;}).join("")
-  +`<tr><td>Zahradní domek</td><td class="n">19,9–23,9</td><td class="n">49,7–59,7</td></tr>`
-  +`<tr><td>Kopeček</td><td class="n">20,1–24,6</td><td class="n">81,2–88,9</td></tr>`
-  +`<tr><td>Strom jižní</td><td class="n">22,62</td><td class="n">82,57</td></tr>`
-  +`<tr><td>Strom severní</td><td class="n">22,02</td><td class="n">87,54</td></tr>`
+  +`<tr><td>Zahradní domek</td><td class="n">19,9–23,9</td><td class="n">51,1–61,1</td></tr>`
+  +`<tr><td>Kopeček</td><td class="n">15,0–23,7</td><td class="n">73,5–85,6</td></tr>`
+  +`<tr><td>Jabloň na kopečku</td><td class="n">17,81</td><td class="n">78,25</td></tr>`
+  +`<tr><td>Hrušeň na kopečku</td><td class="n">18,81</td><td class="n">82,75</td></tr>`
   +`<tr><td>Louka</td><td class="n">0–26,0</td><td class="n">49,7–97,9</td></tr>`;
 
 /* --- interakce --- */
