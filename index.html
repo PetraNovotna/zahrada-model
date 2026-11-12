@@ -1825,7 +1825,7 @@ function k3Mapa(SV,STIN,bg,stara){
     const sg=sc.getContext("2d"), im=sg.createImageData(w,h);
     for(let j=0;j<h;j++) for(let i=0;i<w;i++){
       const n=k3Normala(M.x0+(i+.5)*kr, M.y1-(j+.5)*kr);
-      const v=n[2]>.9995 ? 128 : Math.max(20,Math.min(236,128+(SV.f(n[0],n[1],n[2])-1)*330)), o=(j*w+i)*4;
+      const v=n[2]>.9995 ? 128 : Math.max(80,Math.min(236,128+(SV.f(n[0],n[1],n[2])-1)*330)), o=(j*w+i)*4;   // spodni mez 80 (drive 20): u spicky najezdu vychazela cerna smouha
       im.data[o]=im.data[o+1]=im.data[o+2]=v; im.data[o+3]=255;
     }
     sg.putImageData(im,0,0);
