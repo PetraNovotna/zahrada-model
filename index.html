@@ -289,7 +289,7 @@ const D={
  terasa:[[15.14,40.58],[22.14,40.58],[22.14,44.38],[15.14,44.38]],
  sklep:[[21.54,51.08],[23.94,51.08],[23.94,54.59],[21.54,54.59]],
  cesta:[[17.9,0],[21.6,0],[21.6,23.9],[17.9,23.9]],
- nadvori:{"varianta": "V6", "plochy": [{"povrch": "dlazba_spara", "body": [[14.3, 23.9], [21.6, 23.9], [21.6, 27.0], [14.3, 27.0]]}, {"povrch": "dlazba_spara", "body": [[17.9, 21.4], [17.9, 23.9], [15.4, 23.9]]}, {"povrch": "desky", "body": [[19.3, 27.0], [21.2, 27.0], [21.2, 29.5], [19.3, 29.5]]}, {"povrch": "dlazba_spara", "body": [[21.6, 19.01], [25.85, 23.26], [25.85, 27.46], [24.2, 29.11], [21.6, 26.51]]}, {"povrch": "prejezdny", "body": [[17.3, 17.0], [17.9, 17.0], [17.9, 21.4], [17.3, 21.4]]}], "auta": [[24.27, 27.27, 225], [24.27, 23.59, 225]], "brana": {"y": 12.0, "x": [17.9, 21.6], "vyska_odhad_m": 1.6}, "plot": {"useky": [[[15.5, 12.0], [17.9, 12.0]], [[21.6, 12.0], [26.01, 12.0]]], "vyska_odhad_m": 1.6}},   // navrh nadvori: pozemek.json → navrh.nadvori (zdroj plan/nadvori.json)
+ nadvori:{"varianta": "V6", "plochy": [{"povrch": "dlazba_spara", "body": [[14.3, 23.9], [21.6, 23.9], [21.6, 27.0], [14.3, 27.0]]}, {"povrch": "dlazba_spara", "body": [[17.9, 21.4], [17.9, 23.9], [15.4, 23.9]]}, {"povrch": "desky", "body": [[19.3, 27.0], [21.2, 27.0], [21.2, 29.5], [19.3, 29.5]]}, {"povrch": "dlazba_spara", "body": [[21.6, 19.01], [25.85, 23.26], [25.85, 27.46], [24.2, 29.11], [21.6, 26.51]]}, {"povrch": "prejezdny", "body": [[17.3, 17.0], [17.9, 17.0], [17.9, 21.4], [17.3, 21.4]]}], "auta": [[24.27, 27.27, 225], [24.27, 23.59, 225]], "brana": {"y": 12.0, "x": [17.9, 21.6], "vyska_odhad_m": 1.6, "kridla": 2}, "plot": {"useky": [[[21.6, 12.0], [26.01, 12.0]]], "vyska_odhad_m": 1.6, "zapad": {"body": [[17.9, 12.0], [15.5, 12.0], [15.5, 0.49], [0, 1.22]], "vyska_odhad_m": 1.5}}},   // navrh nadvori: pozemek.json → navrh.nadvori (zdroj plan/nadvori.json)
  louka:[[0, 49.74], [4.5, 49.74], [4.5, 75.51], [4.56, 76.58], [4.72, 77.64], [5.0, 78.67], [5.39, 79.67], [5.87, 80.63], [6.46, 81.53], [7.13, 82.36], [7.89, 83.12], [8.72, 83.79], [9.62, 84.38], [10.58, 84.86], [11.58, 85.25], [12.61, 85.53], [13.67, 85.69], [14.74, 85.75], [26.01, 85.75], [26.01, 97.9], [0, 97.42]],
  rovina:[[10.5,27.94],[15.5,22.96],[26.01,22.96],[26.01,51.08],[10.5,51.08]],
  skok:[[14.9, 51.08], [26.01, 51.08]],
@@ -507,8 +507,12 @@ function build(){
     });
     nv.plot.useky.forEach(u=>gNav.appendChild(el("line",{x1:u[0][0],y1:sy(u[0][1]),x2:u[1][0],y2:sy(u[1][1]),stroke:"#3e4248",
       "stroke-width":1.6,"stroke-dasharray":"3 2","vector-effect":"non-scaling-stroke"})));
+    if(nv.plot.zapad) gNav.appendChild(el("polyline",{points:pts(nv.plot.zapad.body),fill:"none",stroke:"var(--tree)",   // obycejny plot vlevo
+      "stroke-width":2,"stroke-dasharray":"2 3","vector-effect":"non-scaling-stroke"}));
     gNav.appendChild(el("line",{x1:nv.brana.x[0],y1:sy(nv.brana.y),x2:nv.brana.x[1],y2:sy(nv.brana.y),stroke:"#3e4248",
       "stroke-width":4,"vector-effect":"non-scaling-stroke"}));
+    { const xm=(nv.brana.x[0]+nv.brana.x[1])/2;            // dvoukridla: predel uprostred
+      gNav.appendChild(el("line",{x1:xm,y1:sy(nv.brana.y-.35),x2:xm,y2:sy(nv.brana.y+.35),stroke:"#3e4248","stroke-width":1.4,"vector-effect":"non-scaling-stroke"})); }
   }
 
   const gUZ=group("uzitkova","Užitková zahrada");
@@ -2150,6 +2154,9 @@ function k3Scena(bg){
     pridej([[br.x[0],br.y,zb0+.08],[br.x[1],br.y,zb0+.08],[br.x[1],br.y,zb0+hb],[br.x[0],br.y,zb0+hb]],.1,q=>{
       k3Cesta(q); ctx.globalAlpha=.5; ctx.fillStyle=rgbS(ant,1); ctx.fill(); ctx.globalAlpha=1;       // kridlo: ram a svisle pruty
       ctx.strokeStyle=rgbS(ant,.85); ctx.lineWidth=1.6; ctx.stroke();
+      { const u=.5, sx0=q[0][0]+(q[1][0]-q[0][0])*u, sy0=q[0][1]+(q[1][1]-q[0][1])*u,                  // dvoukridla: silny predel uprostred
+              sx1=q[3][0]+(q[2][0]-q[3][0])*u, sy1=q[3][1]+(q[2][1]-q[3][1])*u;
+        ctx.lineWidth=2.6; ctx.beginPath(); ctx.moveTo(sx0,sy0); ctx.lineTo(sx1,sy1); ctx.stroke(); }
       const n=24; ctx.lineWidth=.8; ctx.beginPath();
       for(let i=1;i<n;i++){ const u=i/n; ctx.moveTo(q[0][0]+(q[1][0]-q[0][0])*u,q[0][1]+(q[1][1]-q[0][1])*u);
         ctx.lineTo(q[3][0]+(q[2][0]-q[3][0])*u,q[3][1]+(q[2][1]-q[3][1])*u); }
@@ -2157,6 +2164,8 @@ function k3Scena(bg){
     });
     STIN.push({a0:[br.x[0],br.y],b0:[br.x[1],br.y],w:.5,a:.5});
     (nv.plot.useky||[]).forEach(u=>plotDil(u,nv.plot.vyska_odhad_m||1.6,ant));
+    if(nv.plot.zapad){ const B=nv.plot.zapad.body;        // obycejny plot vlevo: po hrane pozemku, k brane zleva
+      for(let i=1;i<B.length;i++) plotDil([B[i-1],B[i]],nv.plot.zapad.vyska_odhad_m||1.5,[126,146,110]); }
     popis("Brána",xm,br.y,zb0+hb+.5,1);
     nv.auta.forEach((a,i)=>{                                // auta: kola, karoserie, prosklena kabina, strecha
       const c=Math.cos(a[2]*Math.PI/180), si=Math.sin(a[2]*Math.PI/180), L=(u,w)=>[a[0]+u*c-w*si,a[1]+u*si+w*c];
