@@ -276,7 +276,7 @@ svg#plan #cross{pointer-events:none}
   Terasa je zakreslená ve skutečné velikosti 4 × 7 m, ale její přesná poloha je zatím odhad. Příjezd je podle fotek asi 3,7 m široký a míří na vchodové dveře (odhad ± 0,5 m).
   <b>Svejly z projektu se realizovat nebudou</b>, proto tu nejsou.
   Funkční rozměry prvků v katalogu vycházejí z předlohy kurzu <b>Žijte ve své zahradě</b>
-  (Flera s. r. o.); symboly jsou kreslené vlastní.
+  (Flera s. r. o.); symboly jsou kreslené vlastní.<span id="zdroje-aut"></span>
 </footer>
 </div>
 
@@ -1408,6 +1408,19 @@ for(const[id,s] of Object.entries(SPRITY)){
   });
   SPRITY_IMG[id]=SPRITY_VAR[id][0];
 }
+// Sítě aut ze skutečných modelů (blok AUTA3D výš, vyrábí tools/auta_modely.py + tools/vlozit_auta.py):
+// v = vrcholy v mm v souřadnicích vozu (u dopředu od zadní nápravy, q doleva, z nahoru od země),
+// t = trojúhelníky, c = index barvy v paletě, n = normála pro stínování. Vůz bez sítě se kreslí jako typový tvar.
+const AUTA3D_SIT={};
+if(typeof AUTA3D!=="undefined") for(const[id,m] of Object.entries(AUTA3D)){
+  const b=t=>Uint8Array.from(atob(t),ch=>ch.charCodeAt(0)).buffer;
+  try{ AUTA3D_SIT[id]={v:new Int16Array(b(m.v)), t:new Uint16Array(b(m.t)), c:new Uint8Array(b(m.c)), n:new Int8Array(b(m.n)), pal:m.pal, zdroj:m.zdroj}; }
+  catch(e){ console.warn("síť auta "+id+" se nepodařilo načíst",e); }
+}
+{ // autoři modelů do patičky – licence CC BY chce uvedení autora (v reportech patička není, tam se přeskočí)
+  const zd=Object.values(AUTA3D_SIT).map(m=>m.zdroj).filter(Boolean), kam=document.getElementById("zdroje-aut");
+  if(kam && zd.length) kam.textContent=" Modely aut ve 3D: "+zd.map(z=>z.nazev+" – "+z.autor+" ("+z.licence+")").join("; ")+"; zjednodušeno pro tuto stránku.";
+}
 
 const cv=document.getElementById("scena"), ovl=document.getElementById("ovladani3d");
 let mode3d=false, ctx=null;
@@ -2150,8 +2163,32 @@ function k3Scena(bg){
   /* Auto jako nizkopolygonovy model: bocni profil (zad → pred) vytazeny pres sirku vozu.
      Tvar se ridi typem (kombi ma dlouhou strechu a strmou zad, male SUV je kratsi a vyssi),
      rozmery a barva jdou z dat (nadvori.json → vozy). Poza = stred zadni napravy a smer jizdy. */
+  /* Auto ze skutečného 3D modelu (AUTA3D_SIT): trojúhelníky sítě v póze vozu, lak v barvě z dat.
+     Stojí na terénu pod oběma nápravami, takže se na svahu nakloní s ním. */
+  function autoSit3D(a,V,M){
+    const c=Math.cos(a[2]*Math.PI/180), si=Math.sin(a[2]*Math.PI/180);
+    const r0=-V.zadni_previs, f0=V.rozvor+V.predni_previs, H=V.vyska;
+    const zZ=vyska(a[0],a[1]), zP=vyska(a[0]+V.rozvor*c,a[1]+V.rozvor*si), skl=(zP-zZ)/V.rozvor;
+    const ref=[a[0]+(r0+f0)/2*c, a[1]+(r0+f0)/2*si, zZ+skl*(r0+f0)/2];
+    const nv=M.v.length/3, W=new Array(nv), v=M.v, t=M.t, nn=M.n;
+    for(let i=0;i<nv;i++){ const u=v[3*i]/1000, q=v[3*i+1]/1000; W[i]=[a[0]+u*c-q*si, a[1]+u*si+q*c, zZ+skl*u+v[3*i+2]/1000]; }
+    const pal=M.pal.map(p=>p==="lak"?V.rgb:p);
+    for(let k=0;k<M.c.length;k++){
+      const A=W[t[3*k]], B=W[t[3*k+1]], C=W[t[3*k+2]];
+      const ux=B[0]-A[0], uy=B[1]-A[1], uz=B[2]-A[2], vx=C[0]-A[0], vy=C[1]-A[1], vz=C[2]-A[2];
+      const gx=uy*vz-uz*vy, gy=uz*vx-ux*vz, gz=ux*vy-uy*vx, L=Math.hypot(gx,gy,gz);
+      if(L<1e-9) continue;
+      const sx=nn[3*k]/127, sy=nn[3*k+1]/127, sz=nn[3*k+2]/127;      // hladká normála jen pro světlo
+      const col=rgbS(pal[M.c[k]],SV.f(sx*c-sy*si,sx*si+sy*c,sz));
+      plocha([A,B,C],col,0,0,{n:[gx/L,gy/L,gz/L],r:ref,obrys:col,lw:.7});   // obrys v barvě plochy zavře spáry mezi trojúhelníky
+    }
+    STIN.push({a0:[a[0]+r0*c,a[1]+r0*si],b0:[a[0]+f0*c,a[1]+f0*si],w:V.sirka+.15,a:.9});                          // stin pod autem
+    STIN.push({a0:[a[0]+r0*c+SV.stin[0]*H*.7,a[1]+r0*si+SV.stin[1]*H*.7],b0:[a[0]+f0*c+SV.stin[0]*H*.7,a[1]+f0*si+SV.stin[1]*H*.7],w:V.sirka,a:.7});
+    popis(V.nazev,a[0]+(r0+f0)/2*c,a[1]+(r0+f0)/2*si,zZ+H+.35,0);
+  }
   function auto3D(a,V){
     V=V||{nazev:"auto",rgb:[90,96,104],delka:4.69,sirka:1.83,vyska:1.47,rozvor:2.69,predni_previs:.91,zadni_previs:1.09,svetlost:.15,typ:"kombi"};
+    if(AUTA3D_SIT[a[3]]) return autoSit3D(a,V,AUTA3D_SIT[a[3]]);   // skutečný model; dál typový tvar pro vozy bez něj
     const c=Math.cos(a[2]*Math.PI/180), si=Math.sin(a[2]*Math.PI/180), w=V.sirka/2, z0=vyska(a[0],a[1]);
     const W3=(u,q,z)=>[a[0]+u*c-q*si, a[1]+u*si+q*c, z0+z];
     const r0=-V.zadni_previs, f0=V.rozvor+V.predni_previs, H=V.vyska, cl=V.svetlost, suv=V.typ!=="kombi";
