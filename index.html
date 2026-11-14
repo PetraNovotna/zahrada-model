@@ -289,7 +289,7 @@ const D={
  terasa:[[15.14,40.58],[22.14,40.58],[22.14,44.38],[15.14,44.38]],
  sklep:[[21.54,51.08],[23.94,51.08],[23.94,54.59],[21.54,54.59]],
  cesta:[[17.9,0],[21.6,0],[21.6,23.9],[17.9,23.9]],
- nadvori:{"varianta": "V6", "plochy": [{"povrch": "dlazba_spara", "body": [[14.3, 23.9], [21.6, 23.9], [21.6, 27.0], [14.3, 27.0]]}, {"povrch": "dlazba_spara", "body": [[17.9, 21.4], [17.9, 23.9], [15.4, 23.9]]}, {"povrch": "desky", "body": [[19.3, 27.0], [21.2, 27.0], [21.2, 29.5], [19.3, 29.5]]}, {"povrch": "dlazba_spara", "body": [[21.6, 19.01], [25.85, 23.26], [25.85, 27.46], [24.2, 29.11], [21.6, 26.51]]}, {"povrch": "prejezdny", "body": [[17.3, 17.0], [17.9, 17.0], [17.9, 21.4], [17.3, 21.4]]}], "auta": [[24.27, 27.27, 225], [24.27, 23.59, 225]], "brana": {"y": 12.0, "x": [17.9, 21.6], "vyska_odhad_m": 1.6, "kridla": 2}, "plot": {"useky": [[[21.6, 12.0], [26.01, 12.0]]], "vyska_odhad_m": 1.6, "zapad": {"body": [[17.9, 12.0], [15.5, 12.0], [15.5, 0.49], [0, 1.22]], "vyska_odhad_m": 1.5}}},   // navrh nadvori: pozemek.json → navrh.nadvori (zdroj plan/nadvori.json)
+ nadvori:{"varianta": "V6", "plochy": [{"povrch": "dlazba_spara", "body": [[14.3, 23.9], [21.6, 23.9], [21.6, 27.0], [14.3, 27.0]]}, {"povrch": "dlazba_spara", "body": [[17.9, 21.4], [17.9, 23.9], [15.4, 23.9]]}, {"povrch": "desky", "body": [[19.3, 27.0], [21.2, 27.0], [21.2, 29.5], [19.3, 29.5]]}, {"povrch": "dlazba_spara", "body": [[21.6, 19.01], [25.85, 23.26], [25.85, 27.46], [24.2, 29.11], [21.6, 26.51]]}, {"povrch": "prejezdny", "body": [[17.3, 17.0], [17.9, 17.0], [17.9, 21.4], [17.3, 21.4]]}], "auta": [[24.288, 27.288, 225, "ceed_sw"], [24.525, 23.845, 225, "stonic"]], "brana": {"y": 12.0, "x": [17.9, 21.6], "vyska_odhad_m": 1.6, "kridla": 2}, "plot": {"useky": [[[21.6, 12.0], [26.01, 12.0]]], "vyska_odhad_m": 1.6, "zapad": {"body": [[17.9, 12.0], [15.5, 12.0], [15.5, 0.49], [0, 1.22]], "vyska_odhad_m": 1.5}}, "vozy": {"ceed_sw": {"nazev": "Kia Ceed SW", "rgb": [28, 88, 100], "delka": 4.6, "sirka": 1.8, "vyska": 1.465, "rozvor": 2.65, "predni_previs": 0.885, "zadni_previs": 1.065, "svetlost": 0.15, "typ": "kombi"}, "stonic": {"nazev": "Kia Stonic", "rgb": [238, 240, 242], "delka": 4.14, "sirka": 1.76, "vyska": 1.5, "rozvor": 2.58, "predni_previs": 0.83, "zadni_previs": 0.73, "svetlost": 0.18, "typ": "malé SUV"}}},   // navrh nadvori: pozemek.json → navrh.nadvori (zdroj plan/nadvori.json)
  louka:[[0, 49.74], [4.5, 49.74], [4.5, 75.51], [4.56, 76.58], [4.72, 77.64], [5.0, 78.67], [5.39, 79.67], [5.87, 80.63], [6.46, 81.53], [7.13, 82.36], [7.89, 83.12], [8.72, 83.79], [9.62, 84.38], [10.58, 84.86], [11.58, 85.25], [12.61, 85.53], [13.67, 85.69], [14.74, 85.75], [26.01, 85.75], [26.01, 97.9], [0, 97.42]],
  rovina:[[10.5,27.94],[15.5,22.96],[26.01,22.96],[26.01,51.08],[10.5,51.08]],
  skok:[[14.9, 51.08], [26.01, 51.08]],
@@ -500,10 +500,11 @@ function build(){
     const nv=D.nadvori, VYPLN={dlazba_spara:"var(--paving)",desky:"var(--paving)",prejezdny:"var(--play)"};
     nv.plochy.forEach(pl=>gNav.appendChild(el("polygon",{points:pts(pl.body),fill:VYPLN[pl.povrch]||"var(--paving)",
       "fill-opacity":pl.povrch==="prejezdny"?.25:.85,stroke:"var(--build-line)","stroke-width":1,"stroke-dasharray":"4 3","vector-effect":"non-scaling-stroke"})));
-    nv.auta.forEach(a=>{                                   // obrys auta 4,69 × 1,83 m, poza = stred zadni napravy a smer
-      const c=Math.cos(a[2]*Math.PI/180), si=Math.sin(a[2]*Math.PI/180);
-      const P=[[3.6,.915],[3.6,-.915],[-1.09,-.915],[-1.09,.915]].map(([u,w])=>[a[0]+u*c-w*si,a[1]+u*si+w*c]);
-      gNav.appendChild(el("polygon",{points:pts(P),fill:"var(--ink-2)","fill-opacity":.28,stroke:"var(--ink-2)","stroke-width":1.2,"vector-effect":"non-scaling-stroke"}));
+    nv.auta.forEach(a=>{                                   // obrys auta ve skutecnych rozmerech; poza = stred zadni napravy a smer
+      const V=(nv.vozy||{})[a[3]]||{rozvor:2.69,predni_previs:.91,zadni_previs:1.09,sirka:1.83,rgb:[90,96,104]};
+      const c=Math.cos(a[2]*Math.PI/180), si=Math.sin(a[2]*Math.PI/180), f=V.rozvor+V.predni_previs, w=V.sirka/2;
+      const P=[[f,w],[f,-w],[-V.zadni_previs,-w],[-V.zadni_previs,w]].map(([u,q])=>[a[0]+u*c-q*si,a[1]+u*si+q*c]);
+      gNav.appendChild(el("polygon",{points:pts(P),fill:"rgb("+V.rgb.join(",")+")","fill-opacity":.9,stroke:"var(--ink-2)","stroke-width":1.2,"vector-effect":"non-scaling-stroke"}));
     });
     nv.plot.useky.forEach(u=>gNav.appendChild(el("line",{x1:u[0][0],y1:sy(u[0][1]),x2:u[1][0],y2:sy(u[1][1]),stroke:"#3e4248",
       "stroke-width":1.6,"stroke-dasharray":"3 2","vector-effect":"non-scaling-stroke"})));
@@ -2146,6 +2147,55 @@ function k3Scena(bg){
     if(sa && sa.poloha_odhad) popis("Šachta",sa.poloha_odhad[0],sa.poloha_odhad[1],vyska(sa.poloha_odhad[0],sa.poloha_odhad[1])+.4,0);
     if(D.cesta){ const c=stred(D.cesta); popis("Příjezd",c[0],c[1],vyska(c[0],c[1])+.3,2); }
   }
+  /* Auto jako nizkopolygonovy model: bocni profil (zad → pred) vytazeny pres sirku vozu.
+     Tvar se ridi typem (kombi ma dlouhou strechu a strmou zad, male SUV je kratsi a vyssi),
+     rozmery a barva jdou z dat (nadvori.json → vozy). Poza = stred zadni napravy a smer jizdy. */
+  function auto3D(a,V){
+    V=V||{nazev:"auto",rgb:[90,96,104],delka:4.69,sirka:1.83,vyska:1.47,rozvor:2.69,predni_previs:.91,zadni_previs:1.09,svetlost:.15,typ:"kombi"};
+    const c=Math.cos(a[2]*Math.PI/180), si=Math.sin(a[2]*Math.PI/180), w=V.sirka/2, z0=vyska(a[0],a[1]);
+    const W3=(u,q,z)=>[a[0]+u*c-q*si, a[1]+u*si+q*c, z0+z];
+    const r0=-V.zadni_previs, f0=V.rozvor+V.predni_previs, H=V.vyska, cl=V.svetlost, suv=V.typ!=="kombi";
+    const pas=suv?.60*H+.12:.62*H+.04;                       // vyska bocni linie pod okny
+    // horni obrys zezadu dopredu: [u, z, druh plochy mezi timto a dalsim bodem]
+    const PR=suv ? [[r0,cl+.22,"lak"],[r0,pas-.04,"sklo"],[r0+.26,H-.06,"lak"],[r0+.46,H,"strecha"],[f0-1.95,H,"strecha"],[f0-1.72,H-.05,"sklo"],
+                    [f0-1.05,pas+.02,"lak"],[f0-.18,pas-.14,"lak"],[f0,pas-.34,"lak"],[f0,cl+.18,null]]
+                 : [[r0,cl+.2,"lak"],[r0,pas-.02,"sklo"],[r0+.3,H-.07,"lak"],[r0+.5,H,"strecha"],[f0-2.2,H,"strecha"],[f0-1.95,H-.05,"sklo"],
+                    [f0-1.12,pas+.02,"lak"],[f0-.2,pas-.17,"lak"],[f0,pas-.36,"lak"],[f0,cl+.16,null]];
+    const lak=V.rgb, sklo=[38,48,58], plast=[36,38,42], B={lak, sklo, strecha:lak.map(v=>Math.round(v*.94))};
+    const ref=[a[0]+(r0+f0)/2*c, a[1]+(r0+f0)/2*si, z0];
+    const bok=PR.map(p=>[p[0],p[1]]).concat([[f0,cl],[r0,cl]]);
+    // okna na boku: pas mezi bocni linii a strechou, od zadniho sloupku k prednimu sklu
+    const okno=suv ? [[r0+.42,pas+.03],[r0+.62,H-.11],[f0-1.9,H-.11],[f0-1.22,pas+.03]]
+                   : [[r0+.3,pas+.03],[r0+.56,H-.11],[f0-2.15,H-.11],[f0-1.3,pas+.03]];
+    [-1,1].forEach(sg=>{
+      const n=[-si*sg,c*sg,0], f=SV.f(n[0],n[1],0), q=sg*w;
+      plocha(bok.map(p=>W3(p[0],q,p[1])),lak,f,0,{n,r:ref,obrys:0});
+      plocha(okno.map(p=>W3(p[0],q+sg*.004,p[1])),sklo,f*1.05,.004,{n,r:ref,obrys:0});
+      if(suv) plocha([[r0,cl],[f0,cl],[f0,cl+.2],[r0,cl+.2]].map(p=>W3(p[0],q+sg*.004,p[1])),plast,f,.004,{n,r:ref,obrys:0});   // plastove lemy
+      [0,V.rozvor].forEach(u0=>{                              // kola a blatniky
+        const R=suv?.345:.32, kol=[], obl=[];
+        for(let k=0;k<12;k++){ const t=k/12*2*Math.PI; kol.push(W3(u0+R*Math.cos(t),q+sg*.012,R+R*Math.sin(t)));
+          obl.push(W3(u0+(R+.07)*Math.cos(t),q+sg*.008,R+(R+.07)*Math.sin(t))); }
+        if(suv) plocha(obl,plast,f,.006,{n,r:ref,obrys:0});
+        plocha(kol,[28,30,34],f,.008,{n,r:ref,obrys:0});
+        plocha(kol.map((p,k)=>{ const t=k/12*2*Math.PI; return W3(u0+R*.55*Math.cos(t),q+sg*.016,R+R*.55*Math.sin(t)); }),[168,172,178],f,.01,{n,r:ref,obrys:0});
+      });
+    });
+    for(let i=0;i<PR.length-1;i++){                            // plochy pres sirku: zad, zadni sklo, strecha, celni sklo, kapota, pred
+      const p=PR[i], q=PR[i+1], du=q[0]-p[0], dz=q[1]-p[1], L=Math.hypot(du,dz)||1, nu=-dz/L, nz=du/L;
+      const n=[nu*c,nu*si,nz], zuz=p[2]==="sklo"?.07:0;       // skla jsou uzsi nez karoserie
+      plocha([W3(p[0],-w+zuz,p[1]),W3(p[0],w-zuz,p[1]),W3(q[0],w-zuz,q[1]),W3(q[0],-w+zuz,q[1])],B[p[2]]||lak,SV.f(n[0],n[1],n[2])*(p[2]==="sklo"?1.1:1),.002,
+        {n,r:ref,obrys:rgbS(lak,.72),lw:.5});
+    }
+    { const n=[-c,-si,0], f=SV.f(n[0],n[1],0);               // zadni svetla
+      [-1,1].forEach(sg=>plocha([W3(r0-.004,sg*(w-.04),pas-.3),W3(r0-.004,sg*(w-.42),pas-.3),W3(r0-.004,sg*(w-.42),pas-.14),W3(r0-.004,sg*(w-.04),pas-.14)],[176,40,36],f,.006,{n,r:ref,obrys:0})); }
+    { const n=[c,si,0], f=SV.f(n[0],n[1],0);                 // predni svetla a maska
+      [-1,1].forEach(sg=>plocha([W3(f0+.004,sg*(w-.05),pas-.5),W3(f0+.004,sg*(w-.5),pas-.5),W3(f0+.004,sg*(w-.5),pas-.38),W3(f0+.004,sg*(w-.05),pas-.38)],[232,236,240],f,.006,{n,r:ref,obrys:0}));
+      plocha([W3(f0+.004,-w+.5,cl+.2),W3(f0+.004,w-.5,cl+.2),W3(f0+.004,w-.5,pas-.52),W3(f0+.004,-w+.5,pas-.52)],plast,f,.005,{n,r:ref,obrys:0}); }
+    STIN.push({a0:[a[0]+r0*c,a[1]+r0*si],b0:[a[0]+f0*c,a[1]+f0*si],w:V.sirka+.15,a:.9});                          // stin pod autem
+    STIN.push({a0:[a[0]+r0*c+SV.stin[0]*H*.7,a[1]+r0*si+SV.stin[1]*H*.7],b0:[a[0]+f0*c+SV.stin[0]*H*.7,a[1]+f0*si+SV.stin[1]*H*.7],w:V.sirka,a:.7});
+    popis(V.nazev,a[0]+(r0+f0)/2*c,a[1]+(r0+f0)/2*si,z0+H+.35,0);
+  }
   /* nadvori: antracitova kovova brana, plot a auta ve stanich (pozemek.json → navrh.nadvori) */
   function nadvori3D(){
     if(!(zap("navrh") && D.nadvori)) return;
@@ -2167,14 +2217,7 @@ function k3Scena(bg){
     if(nv.plot.zapad){ const B=nv.plot.zapad.body;        // obycejny plot vlevo: po hrane pozemku, k brane zleva
       for(let i=1;i<B.length;i++) plotDil([B[i-1],B[i]],nv.plot.zapad.vyska_odhad_m||1.5,[126,146,110]); }
     popis("Brána",xm,br.y,zb0+hb+.5,1);
-    nv.auta.forEach((a,i)=>{                                // auta: kola, karoserie, prosklena kabina, strecha
-      const c=Math.cos(a[2]*Math.PI/180), si=Math.sin(a[2]*Math.PI/180), L=(u,w)=>[a[0]+u*c-w*si,a[1]+u*si+w*c];
-      const Q=(u0,u1,w)=>[L(u1,w),L(u1,-w),L(u0,-w),L(u0,w)], lak=i?[176,180,186]:[58,80,108];
-      [[-.32,.3],[2.37,3.01]].forEach(([u0,u1])=>[-1,1].forEach(sg=>                                   // ctyri kola
-        kvadr([L(u1,sg*.92),L(u1,sg*.74),L(u0,sg*.74),L(u0,sg*.92)],0,.5,[34,36,40],{bezStinu:1})));
-      const kar=kvadr(Q(-1.09,3.6,.9),.22,.56,lak,{});                                                 // karoserie
-      kvadr(Q(-.85,1.75,.78),.78,.42,[118,138,156],{vrch:lak.map(v=>Math.round(v*.9)),bezStinu:1,r:kar&&kar.ref});   // okna a strecha
-    });
+    nv.auta.forEach(a=>auto3D(a,(nv.vozy||{})[a[3]]));
     popis("Nádvoří",17.6,25.4,vyska(17.6,25.4)+.4,2);
   }
   /* betonova zed z tvarnic na vychodni hranici a sousedovy tuje za ni */
